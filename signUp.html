@@ -4,12 +4,22 @@
     <meta charset="utf-8">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script> -->
+
+
 </head>
 <body>
     <div class="container">
         <input id="textEmail" type="email" placeholder="Email">
-        <input id="textPassword" type="password" placeholder="Password">
+        <input id="textPassword" type="password" placeholder="Password"><br>
+        <input type="radio" name="role" value="customer">Customer<br>
+        <input type="radio" name="role" value="manager">Restaurant Manager<br>
+        <input type="radio" name="role" value="driver">Deliverer<br>
         <button id="btnSignUp" class="btn btn-action">Sign Up</button>
     </div>
     <script src="fireBase.js"></script>
