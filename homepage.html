@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
@@ -14,20 +15,39 @@
   <body>
       <header>
         <div class="container">
+            <!-- <img src="./css/FMlogo.jpg"> -->
               <button onclick="location.href='signUp.html'" type="submit" class="button_1">Sign Up</button>
               <button onclick="location.href='signIn.html'" type="submit" class="button_1">Sign In</button>
               <!-- <button id="btnLogout" class="btn btn-action">Logout</button> -->
         </div>
       </header>
-    <section id="places">
+    <section class="places">
       <div class="container">
             <form>
+              <div id="h">
               <h2>Find Restaurants Near You!<h2>
+              </div>
                 <input type="text" name="cusAddress" placeholder="Enter your delivery address">
                 <button type="submit" class="button_1">Find Food</button>
             </form>
       </div>
+
     </section>
+
+    <div class="column">
+      <h3>Eat with Us!</h3>
+      <p>We provide the best service to our customers. Happy customers make us happy!</p>
+    </div>
+    <div class="column">
+    <h3>Partner with us, Restaurant owners!</h3>
+    <p>We value our partners and try to deliver the best partnership experience ever</p>
+    </div>
+    <div class="column">
+    <h3>Want to ride with us?</h3>
+    <p>Be our deliverers for the best experience and good money!</p>
+    </div>
+
+
     <script src="fireBase.js"></script>
     <script src="homepage.js"></script>
       <footer>
