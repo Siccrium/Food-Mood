@@ -10,18 +10,34 @@
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script> -->
+<header>
+<div class="container">
+<div class="buttn">
+<button type="submit" class="button_1">Log Out</button>
+<button onclick="location.href='signIn.html'" type="submit" class="button_1">Sign In</button>
 
+</div>
+</div>
+</header>
 
 </head>
 <body>
     <div class="container">
+      <div class="places">
+        <p id="para">Sign Up to experience the best food with the best service.</p>
         <input id="textEmail" type="email" placeholder="Email">
+
         <input id="textPassword" type="password" placeholder="Password"><br>
-        <input type="radio" name="role" value="customer">Customer<br>
-        <input type="radio" name="role" value="manager">Restaurant Manager<br>
-        <input type="radio" name="role" value="driver">Deliverer<br>
+      </div>
+      <div class="btn">
+        <input type="radio" name="role" value="Customer">Customer<br>
+        <input type="radio" name="role" value="Restaurant Manager">Manager<br>
+        <input type="radio" name="role" value="Deliverer">Deliverer<br>
         <button id="btnSignUp" class="btn btn-action">Sign Up</button>
+      </div>
     </div>
+
+
     <script src="fireBase.js"></script>
     <script src="signUp.js"></script>
     <footer>
