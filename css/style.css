@@ -2,7 +2,12 @@ body{
   font: 15px/1.5 Arial, Helvetica,sans-serif;
   padding:0;
   margin:0;
+  background-image: url("img6.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   background-color:#636363;
+  min-height: 600px;
+  background-blend-mode:lighten;
 }
 
 .container{
@@ -10,11 +15,17 @@ body{
   margin:auto;
   overflow:hidden;
 }
-header{
-  background-color: #d69764;
+
+/* .container img{
+  max-height: 60px;
+  margin-left: 5px;
+} */
+ header{
+  background-color: #deb887;
   color:#ffffff;
-  padding-top:30px;
-  min-height:70px;
+  padding-top:20px;
+  min-height:30px;
+  max-height: 45px;
   border-bottom:#ffffff 3px solid;
 }
 
@@ -23,29 +34,114 @@ header{
   padding-bottom:20px;
 }
 
+#h{
+  color:#ffffff;
+  margin-top: 10px;
+}
+#h1{
+  color:#ffffff;
+  margin-top: 30px;
+  margin-left: 40px;
+}
+
+#para{
+  color:#ffffff;
+  font-size: 30px;
+}
 .button_1{
   padding: 13px;
-  background-color:#35424a;
+  background-color:#696969;
   color:#ffffff;
   font-size: 13px;
-
+  float: right;
 }
 
-#places{
-  padding:17px;
+.button_2{
+  padding: 13px;
+  background-color:#696969;
   color:#ffffff;
-  background:#35424a;
+  font-size: 13px;
+  float: left;
+}
+#btnSignUp{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;padding-left: 10px;
+  margin-top: 15px;
+
+}
+#btnSignIn{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+  margin-top: 15px;
+
 }
 
-#places form {
+#btnLogout{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+}
+#textEmail{
+  float:left;
+  margin-top:17px;
+
+}
+
+#textPassword{
   float:left;
   margin-top:17px;
 }
 
-#places input[type="text"]{
+.places input[type="email"]{
+
   padding:4px;
   height:28px;
   width:250px;
+}
+
+.places input[type="password"]{
+
+  padding:4px;
+  height:28px;
+  width:200px;
+}
+
+.btn input[type="radio"]{
+  padding:4px;
+  height:28px;
+  background:#ffffff;
+   width:30px;
+}
+.btn{
+  padding:50px;
+  color:#ffffff;
+  font-size: 18px;
+  margin-left: 0px;
+}
+.places form {
+  float:left;
+  margin-top:17px;
+}
+
+.places input[type="text"]{
+  padding:4px;
+  height:28px;
+  width:250px;
+}
+
+ .column{
+  float:left;
+  width:33.33%;
+  height:300px;
+  color:#ffffff;
+  text-align: center;
+  margin-top:25%;
+  background: #808080;
 }
 
 .sidenav {
@@ -72,17 +168,14 @@ header{
   color: #f1f1f1;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+
 footer{
   position:absolute;
   bottom:0;
   width:100%;
-  padding:20px;
+  padding:10px;
   margin-top:20px;
   color:#ffffff;
-  background-color:#d69764;
+  background-color:#deb887;
   text-align: center;
 }
