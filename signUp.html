@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script> -->
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script> -->
-<header>
-<div class="container">
-<div class="buttn">
-<button type="submit" class="button_1">Log Out</button>
-<button onclick="location.href='signIn.html'" type="submit" class="button_1">Sign In</button>
-
-</div>
-</div>
-</header>
-
-</head>
-<body>
+    <header>
+      <div class="container">
+        <div class="buttn">
+          <button type="submit" class="button_1">Log Out</button>
+          <button onclick="location.href='signIn.html'" type="submit" class="button_1">Sign In</button>
+        </div>
+      </div>
+    </header>
+  </head>
+  <body>
     <div class="container">
       <div class="places">
         <p id="para">Sign Up to experience the best food with the best service.</p>
         <input id="textEmail" type="email" placeholder="Email">
-
         <input id="textPassword" type="password" placeholder="Password"><br>
-      </div>
-      <div class="btn">
-        <input type="radio" name="role" value="Customer">Customer<br>
-        <input type="radio" name="role" value="Restaurant Manager">Manager<br>
-        <input type="radio" name="role" value="Deliverer">Deliverer<br>
-        <button id="btnSignUp" class="btn btn-action">Sign Up</button>
+        <input id="confirmPassword" type="password" placeholder="Confirm Password"><br>
+        <div class="btn">
+          <input type="radio" name="role" value="Customer">Customer<br>
+          <input type="radio" name="role" value="Manager">Manager<br>
+          <input type="radio" name="role" value="Deliverer">Deliverer<br>
+          <button id="btnSignUp" class="btn btn-action">Sign Up</button>
+        </div>
+        <h1 id="errorHeader"></h1>
+        <h2>Already have an account? <a href="signIn.html">Click Here to Sign In.</a></h2>
       </div>
     </div>
-
-
-    <script src="fireBase.js"></script>
-    <script src="signUp.js"></script>
+    <script src="js/fireBase.js"></script>
+    <script src="js/signUp.js"></script>
     <footer>
-        <p>Food Mood, Copyright &copy; 2019</p>
+      <p>Food Mood, Copyright &copy; 2019</p>
     </footer>
-</body>
+  </body>
 </html>
