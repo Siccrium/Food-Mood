@@ -1,6 +1,3 @@
-// Initialize Firebase.
-var firebase = app_fireBase;
-
 //Create HTML Reference.
 const signOut = document.getElementById("signOut");
 

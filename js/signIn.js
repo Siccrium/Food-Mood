@@ -1,5 +1,4 @@
-// Initialize Firebase & Firestore.
-firebase = app_fireBase;
+// Initialize Firestore.
 firestore = firebase.firestore();
 
 firebase.auth().signOut();
@@ -14,21 +13,20 @@ const errorHeader = document.getElementById('errorHeader');
 errorHeader.style.visibility = "hidden";
 
 //Outside instantiation for scope issues.
+var email = " ";
 var role = " ";
 
 //Sign-In Event.
 btnSignIn.addEventListener('click', e => {
 
     //Get Email and Password.
-    var email = textEmail.value;
+    email = textEmail.value;
     var pass = textPassword.value;
 
     errorHeader.innerText = "";
 
-    //ERROR: Not checking to see if account exists
-
     //Error Checking(Seeing if email field is empty, etc.)
-    if(email == "") {
+    if(email == " ") {
         errorHeader.innerText = "Please enter an email address."
         errorHeader.style.visibility = "visible";
         console.log("The 'email' field was left empty.");
@@ -40,29 +38,43 @@ btnSignIn.addEventListener('click', e => {
         return;
     }
 
-    //Sign In
-    firebase.auth().signInWithEmailAndPassword(email, pass);
-
     //Accesses users document & sets the appropriate value for role
     var docRef = firestore.collection("Users").doc(email);
     docRef.get().then(function(doc) {
-        if(doc && doc.exists){
+        if(doc.exists){
             var docData = doc.data();
             role = docData.UserRole;
         } else console.log("The users document does not exist.");
     });
 
+    //Sign In (More technical error checking: wrong password, invalid account, etc.)
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+
+        var errorCode = error.code;
+        if(errorCode === 'auth/user-not-found') {
+            errorHeader.innerText = "No account was found with that email address, please Sign Up."
+            errorHeader.style.visibility = "visible";
+        } else if(errorCode === 'auth/wrong-password') {
+            errorHeader.innerText = "Incorrect password for the given email."
+            errorHeader.style.visibility = "visible";
+        }
+        console.log(error);
+
+    });
+    
 });
 
 firebase.auth().onAuthStateChanged(function(user) {
     
     //User is signed in.
     if (user) {
+
         //Redirect user to the dashboard for their role.
         if(role === "Customer") window.location.replace("customer.html");
         else if (role === "Manager") window.location.replace("manager.html");
         else if (role === "Deliverer") window.location.replace("deliverer.html");
-        else console.log("The value of role is not an accepted value: " + role);
+        else console.log("The value of role is not an accepted value: -" + role + ".");
+
     }
 
 });
