@@ -1,13 +1,26 @@
-body{
+.homepagebody{
   font: 15px/1.5 Arial, Helvetica,sans-serif;
-  padding:0;
-  margin:0;
+  padding: 0px;
+  margin: 0px;
   background-image: url("img6.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-color:#636363;
+  background-color: white;
   min-height: 600px;
-  background-blend-mode:lighten;
+  max-height: initial;
+}
+
+p {
+    font-family: Arial;
+}
+
+h1, h2, h3 {
+    font-family: Arial;
+}
+
+body {
+    background-color: white;
+    margin: 0px;
 }
 
 .container{
@@ -16,12 +29,14 @@ body{
   overflow:hidden;
 }
 
-/* .container img{
-  max-height: 60px;
-  margin-left: 5px;
-} */
+.centerpage {
+   margin-top: 0px;
+   margin-left: auto;
+
+}
+
  header{
-  background-color: #deb887;
+  background-color: #ffffff;
   color:#ffffff;
   padding-top:20px;
   min-height:30px;
@@ -48,17 +63,47 @@ header{
   color:#ffffff;
   font-size: 30px;
 }
-.button_1{
-  padding: 13px;
-  background-color:#696969;
-  color:#ffffff;
-  font-size: 13px;
-  float: right;
+
+.button {
+    background-color: white;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin 4px 2px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button_1 {
+    background-color: white;
+    color: black;
+    border: 2px solid slategrey;
+}
+
+.button_1:hover {
+    background-color: slategrey;
+    color: white;
+    border: 2px solid slategrey;
+}
+
+.buttoncolumn {
+    float: left;
+    width: 20%;
+    height: initial;
+    color: black;
+    text-align: center;
+    margin-top: 33%;
 }
 
 .button_2{
+  border-radius:4px;
   padding: 13px;
-  background-color:#696969;
+  background-color:#3e55a3;
   color:#ffffff;
   font-size: 13px;
   float: left;
@@ -135,13 +180,13 @@ header{
 }
 
  .column{
-  float:left;
-  width:33.33%;
-  height:300px;
-  color:#ffffff;
+  float: left;
+  width: 33.33%;
+  height: initial;
+  color: black;
   text-align: center;
-  margin-top:25%;
-  background: #808080;
+  margin-top: auto;
+  background: white;
 }
 
 .sidenav {
@@ -169,13 +214,17 @@ header{
 }
 
 
-footer{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  padding:10px;
-  margin-top:20px;
-  color:#ffffff;
-  background-color:#deb887;
-  text-align: center;
+footer {
+    font-family: Arial;
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    color: black;
+    background-color: #fceade;
+    text-align: center;
+}
+
+.footerbottompage {
+    margin-top: 100%;
+    margin-bottom: 0%;
 }
