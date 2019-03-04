@@ -17,7 +17,6 @@ errorHeader.style.visibility = "hidden";
 //Outside instantiation for scope issues.
 var role = " ";
 var email = "";
-var errorPrevent = "";
 
 //Sign Up Event
 btnSignUp.addEventListener('click', e => {
@@ -75,33 +74,31 @@ btnSignUp.addEventListener('click', e => {
 
     });
 
-    //Create the Users document in the Firestore Database.
-    var docRef = firestore.collection("Users").doc(email);
-    docRef.get().then(function(doc) {
-        if(!doc.exists){
-            firestore.collection("Users").doc(email).set({
-                UserEmail: email,
-                UserRole: role
-            }).then(function() {
-                console.log("Document successfully written!");
-            }).catch(function(error) {
-                console.error("Error writing document: " + error);
-            });
-        } else console.log("The user document already exists, will not overwrite.");
-    });
-
 });
 
+//Detecting Sign-In.
 firebase.auth().onAuthStateChanged(function(user) {
        
     //User is signed in.
     if (user) {
 
-        //Redirect user to the dashboard for their role.
-        if(role === "Customer") window.location.replace("customer.html");
-        else if (role === "Manager") window.location.replace("manager.html");
-        else if (role === "Deliverer") window.location.replace("deliverer.html");
-        else console.log("The value of role is not an accepted value: " + role + ".");
+        //Creates the users file in the database.
+        firestore.collection("Users").doc(email).set({
+            UserEmail: email,
+            UserRole: role
+        }).then(function() {
+
+            console.log("Document successfully written!");
+
+            //Redirect user to the dashboard for their role.
+            if(role === "Customer") window.location.replace("customer.html");
+            else if (role === "Manager") window.location.replace("manager.html");
+            else if (role === "Deliverer") window.location.replace("deliverer.html");
+            else console.log("The value of role is not an accepted value: " + role + ".");
+
+        }).catch(function(error) {
+            console.log("Error writing document: " + error);
+        });
 
     }
 

@@ -1,4 +1,4 @@
-var fireBase;
+var firebase;
 
 // Initialize Firebase
 var config = {

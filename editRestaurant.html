@@ -11,21 +11,36 @@
   <body>
     <header>
       <div class="container">
-        <button type="submit" class="button_1" id="signOut">Sign Out</button>
+        <button type="submit" class="button_1">Sign Out</button>
         <button type="submit" class="button_1">Account</button>
-        <button type="submit" class="button_1">Orders</button>
       </div>
     </header>
-    
     <section class="places">
       <div class="container">
-        <h2 id="h1">Welcome, Restaurant Owner!</h2>
-        <button type="submit" class="button_2" id="createRestaurant" onclick="location.href='editRestaurant.html'">Create your Restaurant </button>
-        <!-- <button type="submit" class="button_2">View Current Orders </button> -->
+        <h2 id="h1">Add Information about your Restaurant!</h2>
+        Restaurant name:<br>
+        <input type="text" id="restName">
+        <br>
+        Street address:<br>
+        <input type="text" id="restAddress">
+        <br>
+        City:<br>
+        <input type="text" id="restCity">
+        <br>
+        State:<br>
+        <input type="text" id="restState">
+        <br>
+        Zip:<br>
+        <input type="text" id="restZip">
+        <br>
+        Restaurant Phone Number:<br>
+        <input type="text" id="restPhoneNumber">
+        <br>
+        <input type="submit" value="Submit" id="Sbutton">
       </div>
     </section>
     <script src="js/firebase.js"></script>
-    <script src="js/signOut.js"></script>
+    <script src="js/editRestaurant.js"></script>
     <footer>
       <p>Food Mood, Copyright &copy; 2019</p>
     </footer>
