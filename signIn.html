@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Food Mood</title>
-        <link rel="stylesheet" href="./css/style.css">
-        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <input id="textEmail" type="email" placeholder="Email">
-            <input id="textPassword" type="password" placeholder="Password">
-            <button id="btnSignIn" class="btn btn-action">Sign In</button>
-            <h1 id="errorHeader"></h1>
-            <h2>Need to Sign Up? <a href="signUp.html">Click Here.</a></h2>
-        </div>
-        <script src="js/fireBase.js"></script>
-        <script src="js/signIn.js"></script>
-        <footer>
-            <p>Food Mood, Copyright &copy; 2019</p>
-        </footer>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Food Mood</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script> -->
+
+    <header>
+    <div class="container">
+
+    <div class="buttn">
+      <img src="./css/FMlogo.jpg">
+    <button onclick="location.href='signUp.html'"type="submit" class="button_1" style="margin:5px;">Sign Up</button>
+
+    </div>
+    </div>
+    </header>
+</head>
+<body>
+    <div class="container">
+      <div class="box">
+        <h2 id="h1">Sign in with your Food Mood account!</h2>
+      <div class="places">
+        <input id="textEmail" type="email" placeholder="Email">
+        <input id="textPassword" type="password" placeholder="Password">
+        <button id="btnSignIn1" class="btn btn-action">Sign In</button>
+    </div>
+  </div>
+  </div>
+    <script src="fireBase.js"></script>
+    <script src="signIn.js"></script>
+    <footer>
+        <p>Food Mood, Copyright &copy; 2019</p>
+    </footer>
+</body>
 </html>
