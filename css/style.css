@@ -1,26 +1,13 @@
-.homepagebody{
+body{
   font: 15px/1.5 Arial, Helvetica,sans-serif;
-  padding: 0px;
-  margin: 0px;
+  padding:0;
+  margin:0;
   background-image: url("img6.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: white;
-  min-height: 600px;
-  max-height: initial;
-}
-
-p {
-    font-family: Arial;
-}
-
-h1, h2, h3 {
-    font-family: Arial;
-}
-
-body {
-    background-color: white;
-    margin: 0px;
+  background-color:#636363;
+  min-height: 650px;
+  background-blend-mode:lighten;
 }
 
 .container{
@@ -29,14 +16,8 @@ body {
   overflow:hidden;
 }
 
-.centerpage {
-   margin-top: 0px;
-   margin-left: auto;
-
-}
-
  header{
-  background-color: #ffffff;
+  background-color: #deb887;
   color:#ffffff;
   padding-top:20px;
   min-height:30px;
@@ -49,6 +30,12 @@ header{
   padding-bottom:20px;
 }
 
+header img{
+  margin-top: 0px;
+  padding-top: 0px;
+  max-height: 55px;
+}
+
 #h{
   color:#ffffff;
   margin-top: 10px;
@@ -56,7 +43,7 @@ header{
 #h1{
   color:#ffffff;
   margin-top: 30px;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 #para{
@@ -64,46 +51,20 @@ header{
   font-size: 30px;
 }
 
-.button {
-    background-color: white;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin 4px 2px;
-    transition-duration: 0.2s;
-    cursor: pointer;
-    border-radius: 5px;
+#text{
+  color:#ffffff;
 }
-
-.button_1 {
-    background-color: white;
-    color: black;
-    border: 2px solid slategrey;
-}
-
-.button_1:hover {
-    background-color: slategrey;
-    color: white;
-    border: 2px solid slategrey;
-}
-
-.buttoncolumn {
-    float: left;
-    width: 20%;
-    height: initial;
-    color: black;
-    text-align: center;
-    margin-top: 33%;
+.button_1{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+  float: right;
 }
 
 .button_2{
-  border-radius:4px;
   padding: 13px;
-  background-color:#3e55a3;
+  background-color:#696969;
   color:#ffffff;
   font-size: 13px;
   float: left;
@@ -125,6 +86,16 @@ header{
 
 }
 
+#btnSignIn1{
+  padding: 18px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+  margin-top: 20px;
+  margin-right:150px;
+  float: left;
+
+}
 #btnLogout{
   padding: 13px;
   background-color:#696969;
@@ -133,15 +104,22 @@ header{
 }
 #textEmail{
   float:left;
-  margin-top:17px;
+  margin-top:30px;
 
 }
 
 #textPassword{
   float:left;
-  margin-top:17px;
+  margin-top:30px;
 }
 
+#Sbutton{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+  margin-top: 10px;
+}
 .places input[type="email"]{
 
   padding:4px;
@@ -179,52 +157,37 @@ header{
   width:250px;
 }
 
- .column{
-  float: left;
-  width: 33.33%;
-  height: initial;
-  color: black;
+.rows{
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-column-gap: 25px;
+}
+
+.rows > div{
+  background-color: #808080;
   text-align: center;
-  margin-top: auto;
-  background: white;
+  margin-top:80%;
+  height:200px;
+  color:#ffffff;
 }
 
-.sidenav {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
+.box{
+background-color: #808080;
+width:400px;
+padding:50px;
+margin:50px;
+height: 400px;
 }
 
 
-footer {
-    font-family: Arial;
-    position: absolute;
-    width: 100%;
-    padding: 10px;
-    color: black;
-    background-color: #fceade;
-    text-align: center;
-}
-
-.footerbottompage {
-    margin-top: 100%;
-    margin-bottom: 0%;
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:10px;
+  margin-top:20px;
+  color:#ffffff;
+  background-color:#deb887;
+  border-top: #ffffff 3px solid;
+  text-align: center;
 }

@@ -1,5 +1,4 @@
-// Initialize Firebase
-firebase = app_fireBase;
+// Initialize Firestore
 firestore = firebase.firestore();
 
 firebase.auth().signOut();
@@ -17,19 +16,18 @@ errorHeader.style.visibility = "hidden";
 
 //Outside instantiation for scope issues.
 var role = " ";
+var email = "";
 
 //Sign Up Event
 btnSignUp.addEventListener('click', e => {
 
     //Get Email, Password & Role.
-    var email = textEmail.value;
+    email = textEmail.value;
     var pass = textPassword.value;
     var confPass = confirmPassword.value;
     role = getRadioVal();
 
     errorHeader.innerText = "";
-
-    //ERROR: Check to see if email is already in use.
 
     //Error Checking(Seeing if email field is empty, etc.)
     if(email == "") {
@@ -59,32 +57,49 @@ btnSignUp.addEventListener('click', e => {
         return;
     }
 
-    //ERROR: Possible that document gets created w/o a Sign-Up.
-
     //Sign Up
-    firebase.auth().createUserWithEmailAndPassword(email, pass);
+    firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error) {
 
-    //Create the Users document in the Firestore Database.
-    firestore.collection("Users").doc(email).set({
-                    UserEmail: email,
-                    UserRole: role
-    }).then(function() {
-        console.log("Document successfully written!");
-    }).catch(function(error) {
-        console.error("Error writing document: " + error);
+        var errorCode = error.code;
+        if(errorCode === 'auth/email-already-in-use') {
+            errorHeader.innerText = "Email already has an account, please sign in."
+            errorHeader.style.visibility = "visible";
+        } else if(errorCode === 'auth/invalid-email') {
+            errorHeader.innerText = "The provided email is not valid."
+            errorHeader.style.visibility = "visible";
+        } else if(errorCode === 'auth/weak-password') {
+            errorHeader.innerText = "The password provided is too weak, please choose another."
+            errorHeader.style.visibility = "visible";
+        } 
+
     });
 
 });
 
+//Detecting Sign-In.
 firebase.auth().onAuthStateChanged(function(user) {
        
     //User is signed in.
     if (user) {
-        //Redirect user to the dashboard for their role.
-        if(role === "Customer") window.location.replace("customer.html");
-        else if (role === "Manager") window.location.replace("manager.html");
-        else if (role === "Deliverer") window.location.replace("deliverer.html");
-        else console.log("The value of role is not an accepted value: " + role + ".");
+
+        //Creates the users file in the database.
+        firestore.collection("Users").doc(email).set({
+            UserEmail: email,
+            UserRole: role
+        }).then(function() {
+
+            console.log("Document successfully written!");
+
+            //Redirect user to the dashboard for their role.
+            if(role === "Customer") window.location.replace("customer.html");
+            else if (role === "Manager") window.location.replace("manager.html");
+            else if (role === "Deliverer") window.location.replace("deliverer.html");
+            else console.log("The value of role is not an accepted value: " + role + ".");
+
+        }).catch(function(error) {
+            console.log("Error writing document: " + error);
+        });
+
     }
 
 });
