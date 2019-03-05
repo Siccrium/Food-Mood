@@ -6,7 +6,7 @@ firebase.auth().signOut();
 //Create HTML References.
 const textEmail = document.getElementById('textEmail');
 const textPassword = document.getElementById('textPassword');
-const btnSignIn = document.getElementById('btnSignIn');
+const btnSignIn = document.getElementById('btnSignIn1');
 const errorHeader = document.getElementById('errorHeader');
 
 //Since there is no initial error, the error message is initially hidden.
