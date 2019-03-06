@@ -3,9 +3,6 @@ firestore = firebase.firestore();
 
 var email = "";
 
-//Create HTML References
-const duplicator = document.getElementById('duplicator');
-
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in. Get their email.
@@ -13,7 +10,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       email = user.email;
       console.log(email);
 
-      //Check to see if this user is a manager. If not, redirect them to their dashboard.
+      //Check to see if this user is a customer. If not, redirect them to their dashboard.
       firestore.doc("/Users/" + email).get().then(function(doc) {
 
         if(doc.exists){
@@ -22,22 +19,14 @@ firebase.auth().onAuthStateChanged(function(user) {
           role = docData.UserRole;
 
           //Redirect user to the dashboard for their role.
-          if(role === "Manager") return;
-          else if(role === "Customer") window.location.replace("customer.html");
-          else if (role === "Deliverer") window.location.replace("deliverer.html");
+          if(role === "Deliverer") return;
+          else if(role === "Manager") window.location.replace("manager.html");
+          else if (role === "Customer") window.location.replace("customer.html");
           else console.log("The value of role is not an accepted value: -" + role + ".");
 
         } else console.log("The users document does not exist.");
-        
-      });
 
-      // firestore.collection("Restaurant").where("Restaurant Manager", "==", user.email).get().then(function(querySnapshot) {
-      //   querySnapshot.forEach(function(doc) {
-      //     console.log(doc.id, " => ", doc.data());
-      //   });
-      // }).catch(function(error) {
-      //   console.log("Error getting documents: " + error);
-      // });
+      });
     
     } else {
       // No user is signed in. Redirect them to the homepage.
