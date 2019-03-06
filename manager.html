@@ -13,7 +13,7 @@
       <div class="container">
         <button type="submit" class="button_1" id="signOut">Sign Out</button>
         <button type="submit" class="button_1">Account</button>
-        <button type="submit" class="button_1">Orders</button>
+        <button onclick="location.href='restaurant.html'" type="submit" class="button_1">Go to Restaurant</button>
       </div>
     </header>
     
@@ -23,9 +23,14 @@
         <button type="submit" class="button_2" id="createRestaurant" onclick="location.href='editRestaurant.html'">Create your Restaurant </button>
         <!-- <button type="submit" class="button_2">View Current Orders </button> -->
       </div>
+      <div id="duplicator">
+        <h1 id="restName"></h1>
+        <button type="submit" class="button_1" id="viewRestaurant">View Restaurant</button>
+      </div>
     </section>
     <script src="js/firebase.js"></script>
     <script src="js/signOut.js"></script>
+    <script src="js/manager.js"></script>
     <footer>
       <p>Food Mood, Copyright &copy; 2019</p>
     </footer>
