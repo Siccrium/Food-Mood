@@ -18,8 +18,6 @@ body{
 
  header{
   background-color: #d3d3d3;
-
-
   color:#ffffff;
   padding-top:20px;
   min-height:30px;
@@ -54,6 +52,9 @@ header img{
   margin-left: 10px;
 }
 
+#h2{
+  color:#ffffff;
+}
 #hh{
   color:#ffffff;
 }
@@ -65,7 +66,7 @@ header img{
 #para{
   color:#ffffff;
   font-size: 25px;
-  margin-top: -15%;
+  margin-top: -10%;
 }
 
 #text{
@@ -87,8 +88,26 @@ header img{
   color:#ffffff;
   font-size: 13px;
   float: left;
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.80;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;
 }
 
+.button_3{
+  padding: 13px;
+  background-color:#696969;
+  color:#ffffff;
+  font-size: 13px;
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.80;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;
+}
 #btnSignUp{
   padding: 13px;
   background-color:#696969;
@@ -219,6 +238,7 @@ grid-column-gap: 0px;
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 25px;
+
 }
 .row1 > div{
   background-color: #808080;
@@ -226,6 +246,11 @@ grid-column-gap: 0px;
   margin-top:80%;
   height:200px;
   color:#ffffff;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.80;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;
 }
 
 #p{
@@ -256,6 +281,7 @@ padding:50px;
 margin: 50px;
 height: 450px;
 margin-left:25%;
+color:#ffffff;
 -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=80);
   -moz-opacity: 0.80;
@@ -292,6 +318,10 @@ margin-left:25%;
 a{
   color:#ffffff;
 }
+#a1{
+  color:#000000;
+}
+
 footer{
   position:absolute;
   bottom:0;
