@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Food Mood</title>
   <link rel="stylesheet" href="./css/style.css">
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
@@ -12,43 +13,22 @@
     <body>
       <header>
         <div class="container">
-          <button type="submit" class="button_1" id="signOut">Sign Out</button>
-          <button type="submit" class="button_1">Account</button>
+            <img src="./css/fm.jpg">
+          <button style="margin:5px;"type="submit" class="button_1" id="signOut">Sign Out</button>
+          <button style="margin:5px;"type="submit" class="button_1">Account</button>
 
         </div>
       </header>
-      <div class="container">
-        <h2 id="h1">Add Information about your Restaurant!</h2>
-        Restaurant name:<br>
-        <h1 id="restName"></h1>
-        <br>
-        Street address:<br>
-        <h1 id="restAddress"></h1>
-        <br>
-        City:<br>
-        <h1 id="restCity"></h1>
-        <br>
-        State:<br>
-        <h1 id="restState"></h1>
-        <br>
-        Zip:<br>
-        <h1 id="restZip"></h1>
-        <br>
-        Restaurant Phone Number:<br>
-        <h1 id="restPhoneNumber"></h1>
-        <br>
-        <input type="submit" value="Submit" id="Sbutton">
-      </div>
 
 
     <section class="places">
       <div class="container">
-        <h2 id="h1">Welcome to your Restaurant Page!</h2>
+        <h2 id="h2">Welcome to your Restaurant Page!</h2>
         <button type="submit" class="button_2">Add Menu Items</button>
     </div>
     </section>
-    <script src="firebase.js"></script>
-    <script src="signOut.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/signOut.js"></script>
       <footer>
         <p>Food Mood, Copyright &copy; 2019</p>
       </footer>
