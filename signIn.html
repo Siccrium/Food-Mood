@@ -2,35 +2,44 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
-    <header>
-    <div class="container">
 
-    <div class="buttn">
-      <img src="./css/FMlogo.jpg">
-    <button onclick="location.href='signUp.html'"type="submit" class="button_1" style="margin:5px;">Sign Up</button>
-
-    </div>
-    </div>
-    </header>
 </head>
+
 <body>
+  <header>
+  <div class="container">
+    <div class="buttn">
+      <img src="./css/fm.jpg">
+        <button onclick="location.href='signUp.html'"type="submit" class="button_1" style="margin:5px;">Sign Up</button>
+    </div>
+  </div>
+  </header>
     <div class="container">
       <div class="box">
         <h2 id="h1">Sign in with your Food Mood account!</h2>
-      <div class="places">
+       <div class="places">
         <input id="textEmail" type="email" placeholder="Email">
         <input id="textPassword" type="password" placeholder="Password">
+
+        <div class="btn">
         <button id="btnSignIn1" class="btn btn-action">Sign In</button>
+         <div class="sth">
         <h1 id="errorHeader"></h1>
-        <h1>Need to Sign Up? <a href="signUp.html">Click Here!</a></h1>
-        <h1>Forgot Password? <a href="passwordReset.html">Click Here!</a></h1>
+        <a href="signUp.html">Need to Sign Up?</a>
+        <br>
+        <br>
+        <a href="passwordReset.html">Forgot password?</a>
+     </div>
     </div>
+  </div>
+
   </div>
   </div>
     <script src="js/firebase.js"></script>
