@@ -10,23 +10,28 @@
   </head>
   <body>
     <header>
-      <div class="container">
-        <button type="submit" class="button_1" id="signOut">Sign Out</button>
-        <button type="submit" class="button_1">Account</button>
+    <div class="container">
+      <div class="buttn">
+        <img src="./css/fm.jpg">
+        <button type="submit" class="button_1" id="signOut" style="margin:5px;">Sign Out</button>
+        <button type="submit" class="button_1" style="margin:5px;">Account</button>
+        <button type="orders" class="button_1" style="margin:5px;">Orders</button>
+
       </div>
+    </div>
     </header>
-    <section id="places">
+    <section class="places">
       <div class="container">
-        <form>
-          <h2>Find Restaurants Near You!<h2>
-          <input type="text" name="cusAddress" placeholder="Enter your delivery address">
-          <button type="submit" class="button_2">Find Food</button>
-        </form>
+            <form>
+              <h2 id="hh">Find Restaurants Near You!<h2>
+                <input type="text" name="cusAddress" placeholder="Enter your delivery address">
+                <button type="submit" class="button_1">Find Food</button>
+            </form>
       </div>
     </section>
     <script src="js/firebase.js"></script>
     <script src="js/signOut.js"></script>
-    <script src="js/deliverer.js"></script>
+  <script src="js/deliverer.js"></script>
     <footer>
       <p>Food Mood, Copyright &copy; 2019</p>
     </footer>
