@@ -2,27 +2,43 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
   </head>
+
   <body>
+    <header>
     <div class="container">
-      <div class="places">
-        <p id="para">Sign Up to experience the best food with the best service.</p>
-        <input id="textEmail" type="email" placeholder="Email">
-        <input id="textPassword" type="password" placeholder="Password"><br>
-        <input id="confirmPassword" type="password" placeholder="Confirm Password"><br>
+      <img src="./css/fm.jpg">
+    </div>
+  </header>
+
+    <div class="container">
+      <div class="box">
+        <div class="places">
+        <form id="text">
+          <p id="para">Sign Up with Us!</p>
+        <input id="textEmail" type="email" placeholder="Email" style="margin:5px">
+        <br>
+        <input id="textPassword" type="password" style="margin:5px;" placeholder="Password">
+        <br>
+        <br>
+        <input id="confirmPassword" type="password" placeholder="Confirm Password" style="margin:5px;"><br>
+        <br>
         <div class="btn">
           <input type="radio" name="role" value="Customer">Customer<br>
           <input type="radio" name="role" value="Manager">Manager<br>
           <input type="radio" name="role" value="Deliverer">Deliverer<br>
           <button id="btnSignUp" class="btn btn-action">Sign Up</button>
-        </div>
-        <h1 id="errorHeader"></h1>
-        <h2>Already have an account? <a href="signIn.html">Click Here to Sign In.</a></h2>
+          <h1 id="errorHeader"></h1>
+        <a href="signIn.html">Already have an account?</a>
+      </div>
+      </div>
+      </form>
       </div>
     </div>
     <script src="js/fireBase.js"></script>
