@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+
+import config from './firebase-config'
+import firebase from 'firebase'
+import 'firebase/firestore'
+import FileUploader from 'react-firebase-file-uploader'
+
+firebase.initializeApp(config);
+
+const db = firebase.firestore()
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <FileUploader />
       </div>
-    );
-  }
-}
+    );//end return
+  }//end render
+}//end component
 
 export default App;

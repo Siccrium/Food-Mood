@@ -1,11 +1,13 @@
 {
-  "name": "foodmoodapp",
+  "name": "expfoodmood",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "firebase": "^5.8.6",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-firebase-file-uploader": "^2.4.2",
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
