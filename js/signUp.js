@@ -64,12 +64,15 @@ btnSignUp.addEventListener('click', e => {
         if(errorCode === 'auth/email-already-in-use') {
             errorHeader.innerText = "Email already has an account, please sign in."
             errorHeader.style.visibility = "visible";
+            console.log("The provided email is already being used.");
         } else if(errorCode === 'auth/invalid-email') {
             errorHeader.innerText = "The provided email is not valid."
             errorHeader.style.visibility = "visible";
+            console.log("The provided email is not a valid format.");
         } else if(errorCode === 'auth/weak-password') {
             errorHeader.innerText = "The password provided is too weak, please choose another."
             errorHeader.style.visibility = "visible";
+            console.log("The provided password is not strong enough.");
         } 
 
     });

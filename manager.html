@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
@@ -11,21 +12,43 @@
   <body>
     <header>
       <div class="container">
-        <button type="submit" class="button_1" id="signOut">Sign Out</button>
-        <button type="submit" class="button_1">Account</button>
-        <button type="submit" class="button_1">Orders</button>
+        <img src="./css/fm.jpg">
+        <button type="submit" class="button_1" id="signOut" style="margin:5px;">Sign Out</button>
+        <button type="submit" class="button_1" style="margin:5px;">Account</button>
       </div>
     </header>
-    
+
     <section class="places">
       <div class="container">
         <h2 id="h1">Welcome, Restaurant Owner!</h2>
-        <button type="submit" class="button_2" id="createRestaurant" onclick="location.href='editRestaurant.html'">Create your Restaurant </button>
-        <!-- <button type="submit" class="button_2">View Current Orders </button> -->
+        <button type="submit" class="button_2" id="createRestaurant" onclick="location.href='editRestaurant.html'" style="margin:5px;">Create your Restaurant </button>
+        <div id="duplicator">
+          <h1 id="restName"></h1>
+          <button onclick="location.href='restaurant.html'" type="submit" class="button_2" id="viewRestaurant" style="margin:5px;">View Restaurant</button>
+        </div>
+      </section>
+
+
+      <div class="container">
+      <div class="row1">
+        <div>
+          <h3>Expand your Business!</h3>
+          <p>Food Mood lets you expand your business by featuring your restaurant on our website, allowing customers to browse your menu from anywhere.</p>
+        </div>
+        <div>
+          <h3>Deliver Faster!</h3>
+          <p>Food Mood delivers orders quickly, allowing you to serve customers your restaurant quality food without any hassle!</p>
+        </div>
+        <div>
+          <h3>Partner with Professionals!</h3>
+          <p>Food Mood will set you up, promote your menu and work with you to improve pickup and delivery times.</p>
+        </div>
       </div>
-    </section>
-    <script src="js/firebase.js"></script>
+  </div>
+
+     <script src="js/firebase.js"></script>
     <script src="js/signOut.js"></script>
+    <script src="js/manager.js"></script> 
     <footer>
       <p>Food Mood, Copyright &copy; 2019</p>
     </footer>

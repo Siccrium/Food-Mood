@@ -4,55 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style2.css">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script> -->
+
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script> -->
+
   </head>
+
   <body>
-      <header>
-        <div class="container">
-            <img src="./css/FMlogo.jpg">
-              <button onclick="location.href='signUp.html'" style="margin:5px;" type="submit" class="button_1">Sign Up</button>
-              <button onclick="location.href='signIn.html'" style="margin:5px;" type="submit" class="button_1">Sign In</button>
-
-        </div>
-      </header>
-    <section class="places">
-      <div class="container">
-            <form>
-              <div id="h">
-              <h2>Find Restaurants Near You!<h2>
-              </div>
-                <input type="text" name="cusAddress" placeholder="Enter your delivery address">
-                <button type="submit" class="button_1">Find Food</button>
-            </form>
-      </div>
-
-    </section>
-
-<div class="rows">
-    <div>
-      <h3>Eat with Us!</h3>
-      <p>We provide the best service to our customers. Happy customers make us happy!</p>
-    </div>
-    <div>
-    <h3>Partner with us, Restaurant owners!</h3>
-    <p>We value our partners and try to deliver the best partnership experience ever</p>
-    </div>
-    <div>
-    <h3>Want to ride with us?</h3>
-    <p>Be our deliverers for the best experience and good money!</p>
-    </div>
+    <div class="container">
+      <div class="box">
+        <img src="./css/FMlogo2.jpg">
+    <h2 id="h">Welcome to Food Mood!</h2>
+  <div class="places">
+     <button onclick="location.href='signIn.html'"id="btnSignIn1" class="btn btn-action" style="margin:5px;">Sign In</button>
+    <button onclick="location.href='signUp.html'"type="submit" class="button_1" style="margin:5px;">Sign Up</button>
+ </div>
+</div>
 </div>
 
-    <script src="fireBase.js"></script>
-    <script src="homepage.js"></script>
-      <footer>
-        <p>Food Mood, Copyright &copy; 2019</p>
-      </footer>
+    <script src="js/fireBase.js"></script>
+    <script src="js/homepage.js"></script>
+
   </body>
 </html>

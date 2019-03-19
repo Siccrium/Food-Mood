@@ -32,23 +32,8 @@ Sbutton.addEventListener('click', e => {
         "Restaurant Zip": zip,
         "Restaurant Phone Number": phoneNumber
     }).then(function() {
-
-        firestore.doc("/Users/" + email + "/Restaurants/" + name).set({
-            "Restaurant Manager": email,
-            "Restaurant Name": name,
-            "Restaurant Address": address,
-            "Restaurant City": city,
-            "Restaurant State": state,
-            "Restaurant Zip": zip,
-            "Restaurant Phone Number": phoneNumber
-        }).then(function() {
-            console.log("Document Successfully Written.");
-            window.location.replace("manager.html");
-        }).catch(function(error) {
-            console.log("Error writing Document to the Manager's Restaurant collection: " + error);
-        });
-
-        
+        console.log("Document Successfully Written.");
+        window.location.replace("manager.html");
     }).catch(function(error) {
         console.log("Error writing document to Restaurant Collection: " + error);
     });
