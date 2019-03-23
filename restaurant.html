@@ -15,12 +15,28 @@
         <div class="container">
             <img src="./css/fm.jpg">
           <button style="margin:5px;"type="submit" class="button_1" id="signOut">Sign Out</button>
-          <button style="margin:5px;"type="submit" class="button_1">Account</button>
+          <a href="manager.html"><button style="margin:5px;"type="submit" class="button_1">Account Dashboard</button></a>
 
         </div>
       </header>
 
+      <div class="box1">
+        <h3 id="hhh">Add Information about your Restaurant!</h3>
 
+    Restaurant name:
+    <p id="restName"></p>
+    Street address:
+    <p id="restAddress"></p>
+    City:
+    <p id="restCity"></p>
+    State:
+    <p id="restState"></p>
+    Zip:
+    <p id="restZip"></p>
+    Restaurant Phone Number:
+    <p id="restPhoneNumber"></p>
+    <a href="editRestaurant.html"><input type="submit" value="Edit Information" id="Sbutton"></a>
+  </div>
     <section class="places">
       <div class="container">
         <h2 id="h2">Welcome to your Restaurant Page!</h2>
@@ -28,6 +44,7 @@
     </div>
     </section>
     <script src="js/firebase.js"></script>
+    <script src="js/restaurant.js"></script>
     <script src="js/signOut.js"></script>
       <footer>
         <p>Food Mood, Copyright &copy; 2019</p>

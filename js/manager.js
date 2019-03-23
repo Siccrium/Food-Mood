@@ -11,7 +11,6 @@ firebase.auth().onAuthStateChanged(function(user) {
       // User is signed in. Get their email.
       console.log("The currently logged in user is: " + user.email + ".");
       email = user.email;
-      console.log(email);
 
       //Check to see if this user is a manager. If not, redirect them to their dashboard.
       firestore.doc("/Users/" + email).get().then(function(doc) {

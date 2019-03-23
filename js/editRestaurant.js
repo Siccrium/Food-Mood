@@ -12,45 +12,66 @@ const restZip = document.getElementById("restZip");
 var restPhoneNumber = document.getElementById("restPhoneNumber");
 var Sbutton = document.getElementById("Sbutton");
 
+function renderPage(){
+
+    firestore.collection("Restaurants").doc(email).get().then(function(doc) {
+        if(doc.exists){
+                
+            var docData = doc.data();
+            restName.defaultValue = docData.RestaurantName;
+            restAddress.defaultValue = docData.RestaurantAddress;
+            restCity.defaultValue = docData.RestaurantCity;
+            restState.defaultValue = docData.RestaurantState;
+            restZip.defaultValue = docData.RestaurantZip;
+            restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
+
+        } else console.log("The restaurant document does not exist.");
+        
+    }).catch(function(error) {
+
+        console.log("The restaurant document does not exist.");
+        console.log(error);
+
+    });
+
+}
+
+
+
+console.log("The currently logged in user is: " + email + ".");
+
 Sbutton.addEventListener('click', e => {
-    console.log("This happened");
     var name = restName.value;
     var address = restAddress.value;
     var city = restCity.value;
     var state = restState.value;
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
-    console.log("This also happened");
     console.log(name + address + city + state + zip + phoneNumber);
 
     firestore.collection("Restaurants").doc(name).set({
-        "Restaurant Manager": email,
-        "Restaurant Name": name,
-        "Restaurant Address": address,
-        "Restaurant City": city,
-        "Restaurant State": state,
-        "Restaurant Zip": zip,
-        "Restaurant Phone Number": phoneNumber
+        "RestaurantManager": email,
+        "RestaurantName": name,
+        "RestaurantAddress": address,
+        "RestaurantCity": city,
+        "RestaurantState": state,
+        "RestaurantZip": zip,
+        "RestaurantPhoneNumber": phoneNumber
     }).then(function() {
         console.log("Document Successfully Written.");
-        window.location.replace("manager.html");
+        window.location.replace("restaurant.html");
     }).catch(function(error) {
         console.log("Error writing document to Restaurant Collection: " + error);
     });
     
-    console.log("Then this happened");
-    console.log(name + address + city + state + zip + phoneNumber);
-
 });
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      console.log(user);
-      console.log(user.email);
       email = user.email;
-      console.log(email);
-    
+      console.log("The currently logged in user is: " + email + ".");
+      renderPage();
     } else {
       // No user is signed in.
       console.log("No user is signed in");
