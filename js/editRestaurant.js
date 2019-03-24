@@ -11,13 +11,16 @@ const restCity = document.getElementById("restCity");
 const restState = document.getElementById("restState");
 const restZip = document.getElementById("restZip");
 var restPhoneNumber = document.getElementById("restPhoneNumber");
+const errorHeader = document.getElementById('errorHeader');
 var Sbutton = document.getElementById("Sbutton");
 
-function renderPage(){
+errorHeader.style.visibility = "hidden";
 
-    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function(doc) {
-        if(doc.exists){
-                
+function renderPage() {
+
+    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
+        if (doc.exists) {
+
             var docData = doc.data();
             restName.defaultValue = docData.RestaurantName;
             restAddress.defaultValue = docData.RestaurantAddress;
@@ -27,8 +30,8 @@ function renderPage(){
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
 
         } else console.log("The restaurant document does not exist.");
-        
-    }).catch(function(error) {
+
+    }).catch(function (error) {
 
         console.log("The restaurant document does not exist.");
         console.log(error);
@@ -40,8 +43,7 @@ function renderPage(){
 function getUrlVars() {
     var hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
+    for (var i = 0; i < hashes.length; i++) {
         hash = hashes[i].split('=');
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
@@ -60,7 +62,39 @@ Sbutton.addEventListener('click', e => {
     var phoneNumber = restPhoneNumber.value;
     var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
-    if(vars[0] == "restaurant_id") {
+    if (name == "") {
+        errorHeader.innerText = "Please enter a restaurant name."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'name' field was left empty.");
+        return;
+    } else if (address == "") {
+        errorHeader.innerText = "Please enter a restaurant address."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'address' field was left empty.");
+        return;
+    } else if (city == "") {
+        errorHeader.innerText = "Please enter a restaurant city."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'city' field was left empty.");
+        return;
+    } else if (state == "") {
+        errorHeader.innerText = "Please enter a restaurant state."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'state' field was left empty.");
+        return;
+    } else if (zip == "") {
+        errorHeader.innerText = "Please enter a restaurant zip."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'zip' field was left empty.");
+        return;
+    } else if (phoneNumber == "") {
+        errorHeader.innerText = "Please enter a restaurant phone number."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'phoneNumber' field was left empty.");
+        return;
+    }
+
+    if (vars[0] == "restaurant_id") {
         firestore.collection("Restaurants").doc(vars['restaurant_id']).set({
             "RestaurantManager": email,
             "RestaurantName": name,
@@ -69,14 +103,14 @@ Sbutton.addEventListener('click', e => {
             "RestaurantState": state,
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber
-        }).then(function() {
-            console.log("Document Successfully Written.");
+        }).then(function () {
+            console.log("Document Successfully Updated.");
             window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
-        }).catch(function(error) {
-            console.log("Error writing document to Restaurant Collection: " + error);
+        }).catch(function (error) {
+            console.log("Error updating document: " + error);
         });
     } else {
-        firestore.collection("Restaurants").doc(number + name).set({
+        firestore.collection("Restaurants").doc(number + name.replace(/[^a-zA-Z]/g, "")).set({
             "RestaurantManager": email,
             "RestaurantName": name,
             "RestaurantAddress": address,
@@ -85,11 +119,10 @@ Sbutton.addEventListener('click', e => {
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantID": number
-        }).then(function() {
-            console.log(number);
+        }).then(function () {
             console.log("Document Successfully Written.");
-            window.location.replace("restaurant.html?restaurant_id=" + number + name);
-        }).catch(function(error) {
+            window.location.replace("restaurant.html?restaurant_id=" + number + name.replace(/[^a-zA-Z]/g, ""));
+        }).catch(function (error) {
             console.log("Error writing document to Restaurant Collection: " + error);
         });
 
@@ -97,15 +130,15 @@ Sbutton.addEventListener('click', e => {
 
 });
 
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // User is signed in.
-      email = user.email;
-      console.log("The currently logged in user is: " + email + ".");
-      getUrlVars();
-      if(vars[0] == "restaurant_id") renderPage();
+        // User is signed in.
+        email = user.email;
+        console.log("The currently logged in user is: " + email + ".");
+        getUrlVars();
+        if (vars[0] == "restaurant_id") renderPage();
     } else {
-      // No user is signed in.
-      console.log("No user is signed in");
+        // No user is signed in.
+        console.log("No user is signed in");
     }
 });

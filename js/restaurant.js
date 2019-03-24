@@ -12,12 +12,13 @@ const restState = document.getElementById("restState");
 const restZip = document.getElementById("restZip");
 const restPhoneNumber = document.getElementById("restPhoneNumber");
 const editButton = document.getElementById("editButton");
+const deleteButton = document.getElementById("delete");
 
 function renderPage() {
 
-    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function(doc) {
-        if(doc.exists){
-                
+    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
+        if (doc.exists) {
+
             var docData = doc.data();
             restName.innerText = docData.RestaurantName;
             restAddress.innerText = docData.RestaurantAddress;
@@ -27,7 +28,7 @@ function renderPage() {
             restPhoneNumber.innerText = docData.RestaurantPhoneNumber;
 
         } else console.log("The restaurant document does not exist.");
-        
+
     })
 
 }
@@ -35,8 +36,7 @@ function renderPage() {
 function getUrlVars() {
     var hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
+    for (var i = 0; i < hashes.length; i++) {
         hash = hashes[i].split('=');
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
@@ -50,15 +50,24 @@ editButton.addEventListener('click', e => {
 
 });
 
-firebase.auth().onAuthStateChanged(function(user) {
+deleteButton.addEventListener('click', e => {
+    firestore.collection("Restaurants").doc(vars['restaurant_id']).delete().then(function () {
+        console.log("Document successfully deleted!");
+        window.location.replace("manager.html");
+    }).catch(function (error) {
+        console.error("Error removing document: ", error);
+    });
+});
+
+firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // User is signed in.
-      console.log("The currently logged in user is: " + user.email + ".");
-      email = user.email;
-      getUrlVars();
-      renderPage();
+        // User is signed in.
+        console.log("The currently logged in user is: " + user.email + ".");
+        email = user.email;
+        getUrlVars();
+        renderPage();
     } else {
-      // No user is signed in.
-      console.log("No user is signed in");
+        // No user is signed in.
+        console.log("No user is signed in");
     }
 });
