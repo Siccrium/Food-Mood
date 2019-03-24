@@ -2,9 +2,38 @@
 firestore = firebase.firestore();
 
 var email = "";
+var refs = [];
 
 //Create HTML References
 const duplicator = document.getElementById('duplicator');
+
+function renderPage() {
+  firestore.collection("Restaurants").where("RestaurantManager", "==", email).get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      var data = doc.data();
+      var div = document.createElement('div');
+      // div.id = data.RestaurantName;
+      div.innerHTML =  '<br><br><h1>' + data.RestaurantName + '</h1>' +
+      '<button name="' + data.RestaurantName + '" id="' + data.RestaurantName + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
+      duplicator.appendChild(div);
+      refs.push(document.getElementById(data.RestaurantName));
+    });
+    eventListeners();
+  }).catch(function(error) {
+    console.log("Error getting documents: " + error);
+  });
+
+}
+
+function eventListeners() {
+
+  refs.forEach(function(elem) {
+    elem.addEventListener("click", e => {
+      window.location.replace("restaurant.html?restaurant_name=" + elem.id);
+    });
+  });
+
+}
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -29,6 +58,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         } else console.log("The users document does not exist.");
         
       });
+
+      renderPage();
 
       // firestore.collection("Restaurant").where("Restaurant Manager", "==", user.email).get().then(function(querySnapshot) {
       //   querySnapshot.forEach(function(doc) {

@@ -2,6 +2,7 @@
 firestore = firebase.firestore();
 
 var email = "";
+var vars = [];
 
 //Create HTML References.
 const restName = document.getElementById("restName");
@@ -14,7 +15,7 @@ var Sbutton = document.getElementById("Sbutton");
 
 function renderPage(){
 
-    firestore.collection("Restaurants").doc(email).get().then(function(doc) {
+    firestore.collection("Restaurants").doc(vars['restaurant_name']).get().then(function(doc) {
         if(doc.exists){
                 
             var docData = doc.data();
@@ -36,7 +37,17 @@ function renderPage(){
 
 }
 
-
+function getUrlVars() {
+    var hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
 
 console.log("The currently logged in user is: " + email + ".");
 
@@ -59,7 +70,7 @@ Sbutton.addEventListener('click', e => {
         "RestaurantPhoneNumber": phoneNumber
     }).then(function() {
         console.log("Document Successfully Written.");
-        window.location.replace("restaurant.html");
+        window.location.replace("restaurant.html?restaurant_name=" + name);
     }).catch(function(error) {
         console.log("Error writing document to Restaurant Collection: " + error);
     });
@@ -71,7 +82,8 @@ firebase.auth().onAuthStateChanged(function(user) {
       // User is signed in.
       email = user.email;
       console.log("The currently logged in user is: " + email + ".");
-      renderPage();
+      getUrlVars();
+      if(vars[0] == "restaurant_name") renderPage();
     } else {
       // No user is signed in.
       console.log("No user is signed in");
