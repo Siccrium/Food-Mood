@@ -15,7 +15,7 @@ const editButton = document.getElementById("editButton");
 
 function renderPage() {
 
-    firestore.collection("Restaurants").doc(vars['restaurant_name']).get().then(function(doc) {
+    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function(doc) {
         if(doc.exists){
                 
             var docData = doc.data();
@@ -46,7 +46,7 @@ function getUrlVars() {
 
 editButton.addEventListener('click', e => {
 
-    window.location.replace("editRestaurant.html?restaurant_name=" + restName.innerText);
+    window.location.replace("editRestaurant.html?restaurant_id=" + vars['restaurant_id']);
 
 });
 

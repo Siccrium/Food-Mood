@@ -15,7 +15,7 @@ var Sbutton = document.getElementById("Sbutton");
 
 function renderPage(){
 
-    firestore.collection("Restaurants").doc(vars['restaurant_name']).get().then(function(doc) {
+    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function(doc) {
         if(doc.exists){
                 
             var docData = doc.data();
@@ -58,23 +58,43 @@ Sbutton.addEventListener('click', e => {
     var state = restState.value;
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
-    console.log(name + address + city + state + zip + phoneNumber);
+    var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
-    firestore.collection("Restaurants").doc(name).set({
-        "RestaurantManager": email,
-        "RestaurantName": name,
-        "RestaurantAddress": address,
-        "RestaurantCity": city,
-        "RestaurantState": state,
-        "RestaurantZip": zip,
-        "RestaurantPhoneNumber": phoneNumber
-    }).then(function() {
-        console.log("Document Successfully Written.");
-        window.location.replace("restaurant.html?restaurant_name=" + name);
-    }).catch(function(error) {
-        console.log("Error writing document to Restaurant Collection: " + error);
-    });
-    
+    if(vars[0] == "restaurant_id") {
+        firestore.collection("Restaurants").doc(vars['restaurant_id']).set({
+            "RestaurantManager": email,
+            "RestaurantName": name,
+            "RestaurantAddress": address,
+            "RestaurantCity": city,
+            "RestaurantState": state,
+            "RestaurantZip": zip,
+            "RestaurantPhoneNumber": phoneNumber
+        }).then(function() {
+            console.log("Document Successfully Written.");
+            window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+        }).catch(function(error) {
+            console.log("Error writing document to Restaurant Collection: " + error);
+        });
+    } else {
+        firestore.collection("Restaurants").doc(number + name).set({
+            "RestaurantManager": email,
+            "RestaurantName": name,
+            "RestaurantAddress": address,
+            "RestaurantCity": city,
+            "RestaurantState": state,
+            "RestaurantZip": zip,
+            "RestaurantPhoneNumber": phoneNumber,
+            "RestaurantID": number
+        }).then(function() {
+            console.log(number);
+            console.log("Document Successfully Written.");
+            window.location.replace("restaurant.html?restaurant_id=" + number + name);
+        }).catch(function(error) {
+            console.log("Error writing document to Restaurant Collection: " + error);
+        });
+
+    }
+
 });
 
 firebase.auth().onAuthStateChanged(function(user) {
@@ -83,7 +103,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       email = user.email;
       console.log("The currently logged in user is: " + email + ".");
       getUrlVars();
-      if(vars[0] == "restaurant_name") renderPage();
+      if(vars[0] == "restaurant_id") renderPage();
     } else {
       // No user is signed in.
       console.log("No user is signed in");

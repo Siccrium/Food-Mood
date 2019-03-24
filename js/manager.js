@@ -12,11 +12,11 @@ function renderPage() {
     querySnapshot.forEach(function(doc) {
       var data = doc.data();
       var div = document.createElement('div');
-      // div.id = data.RestaurantName;
       div.innerHTML =  '<br><br><h1>' + data.RestaurantName + '</h1>' +
-      '<button name="' + data.RestaurantName + '" id="' + data.RestaurantName + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
+      '<h1>' + data.RestaurantAddress + '</h1>' +
+      '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
       duplicator.appendChild(div);
-      refs.push(document.getElementById(data.RestaurantName));
+      refs.push(document.getElementById(doc.id));
     });
     eventListeners();
   }).catch(function(error) {
@@ -29,7 +29,7 @@ function eventListeners() {
 
   refs.forEach(function(elem) {
     elem.addEventListener("click", e => {
-      window.location.replace("restaurant.html?restaurant_name=" + elem.id);
+      window.location.replace("restaurant.html?restaurant_id=" + elem.id);
     });
   });
 
