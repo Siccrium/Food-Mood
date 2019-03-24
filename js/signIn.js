@@ -66,10 +66,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         var docRef = firestore.collection("Users").doc(email);
         docRef.get().then(function (doc) {
             if (doc.exists) {
-
                 var docData = doc.data();
                 role = docData.UserRole;
-
                 //Redirect user to the dashboard for their role.
                 if (role === "Customer") window.location.replace("customer.html");
                 else if (role === "Manager") window.location.replace("manager.html");

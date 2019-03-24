@@ -22,7 +22,7 @@ var email = "";
 btnSignUp.addEventListener('click', e => {
 
     //Get Email, Password & Role.
-    email = textEmail.value;
+    email = (textEmail.value).toLowerCase();
     var pass = textPassword.value;
     var confPass = confirmPassword.value;
     role = getRadioVal();
