@@ -3,6 +3,8 @@ firestore = firebase.firestore();
 
 var email = "";
 var vars = [];
+var menuName = "";
+var refs = [];
 
 //Create HTML References.
 const restName = document.getElementById("restName");
@@ -40,6 +42,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
         div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
             '<button name="' + restName.innerText + ' Complete Menu' + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
+        refs.push(document.getElementById(doc.id));
     });
     eventListeners();
 }).catch(function (error) {
@@ -56,6 +59,17 @@ function getUrlVars() {
     }
     return vars;
 }
+
+function eventListeners() {
+
+    refs.forEach(function(elem) {
+      elem.addEventListener("click", e => {
+        menuName = elem.id;
+        window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
+      });
+    });
+  
+  }
 
 editButton.addEventListener('click', e => {
 

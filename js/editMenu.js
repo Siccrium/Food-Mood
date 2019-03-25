@@ -9,13 +9,23 @@ errorHeader.style.visibility = "hidden";
 
 var name = "";
 var vars = [];
-getUrlVars();
+
+function renderPage() {
+
+    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function(doc) {
+        if(doc && doc.exists) {
+            var data = doc.data();
+            menuName.defaultValue = data.MenuName;
+        } else console.log("The menu document does not exist.");
+    }).catch(function(error) {
+        console.log("Error getting menu document: " + error);
+    });
+}
 
 submitButton.addEventListener("click", e => {
 
     name = menuName.value;
     errorHeader.innerText = "";
-    console.log(checkMenuName());
 
     if (name == "") {
         errorHeader.innerText = "Please enter a Menu Name."
@@ -24,14 +34,27 @@ submitButton.addEventListener("click", e => {
         return;
     }
 
-    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + name).set({
-        "MenuName": name
-    }).then(function () {
-        console.log("Document successfully written.");
-        //window.location.replace("menu.html");
-    }).catch(function (error) {
-        console.log("Error writing document: " + error + ".");
-    });
+    if(vars[1] == "menu_id") {
+        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).set({
+            "MenuName": name
+        }).then(function() {
+            console.log("Successfully Updated Document!");
+            // window.location.replace("menu.html");
+        }).catch(function(error) {
+            console.log("Error updating menu document: " + error);
+        });
+    } else {
+
+        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + name.replace(/[^a-zA-Z]/g, "")).set({
+            "MenuName": name
+        }).then(function() {
+            console.log("Document successfully written.");
+            //window.location.replace("menu.html");
+        }).catch(function (error) {
+            console.log("Error writing document: " + error + ".");
+        });
+
+    }
 
 });
 
@@ -45,3 +68,14 @@ function getUrlVars() {
     }
     return vars;
 }
+
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        // User is signed in.
+        getUrlVars();
+        if (vars[1] == "menu_id") renderPage();
+    } else {
+        // No user is signed in.
+        console.log("No user is signed in");
+    }
+});
