@@ -39,7 +39,7 @@ submitButton.addEventListener("click", e => {
             "MenuName": name
         }).then(function() {
             console.log("Successfully Updated Document!");
-            // window.location.replace("menu.html");
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
         }).catch(function(error) {
             console.log("Error updating menu document: " + error);
         });
@@ -49,7 +49,7 @@ submitButton.addEventListener("click", e => {
             "MenuName": name
         }).then(function() {
             console.log("Document successfully written.");
-            //window.location.replace("menu.html");
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + name.replace(/[^a-zA-Z]/g, ""));
         }).catch(function (error) {
             console.log("Error writing document: " + error + ".");
         });

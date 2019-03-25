@@ -120,7 +120,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantID": number
         }).then(function () {
-            firestore.doc("Restaurants/" + number + name.replace(/[^a-zA-Z]/g, "") + "/Menus/" + name + "CompleteMenu").set({
+            firestore.doc("Restaurants/" + number + name.replace(/[^a-zA-Z]/g, "") + "/Menus/" + name.replace(/[^a-zA-Z]/g, "") + "CompleteMenu").set({
                 "MenuName": name + " Complete Menu"
             }).then(function() {
                 console.log("Document Successfully Written.");
