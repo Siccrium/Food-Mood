@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,23 +10,26 @@
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
-  </head>
-    <body>
-      <header>
-        <div class="container">
-            <img src="./css/fm.jpg">
-          <button style="margin:5px;"type="submit" class="button_1" id="signOut">Sign Out</button>
-          <a href="manager.html"><button style="margin:5px;"type="submit" class="button_1">Account Dashboard</button></a>
-          <button style="margin:5px;"type="submit" class="button_1" id="delete">Delete Restaurant</button>
-        </div>
-      </header>
+</head>
 
-      <div class="box1">
-        <h3 id="hhh">Add Information about your Restaurant!</h3>
+<body>
+  <header>
+    <div class="container">
+      <img src="./css/fm.jpg">
+      <button style="margin:5px;" type="submit" class="button_1" id="signOut">Sign Out</button>
+      <a href="manager.html"><button style="margin:5px;" type="submit" class="button_1">Account Dashboard</button></a>
+      <button style="margin:5px;" type="submit" class="button_1" id="delete">Delete Restaurant</button>
+    </div>
+  </header>
+  <div class="container">
+    <h2 id="h2">Welcome to your Restaurant Page!</h2>
+  </div>
+  <div class="box1">
+    <h3 id="hhh">Restaurant Information</h3>
 
-    Restaurant name:
+    Restaurant Name:
     <p id="restName"></p>
-    Street address:
+    Street Address:
     <p id="restAddress"></p>
     City:
     <p id="restCity"></p>
@@ -37,17 +41,19 @@
     <p id="restPhoneNumber"></p>
     <input type="submit" value="Edit Information" id="editButton">
   </div>
-    <section class="places">
-      <div class="container">
-        <h2 id="h2">Welcome to your Restaurant Page!</h2>
-        <button type="submit" class="button_2">Add Menu Items</button>
+  <section class="places">
+    <div id="duplicator">
     </div>
-    </section>
-    <script src="js/firebase.js"></script>
-    <script src="js/restaurant.js"></script>
-    <script src="js/signOut.js"></script>
-      <footer>
-        <p>Food Mood, Copyright &copy; 2019</p>
-      </footer>
-      </body>
-  </html>
+    <div class="container">
+      <button type="submit" class="button_2" id="addMenuButton">Add Menu</button>
+    </div>
+  </section>
+  <script src="js/firebase.js"></script>
+  <script src="js/restaurant.js"></script>
+  <script src="js/signOut.js"></script>
+  <footer>
+    <p>Food Mood, Copyright &copy; 2019</p>
+  </footer>
+</body>
+
+</html>

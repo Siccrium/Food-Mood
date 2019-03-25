@@ -22,7 +22,6 @@ function renderPage() {
   }).catch(function(error) {
     console.log("Error getting documents: " + error);
   });
-
 }
 
 function eventListeners() {

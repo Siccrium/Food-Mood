@@ -13,25 +13,38 @@ const restZip = document.getElementById("restZip");
 const restPhoneNumber = document.getElementById("restPhoneNumber");
 const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
+const duplicator = document.getElementById('duplicator');
+const addMenuButton = document.getElementById("addMenuButton");
 
-function renderPage() {
+getUrlVars();
 
-    firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
-        if (doc.exists) {
+firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
+    if (doc.exists) {
 
-            var docData = doc.data();
-            restName.innerText = docData.RestaurantName;
-            restAddress.innerText = docData.RestaurantAddress;
-            restCity.innerText = docData.RestaurantCity;
-            restState.innerText = docData.RestaurantState;
-            restZip.innerText = docData.RestaurantZip;
-            restPhoneNumber.innerText = docData.RestaurantPhoneNumber;
+        var docData = doc.data();
+        restName.innerText = docData.RestaurantName;
+        restAddress.innerText = docData.RestaurantAddress;
+        restCity.innerText = docData.RestaurantCity;
+        restState.innerText = docData.RestaurantState;
+        restZip.innerText = docData.RestaurantZip;
+        restPhoneNumber.innerText = docData.RestaurantPhoneNumber;
 
-        } else console.log("The restaurant document does not exist.");
+    } else console.log("The restaurant document does not exist.");
 
-    })
+});
 
-}
+firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+        var data = doc.data();
+        var div = document.createElement('div');
+        div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
+            '<button name="' + restName.innerText + ' Complete Menu' + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
+        duplicator.appendChild(div);
+    });
+    eventListeners();
+}).catch(function (error) {
+    console.log("Error getting documents: " + error);
+});
 
 function getUrlVars() {
     var hash;
@@ -59,13 +72,17 @@ deleteButton.addEventListener('click', e => {
     });
 });
 
+addMenuButton.addEventListener('click', e => {
+
+    window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
+
+});
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
         console.log("The currently logged in user is: " + user.email + ".");
         email = user.email;
-        getUrlVars();
-        renderPage();
     } else {
         // No user is signed in.
         console.log("No user is signed in");
