@@ -20,18 +20,18 @@ var role = " ";
 btnSignIn.addEventListener('click', e => {
 
     //Get Email and Password.
-    email = textEmail.value;
+    email = (textEmail.value).toLowerCase();
     var pass = textPassword.value;
 
     errorHeader.innerText = "";
 
     //Error Checking(Seeing if email field is empty, etc.)
-    if(email == "") {
+    if (email == "") {
         errorHeader.innerText = "Please enter an email address."
         errorHeader.style.visibility = "visible";
         console.log("The 'email' field was left empty.");
         return;
-    } else if(pass == "") {
+    } else if (pass == "") {
         errorHeader.innerText = "Please enter a password."
         errorHeader.style.visibility = "visible";
         console.log("The 'password' field was left empty.");
@@ -39,44 +39,45 @@ btnSignIn.addEventListener('click', e => {
     }
 
     //Sign In (More technical error checking: wrong password, invalid account, etc.)
-    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function (error) {
 
         var errorCode = error.code;
-        if(errorCode === 'auth/user-not-found') {
+        if (errorCode === 'auth/user-not-found') {
             errorHeader.innerText = "No account was found with that email address, please Sign Up."
             errorHeader.style.visibility = "visible";
             console.log("The provided email is has not been signed up with.");
-        } else if(errorCode === 'auth/wrong-password') {
+        } else if (errorCode === 'auth/wrong-password') {
             errorHeader.innerText = "Incorrect password for the given email."
             errorHeader.style.visibility = "visible";
             console.log("The provided password does not match the email's account password.");
         } else console.log(error);
 
     });
-    
+
 });
 
 //Detect Sign-In
-firebase.auth().onAuthStateChanged(function(user) {
-    
+firebase.auth().onAuthStateChanged(function (user) {
+
     //User is signed in.
     if (user) {
 
         //Accesses users document & sets the appropriate value for role
         var docRef = firestore.collection("Users").doc(email);
-        docRef.get().then(function(doc) {
-            if(doc.exists){
-                
+        docRef.get().then(function (doc) {
+            if (doc.exists) {
                 var docData = doc.data();
                 role = docData.UserRole;
-
                 //Redirect user to the dashboard for their role.
-                if(role === "Customer") window.location.replace("customer.html");
+                if (role === "Customer") window.location.replace("customer.html");
                 else if (role === "Manager") window.location.replace("manager.html");
                 else if (role === "Deliverer") window.location.replace("deliverer.html");
                 else console.log("The value of role is not an accepted value: -" + role + ".");
 
-            } else console.log("The users document does not exist.");
+            } else {
+                console.log("The users document does not exist.");
+                firebase.auth().signOut();
+            }
         });
 
     }
