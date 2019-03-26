@@ -18,6 +18,16 @@ const addMenuButton = document.getElementById("addMenuButton");
 
 getUrlVars();
 
+function handleMenuId(menuId) {
+    const viewMenuButton = document.getElementById(menuId)
+    viewMenuButton.addEventListener('click', e => {
+
+        window.location.replace("menu.html?menu_id=" + menuId);
+
+    });
+};
+
+
 firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
     if (doc.exists) {
 
@@ -40,8 +50,9 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
         div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
             '<button name="' + restName.innerText + ' Complete Menu' + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
+        handleMenuId(doc.id);
     });
-    eventListeners();
+    // eventListener
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
 });
@@ -77,6 +88,12 @@ addMenuButton.addEventListener('click', e => {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
 
 });
+
+// viewMenuButton.addEventListener('click', e => {
+
+// window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
+
+// });
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {

@@ -45,3 +45,7 @@ function getUrlVars() {
     }
     return vars;
 }
+
+function checkMenuName() {
+
+}//end checkmenu

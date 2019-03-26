@@ -122,13 +122,13 @@ Sbutton.addEventListener('click', e => {
         }).then(function () {
             firestore.doc("Restaurants/" + number + name.replace(/[^a-zA-Z]/g, "") + "/Menus/" + name + "CompleteMenu").set({
                 "MenuName": name + " Complete Menu"
-            }).then(function() {
+            }).then(function () {
                 console.log("Document Successfully Written.");
                 window.location.replace("restaurant.html?restaurant_id=" + number + name.replace(/[^a-zA-Z]/g, ""));
-            }).catch(function(error) {
-                console.log("Error Creating the Menu Document.");
+            }).catch(function (error) {
+                console.log("Error Creating the Menu Document." + error);
             });
-            
+
         }).catch(function (error) {
             console.log("Error writing document to Restaurant Collection: " + error);
         });
