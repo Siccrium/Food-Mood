@@ -28,7 +28,6 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
-
         } else console.log("The restaurant document does not exist.");
 
     }).catch(function (error) {

@@ -12,11 +12,13 @@ const restPage = document.getElementById("restPage");
 
 getUrlVars();
 
-firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function(doc) {
-    if(doc && doc.exists) {
+firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
+    if (doc && doc.exists) {
         var data = doc.data();
         menuName.innerText = data.MenuName;
-    } else console.log("The menu document doesn't exist");
+    } else
+        console.log("The menu document doesn't exist");
+    console.log(vars);
 });
 
 editButton.addEventListener("click", e => {
@@ -25,10 +27,10 @@ editButton.addEventListener("click", e => {
 
 deleteButton.addEventListener("click", e => {
 
-    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function() {
+    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function () {
         console.log("Document successfully deleted!");
         window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.log("Error deleting document: " + error);
     });
 
