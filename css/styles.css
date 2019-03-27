@@ -1,0 +1,27 @@
+ img{
+  margin-top: 0px;
+  padding-top: 0px;
+  max-height: 55px;
+}
+
+.bttn{
+  float: right;
+}
+
+.btn{
+  background-color: #808080;
+  border-color: #ffffff;
+}
+.btn-action{
+  color:#ffffff;
+  background-color: #808080;
+  border-color: #ffffff;
+}
+#hh{
+  margin-top:5%;
+  color:#ffffff;
+}
+.header{
+  background-color: #d3d3d3;
+  padding:8px;
+}
