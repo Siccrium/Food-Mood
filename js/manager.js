@@ -2,16 +2,43 @@
 firestore = firebase.firestore();
 
 var email = "";
+var refs = [];
 
 //Create HTML References
 const duplicator = document.getElementById('duplicator');
+
+function renderPage() {
+  firestore.collection("Restaurants").where("RestaurantManager", "==", email).get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      var data = doc.data();
+      var div = document.createElement('div');
+      div.innerHTML =  '<br><br><h1>' + data.RestaurantName + '</h1>' +
+      '<h1>' + data.RestaurantAddress + '</h1>' +
+      '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
+      duplicator.appendChild(div);
+      refs.push(document.getElementById(doc.id));
+    });
+    eventListeners();
+  }).catch(function(error) {
+    console.log("Error getting documents: " + error);
+  });
+}
+
+function eventListeners() {
+
+  refs.forEach(function(elem) {
+    elem.addEventListener("click", e => {
+      window.location.replace("restaurant.html?restaurant_id=" + elem.id);
+    });
+  });
+
+}
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in. Get their email.
       console.log("The currently logged in user is: " + user.email + ".");
       email = user.email;
-      console.log(email);
 
       //Check to see if this user is a manager. If not, redirect them to their dashboard.
       firestore.doc("/Users/" + email).get().then(function(doc) {
@@ -30,6 +57,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         } else console.log("The users document does not exist.");
         
       });
+
+      renderPage();
 
       // firestore.collection("Restaurant").where("Restaurant Manager", "==", user.email).get().then(function(querySnapshot) {
       //   querySnapshot.forEach(function(doc) {
