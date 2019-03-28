@@ -100,7 +100,6 @@ function handleViewMenu(menuId) {
     viewMenuButton.addEventListener('click', e => {
         console.log(menuId);
         window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuId);
-
     });
 };
 

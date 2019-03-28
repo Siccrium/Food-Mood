@@ -9,6 +9,8 @@ const menuName = document.getElementById("menuName");
 const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
 const restPage = document.getElementById("restPage");
+const foodDuplicator = document.getElementById('foodDuplicator');
+const addFoodButton = document.getElementById("addFoodButton");
 
 getUrlVars();
 
@@ -16,9 +18,28 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
     if (doc && doc.exists) {
         var data = doc.data();
         menuName.innerText = data.MenuName;
+        //create divs for showing food items
+        firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc(vars['menu_id']).collection("Food").get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                var data = doc.data();
+                var div = document.createElement('div');
+                div.innerHTML = '<br><br><h1>' + data.FoodName + '</h1>' +
+                    '<p id="' + foodName.innerText + '">Food Name: </p>' +
+                    '<p id="' + foodPrice.innerText + '">Food Price: </p>'
+                foodDuplicator.appendChild(div);
+                //handle addToCart later in customer view
+            });
+        }).catch(function (error) {
+            console.log("Error getting documents: " + error);
+        });
+        //end foodDuplicator div
     } else
         console.log("The menu document doesn't exist");
     console.log(vars);
+});
+
+addFoodButton.addEventListener("click", e => {
+    window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
 });
 
 editButton.addEventListener("click", e => {
