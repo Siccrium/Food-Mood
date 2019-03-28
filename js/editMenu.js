@@ -49,6 +49,7 @@ submitButton.addEventListener("click", e => {
     }
 
     if (vars[1] == "menu_id") {
+        //restaurant exists, update with this info then redirect // you got here by clicking edit information
         firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).update({
             "MenuName": name,
         }).then(function () {
@@ -58,6 +59,12 @@ submitButton.addEventListener("click", e => {
             console.log("Error writing document: " + error + ".");
         });
     } else {
+        //in order of code below
+        //restaurant does not exist // you got here by clicking add menu
+        //get docReference of next doc (newMenuRef).This contains firestore info of doc including the unique .id
+        //save text field info as parameters for menu
+        //create new menu doc using the newMenuRef and give it menuInfo
+        //Redirect to new url
         var newMenuRef = firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc();
         var menuInfo = { "MenuName": name, "ParentRestaurant": vars['restaurant_id'] };
         newMenuRef.set(menuInfo).then(function () {
