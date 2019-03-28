@@ -7,7 +7,7 @@ var refs = [];
 //Create HTML References
 const duplicator = document.getElementById('duplicator');
 
-function renderPage() 6{
+function renderPage() {
   firestore.collection("Restaurants").where("RestaurantManager", "==", email).get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
       var data = doc.data();

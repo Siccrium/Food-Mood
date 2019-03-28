@@ -12,6 +12,9 @@ var vars = [];
 getUrlVars();
 
 
+//this function only runs after the user is authenticated
+//AND there is a menu_id in the url
+//which means they must be trying to edit, not create.
 function renderPage() {
 
     firestore.collection("Restaurants").doc(vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
@@ -46,47 +49,25 @@ submitButton.addEventListener("click", e => {
     }
 
     if (vars[1] == "menu_id") {
-        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).set({
-            "MenuName": name
+        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).update({
+            "MenuName": name,
         }).then(function () {
             console.log("Document successfully Updated.");
-            //this is a problem because previous doc name stays the same.
-            //either get data and set as new doc, or use unique id instead of menuName 
-            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + name.replace(/[^a-zA-Z]/g, ""));
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
         }).catch(function (error) {
             console.log("Error writing document: " + error + ".");
         });
-
-
     } else {
-        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + name).set({
-            "MenuName": name,
-            "ParentRestaurant": vars['restaurant_id']
-        }).then(function () {
+        var newMenuRef = firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc();
+        var menuInfo = { "MenuName": name, "ParentRestaurant": vars['restaurant_id'] };
+        newMenuRef.set(menuInfo).then(function () {
             console.log("Document successfully written.");
-            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + name);
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + newMenuRef.id);
         }).catch(function (error) {
             console.log("Error writing document: " + error + ".");
         });
-
     }//end if
-
-});
-
-
-//example duplicating doc for rename
-
-// get the data from 'name@xxx.com'
-// firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
-//     if (doc && doc.exists) {
-//         var data = doc.data();
-//         // saves the data to 'name'
-//         firestore.collection("users").doc("name").set(data).then({
-//             // deletes the old document
-//             firestore.collection("users").doc("name@xxx.com").delete();
-//         });
-//     }
-// });
+});//end submit button Event Listener
 
 
 function getUrlVars() {
@@ -101,7 +82,7 @@ function getUrlVars() {
 }
 
 // function checkMenuName() {
-
+//still need this?
 // }//end checkmenu
 
 firebase.auth().onAuthStateChanged(function (user) {
