@@ -20,19 +20,6 @@ getUrlVars();
 console.log(vars);
 
 
-
-//this doesn't work? 
-// function eventListeners() {
-
-//     vars.forEach(function (elem) {
-//         elem.addEventListener("click", e => {
-//             window.location.replace("menu.html?menu_id=" + elem.id);
-//         });
-//     });
-
-// }
-
-
 firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
     if (doc.exists) {
 

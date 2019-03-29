@@ -22,12 +22,12 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
         firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc(vars['menu_id']).collection("Food").get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 var data = doc.data();
+                console.log(data);
                 var div = document.createElement('div');
-                div.innerHTML = '<br><br><h1>' + data.FoodName + '</h1>' +
-                    '<p id="' + foodName.innerText + '">Food Name: </p>' +
-                    '<p id="' + foodPrice.innerText + '">Food Price: </p>'
+                div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>'
                 foodDuplicator.appendChild(div);
-                //handle addToCart later in customer view
+                //next todo here: add a small button in front of each food item to edit. delete inside
+                //handle addToCart button later for customer view
             });
         }).catch(function (error) {
             console.log("Error getting documents: " + error);
