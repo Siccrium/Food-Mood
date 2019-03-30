@@ -26,12 +26,12 @@ btnSignIn.addEventListener("click", e => {
 
   //Error Checking(Seeing if email field is empty, etc.)
   if (email == "") {
-    errorHeader.outerHTML = "<p>Please enter an email address.</p>";
+    errorHeader.innerText = "Please enter an email address.";
     errorHeader.style.visibility = "visible";
     console.log("The 'email' field was left empty.");
     return;
   } else if (pass == "") {
-    errorHeader.outerHTML = "<p>Please enter a password.</p>";
+    errorHeader.innerText = "Please enter a password.";
     errorHeader.style.visibility = "visible";
     console.log("The 'password' field was left empty.");
     return;
@@ -41,16 +41,16 @@ btnSignIn.addEventListener("click", e => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, pass)
-    .catch(function(error) {
+    .catch(function (error) {
       var errorCode = error.code;
       if (errorCode === "auth/user-not-found") {
-        errorHeader.outerHTML =
-          "<p>No account was found with that email address, please Sign Up.</p>";
+        errorHeader.innerText =
+          "No account was found with that email address, please Sign Up.";
         errorHeader.style.visibility = "visible";
         console.log("The provided email is has not been signed up with.");
       } else if (errorCode === "auth/wrong-password") {
-        errorHeader.outerHTML =
-          "<p>Incorrect password for the given email.</p>";
+        errorHeader.innerText =
+          "Incorrect password for the given email.";
         errorHeader.style.visibility = "visible";
         console.log(
           "The provided password does not match the email's account password."
@@ -60,12 +60,12 @@ btnSignIn.addEventListener("click", e => {
 });
 
 //Detect Sign-In
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   //User is signed in.
   if (user) {
     //Accesses users document & sets the appropriate value for role
     var docRef = firestore.collection("Users").doc(email);
-    docRef.get().then(function(doc) {
+    docRef.get().then(function (doc) {
       if (doc.exists) {
         var docData = doc.data();
         role = docData.UserRole;
