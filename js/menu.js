@@ -9,14 +9,37 @@ const menuName = document.getElementById("menuName");
 const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
 const restPage = document.getElementById("restPage");
+const foodDuplicator = document.getElementById('foodDuplicator');
+const addFoodButton = document.getElementById("addFoodButton");
 
 getUrlVars();
 
-firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function(doc) {
-    if(doc && doc.exists) {
+firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
+    if (doc && doc.exists) {
         var data = doc.data();
         menuName.innerText = data.MenuName;
-    } else console.log("The menu document doesn't exist");
+        //create divs for showing food items
+        firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc(vars['menu_id']).collection("Food").get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                var data = doc.data();
+                console.log(data);
+                var div = document.createElement('div');
+                div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>'
+                foodDuplicator.appendChild(div);
+                //next todo here: add a small button in front of each food item to edit. delete inside
+                //handle addToCart button later for customer view
+            });
+        }).catch(function (error) {
+            console.log("Error getting documents: " + error);
+        });
+        //end foodDuplicator div
+    } else
+        console.log("The menu document doesn't exist");
+    console.log(vars);
+});
+
+addFoodButton.addEventListener("click", e => {
+    window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
 });
 
 editButton.addEventListener("click", e => {
@@ -25,10 +48,10 @@ editButton.addEventListener("click", e => {
 
 deleteButton.addEventListener("click", e => {
 
-    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function() {
+    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function () {
         console.log("Document successfully deleted!");
         window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.log("Error deleting document: " + error);
     });
 
