@@ -25,3 +25,19 @@
   background-color: #d3d3d3;
   padding:8px;
 }
+
+.navbar{
+  background-color: #d3d3d3;
+}
+
+.footer{
+  background-color: #d3d3d3;
+}
+
+#editButton{
+  z-index: 10000;
+}
+
+#h{
+  color:#808080;
+}
