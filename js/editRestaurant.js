@@ -28,7 +28,6 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
-
         } else console.log("The restaurant document does not exist.");
 
     }).catch(function (error) {
@@ -40,6 +39,7 @@ function renderPage() {
 
 }
 
+//thank you for this function xD
 function getUrlVars() {
     var hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -60,7 +60,7 @@ Sbutton.addEventListener('click', e => {
     var state = restState.value;
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
-    var number = Math.floor(Math.random() * 900000000000) + 100000000000;
+    // var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
     if (name == "") {
         errorHeader.innerText = "Please enter a restaurant name."
@@ -94,9 +94,8 @@ Sbutton.addEventListener('click', e => {
         return;
     }
 
-    if (vars[0] == "restaurant_id") {
-        firestore.collection("Restaurants").doc(vars['restaurant_id']).set({
-            "RestaurantManager": email,
+    if (vars[0] == "restaurant_id") {//edit existing rest // you clicked edit information
+        firestore.collection("Restaurants").doc(vars['restaurant_id']).update({
             "RestaurantName": name,
             "RestaurantAddress": address,
             "RestaurantCity": city,
@@ -109,28 +108,35 @@ Sbutton.addEventListener('click', e => {
         }).catch(function (error) {
             console.log("Error updating document: " + error);
         });
-    } else {
-        firestore.collection("Restaurants").doc(number + name.replace(/[^a-zA-Z]/g, "")).set({
+    } else {//create a new menu // you clicked create your restaurant
+        var newRestRef = firestore.collection("Restaurants").doc();
+        var restInfo = { //if email is changed, rest manager will be lost
             "RestaurantManager": email,
             "RestaurantName": name,
             "RestaurantAddress": address,
             "RestaurantCity": city,
             "RestaurantState": state,
             "RestaurantZip": zip,
-            "RestaurantPhoneNumber": phoneNumber,
-            "RestaurantID": number
-        }).then(function () {
-            firestore.doc("Restaurants/" + number + name.replace(/[^a-zA-Z]/g, "") + "/Menus/" + name.replace(/[^a-zA-Z]/g, "") + "CompleteMenu").set({
-                "MenuName": name + " Complete Menu"
-            }).then(function() {
+            "RestaurantPhoneNumber": phoneNumber
+        };
+        console.log("newRestRef: " + newRestRef);
+        console.log("id: " + newRestRef.id);
+        console.log(restInfo);
+        newRestRef.set(restInfo).then(function () {
+            //original menu made on restaurant creation. 
+            var newMenuRef = firestore.collection("Restaurants").doc(newRestRef.id).collection("Menus").doc();
+            var menuInfo = { "MenuName": name + " Complete Menu", "ParentRestaurant": newRestRef.id };
+            newMenuRef.set(menuInfo).then(function () {
                 console.log("Document Successfully Written.");
-                window.location.replace("restaurant.html?restaurant_id=" + number + name.replace(/[^a-zA-Z]/g, ""));
-            }).catch(function(error) {
-                console.log("Error Creating the Menu Document.");
+                window.location.replace("restaurant.html?restaurant_id=" + newRestRef.id);
+            }).catch(function (error) {
+                console.log("Error Creating the Menu Document." + error);
             });
-            
+
         }).catch(function (error) {
             console.log("Error writing document to Restaurant Collection: " + error);
+            console.log("restinfo: " + restInfo);
+            console.log("id: " + restInfo.id);
         });
 
     }
