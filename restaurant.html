@@ -3,31 +3,82 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
   <title>Food Mood</title>
-  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/landing-page.min.css" rel="stylesheet">
+
+  <!--Firebase authentication-->
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
-</head>
+  </head>
+    <body>
+      <div class="header">
+      <nav class="navbar static-top">
+        <div class="container">
+          <img src="./img/fm.jpg">
+          <div class="bttn">
+          <a onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</a>
+          <a href="manager.html"><button type="submit" class="btn btn-action">Account Dashboard</button></a>
+          <button type="submit" class="btn btn-action" id="delete">Delete Restaurant</button>
+          </div>
 
-<body>
-  <header>
-    <div class="container">
-      <img src="./css/fm.jpg">
-      <button style="margin:5px;" type="submit" class="button_1" id="signOut">Sign Out</button>
-      <a href="manager.html"><button style="margin:5px;" type="submit" class="button_1">Account Dashboard</button></a>
-      <button style="margin:5px;" type="submit" class="button_1" id="delete">Delete Restaurant</button>
+        </div>
+      </nav>
     </div>
-  </header>
-  <div class="container">
-    <h2 id="h2">Welcome to your Restaurant Page!</h2>
-  </div>
-  <div class="box1">
-    <h3 id="hhh">Restaurant Information</h3>
 
-    Restaurant Name:
+    <header class="masthead text-gray text-center">
+      <div class="container">
+        <h2>Welcome to your Restaurant!</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Restaurant Name: </th>
+              <th scope="col">Restaurant Address: </th>
+              <th scope="col">Restaurant City: </th>
+              <th scope="col">Restaurant State: </th>
+              <th scope="col">Restaurant Zip: </th>
+              <th scope="col">Restaurant Phone Number: </th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- <th scope="row">1</th> -->
+              <td id="restName"></td>
+              <td id="restAddress"></td>
+              <td id="restCity"></td>
+              <td id="restState"></td>
+              <td id="restZip"></td>
+              <td id="restPhoneNumber"></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <input type="submit" value="Edit Information" id="editButton">
+        <button type="submit" class="button_2" id="addMenuButton">Add Menu</button>
+        </div>
+        </div>
+    </header>
+    <div id="duplicator">
+
+    </div>
+
+
+<div class="container">
+    <!-- Restaurant Name:
     <p id="restName"></p>
     Street Address:
     <p id="restAddress"></p>
@@ -38,22 +89,36 @@
     Zip:
     <p id="restZip"></p>
     Restaurant Phone Number:
-    <p id="restPhoneNumber"></p>
-    <input type="submit" value="Edit Information" id="editButton">
-  </div>
-  <section class="places">
-    <div id="duplicator">
-    </div>
-    <div class="container">
-      <button type="submit" class="button_2" style="margin:5px;" id="addMenuButton">Add Menu</button>
-    </div>
-  </section>
-  <script src="js/firebase.js"></script>
-  <script src="js/restaurant.js"></script>
-  <script src="js/signOut.js"></script>
-  <footer>
-    <p>Food Mood, Copyright &copy; 2019</p>
-  </footer>
-</body>
+    <p id="restPhoneNumber"></p> -->
 
-</html>
+
+
+    <footer class="footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="js/firebase.js"></script>
+    <script src="js/restaurant.js"></script>
+    <script src="js/signOut.js"></script>
+    
+
+      </body>
+  </html>

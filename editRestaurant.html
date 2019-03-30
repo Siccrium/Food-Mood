@@ -2,55 +2,101 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>Food Mood</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+
+    <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/landing-page.min.css" rel="stylesheet">
+
+  <!--Firebase authentication-->
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+
   </head>
   <body>
-    <header>
+    <div class="header">
+    <nav class="navbar static-top">
       <div class="container">
-        <img src="./css/fm.jpg">
-        <button type="submit" class="button_1" style="margin:5px;">Sign Out</button>
-        <a href="manager.html"><button style="margin:5px;"type="submit" class="button_1">Account Dashboard</button></a>      </div>
-    </header>
-    <section class="container">
-        <div class="places1">
-          <!-- <form id="text"> -->
-            <div class="box1">
-            <h3 id="hhh">Add Information about your Restaurant!</h3>
+        <img src="./img/fm.jpg">
+        <div class="bttn">
+        <a onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</a>
+        <a href="manager.html"><button type="submit" class="btn btn-action">Account Dashboard</button></a>
+        </div>
 
-        Restaurant name:<br>
-        <input type="text" id="restName">
-        <br>
-        Street address:<br>
-        <input type="text" id="restAddress">
-        <br>
-        City:<br>
-        <input type="text" id="restCity">
-        <br>
-        State:<br>
-        <input type="text" id="restState">
-        <br>
-        Zip:<br>
-        <input type="text" id="restZip">
-        <br>
-        Restaurant Phone Number:<br>
-        <input type="text" id="restPhoneNumber">
-        <br>
-        <h1 id="errorHeader"></h1>
-        <input type="submit" value="Submit" id="Sbutton">
       </div>
-    <!-- </form> -->
-      </div>
-    </section>
+    </nav>
+  </div>
+
+  <div class="bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h5 class="card-title text-center">Enter your Restaurant Information</h5>
+
+
+                  <label for="restName">Restaurant Name: </label>
+                  <input type="text" id="restName" class="form-control" required autofocus>
+
+                  <label for="restAddress">Restaurant Address: </label>
+                  <input type="text" id="restAddress" class="form-control" required autofocus>
+
+                  <label for="restCity">Restaurant City: </label>
+                  <input type="text" id="restCity" class="form-control" required autofocus>
+
+                  <label for="restState">Restaurant State: </label>
+                  <input type="text" id="restState" class="form-control" required autofocus>
+
+                  <label for="restZip">Restaurant Zip: </label>
+                  <input type="text" id="restZip" class="form-control" required autofocus>
+
+                  <label for="restPhoneNumber">Restaurant Phone Number: </label>
+
+                  <input type="text" id="restPhoneNumber" class="form-control" required autofocus>
+
+                  <h1 id="errorHeader"></h1>
+                  <button type="submit" value="Submit" id="Sbutton" class="btn btn-lg btn-primary btn-block text-uppercase">Submit</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>
 
     <script src="js/firebase.js"></script>
     <script src="js/editRestaurant.js"></script>
-    <footer>
-      <p>Food Mood, Copyright &copy; 2019</p>
+          
+    <footer class="footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

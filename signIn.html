@@ -4,45 +4,63 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Mood</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/landing-page.min.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
 
 </head>
-
 <body>
-  <header>
-  <div class="container">
-    <div class="buttn">
-      <a href="homepage.html"><img src="./css/fm.jpg"></a>
-    </div>
-  </div>
-  </header>
+
+  <div class="header">
     <div class="container">
-      <div class="box">
-        <h2 id="h1">Sign in with your Food Mood account!</h2>
-       <div class="places">
-        <input id="textEmail" type="email" placeholder="Email">
-        <input id="textPassword" type="password" placeholder="Password">
+      <img src="./img/fm.jpg">
+    </div>
+</div>
 
-        <div class="btn">
-        <button id="btnSignIn1" class="btn btn-action">Sign In</button>
-         <div class="sth">
-        <h1 id="errorHeader"></h1>
-        <a href="passwordReset.html">Forgot password?</a><br>
-        <a href="signUp.html">Already a member?</a>
-     </div>
+<div class="bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+
+                <input type="email" id="textEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="textEmail">Email address</label>
+
+
+
+                <input type="password" id="textPassword" class="form-control" placeholder="Password" required>
+                <label for="textPassword">Password</label>
+
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+
+              <button id="btnSignIn1" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+              <h1 id="errorHeader"></h1>
+             <a href="passwordReset.html">Forgot password?</a><br>
+             <a href="signUp.html">Don't have an account yet?</a><br>
+              
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  </div>
-  </div>
-    <script src="js/firebase.js"></script>
-    <script src="js/signIn.js"></script>
-    <footer>
-        <p>Food Mood, Copyright &copy; 2019</p>
-    </footer>
+</div>
+  <script src="js/firebase.js"></script>
+  <script src="js/signIn.js"></script>
+ 
 </body>
+
 </html>

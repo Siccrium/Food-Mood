@@ -9,7 +9,18 @@ errorHeader.style.visibility = "hidden";
 
 var name = "";
 var vars = [];
-getUrlVars();
+
+function renderPage() {
+
+    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function(doc) {
+        if(doc && doc.exists) {
+            var data = doc.data();
+            menuName.defaultValue = data.MenuName;
+        } else console.log("The menu document does not exist.");
+    }).catch(function(error) {
+        console.log("Error getting menu document: " + error);
+    });
+}
 
 
 //this function only runs after the user is authenticated
