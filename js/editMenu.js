@@ -56,6 +56,7 @@ function renderPage() {
     });
 }//end renderPage
 
+
 function handleFoodDiv(foodId, FoodName, FoodPrice) {
     var foodDiv = document.getElementById(FoodName + "Div");
     var editButton = document.getElementById("EditFoodButton" + FoodName);
@@ -108,7 +109,7 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
         });//end update listener
 
         deleteFoodButton.addEventListener("click", e => {//need some sort of "confirm delete" thing
-            deleteFood(FoodName);
+            deleteFood(foodId);
             setTimeout(backToMenu, 2000);
         });//end delete listener
     });//end editButton listener
@@ -214,6 +215,7 @@ deleteMenuButton.addEventListener("click", e => {
         });
     } else {
         errorHeader.innerText = "You must create a Menu before it can be deleted!"
+        errorHeader.style.visibility = "visible";
     }//end if
 });//end delete menu button listener
 
@@ -242,6 +244,7 @@ addFoodButton.addEventListener("click", e => {
         errorHeader.innerText = "Please enter a Name and Price for your New Food Item.";
         errorHeader.style.visibility = "visible";
         console.log("both fields left empty");
+        return;
     } else if (newFoodName.value != "" && newFoodPrice.value != "") {
         console.log("Both Fields contain info, continue to creation!");
     } else {

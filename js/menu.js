@@ -40,9 +40,9 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
     console.log(vars);
 });
 
-addFoodButton.addEventListener("click", e => {
-    window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
-});
+// addFoodButton.addEventListener("click", e => {
+//     window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
+// });
 
 editButton.addEventListener("click", e => {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
