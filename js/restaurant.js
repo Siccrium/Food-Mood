@@ -66,7 +66,7 @@ function eventListeners() {
     refs.forEach(function (elem) {
         elem.addEventListener("click", e => {
             menuName = elem.id;
-            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z0-9]/g, ""));
         });
     });
 
