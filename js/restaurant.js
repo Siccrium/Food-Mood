@@ -19,8 +19,6 @@ const duplicator = document.getElementById('duplicator');
 const addMenuButton = document.getElementById("addMenuButton");
 
 getUrlVars();
-console.log(vars);
-
 
 firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
     if (doc.exists) {
@@ -45,7 +43,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
         div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
             '<button name=" Complete Menu" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
-        handleViewMenu(doc.id);
+        refs.push(document.getElementById(doc.id));
     });
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
@@ -93,15 +91,6 @@ addMenuButton.addEventListener('click', e => {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
 
 });
-
-
-function handleViewMenu(menuId) {
-    var viewMenuButton = document.getElementById(menuId)
-    viewMenuButton.addEventListener('click', e => {
-        console.log(menuId);
-        window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuId);
-    });
-};
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
