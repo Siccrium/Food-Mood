@@ -19,8 +19,6 @@ const duplicator = document.getElementById('duplicator');
 const addMenuButton = document.getElementById("addMenuButton");
 
 getUrlVars();
-console.log(vars);
-
 
 firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(function (doc) {
     if (doc.exists) {
@@ -41,12 +39,12 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
     querySnapshot.forEach(function (doc) {
         var data = doc.data();
         var div = document.createElement('div');
-        div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
-            '<button name="' + restName.innerText + ' Complete Menu' + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
+        div.innerHTML = '<br><br><h3 id="h">' + data.MenuName + '</h3>' +
+            '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-action">View Menu</button>';
         duplicator.appendChild(div);
-        handleViewMenu(doc.id);
+        refs.push(document.getElementById(doc.id));
     });
-    //eventlisteners();
+    eventListeners();
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
 });
@@ -70,7 +68,7 @@ function eventListeners() {
         window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
       });
     });
-  
+
   }
 
 editButton.addEventListener('click', e => {
@@ -93,15 +91,6 @@ addMenuButton.addEventListener('click', e => {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
 
 });
-
-
-function handleViewMenu(menuId) {
-    var viewMenuButton = document.getElementById(menuId)
-    viewMenuButton.addEventListener('click', e => {
-        console.log(menuId);
-        window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuId);
-    });
-};
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
