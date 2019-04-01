@@ -44,6 +44,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
             '<button name=" Complete Menu" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
         refs.push(document.getElementById(doc.id));
+        eventListeners();
     });
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
