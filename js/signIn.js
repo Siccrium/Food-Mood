@@ -47,14 +47,14 @@ btnSignIn.addEventListener("click", e => {
         errorHeader.innerText =
           "No account was found with that email address, please Sign Up.";
         errorHeader.style.visibility = "visible";
-        console.log("The provided email is has not been signed up with.");
       } else if (errorCode === "auth/wrong-password") {
         errorHeader.innerText =
           "Incorrect password for the given email.";
         errorHeader.style.visibility = "visible";
-        console.log(
-          "The provided password does not match the email's account password."
-        );
+      } else if (errorCode === "auth/invalid-email") {
+        errorHeader.innerText =
+          "Please enter a valid email address.";
+        errorHeader.style.visibility = "visible";
       } else console.log(error);
     });
 });
