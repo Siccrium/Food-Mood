@@ -3,6 +3,20 @@ firestore = firebase.firestore();
 
 var email = "";
 
+const placeOrder = document.getElementById("placeOrder");
+
+placeOrder.addEventListener("click", e => {
+
+  firestore.doc("Restaurants/RRWswvxp24gRBdBgYouD/Orders/OrderTest").set({
+
+    "FoodItem": "Spaghetti",
+    "AmountPaid": "$10",
+    "OrderStatus": "Pending"
+
+  });
+
+})
+
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in. Get their email.

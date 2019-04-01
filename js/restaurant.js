@@ -17,6 +17,7 @@ const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
 const duplicator = document.getElementById('duplicator');
 const addMenuButton = document.getElementById("addMenuButton");
+const ordersButton = document.getElementById("ordersButton");
 
 getUrlVars();
 
@@ -90,6 +91,12 @@ deleteButton.addEventListener('click', e => {
 addMenuButton.addEventListener('click', e => {
 
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
+
+});
+
+ordersButton.addEventListener("click", e => {
+
+    window.location.replace("orders.html?restaurant_id=" + vars['restaurant_id']);
 
 });
 
