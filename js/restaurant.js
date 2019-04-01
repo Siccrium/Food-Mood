@@ -37,16 +37,16 @@ firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(functi
 
 });
 
+//show each menu for the specific restaurant
 firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
         var data = doc.data();
         var div = document.createElement('div');
         div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
-            '<button name="' + restName.innerText + ' Complete Menu' + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
+            '<button name=" Complete Menu" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
         handleViewMenu(doc.id);
     });
-    //eventlisteners();
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
 });
@@ -64,14 +64,14 @@ function getUrlVars() {
 
 function eventListeners() {
 
-    refs.forEach(function(elem) {
-      elem.addEventListener("click", e => {
-        menuName = elem.id;
-        window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
-      });
+    refs.forEach(function (elem) {
+        elem.addEventListener("click", e => {
+            menuName = elem.id;
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
+        });
     });
-  
-  }
+
+}
 
 editButton.addEventListener('click', e => {
 

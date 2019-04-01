@@ -14,13 +14,7 @@ var vars = [];
 
 getUrlVars();
 
-//some instances accessing firebase we are using firestore.collection().doc().collection().doc()
-//and dome are using firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'])...
-//we should probably stick to one or the other, but I think that for destructuring, the second one is the only way, and its shorter too
-//because we can't save an entire collection to a variale, but we can for a doc.
-//I will leave it like this for now because the first way is easy to visualize 
-
-//this function only runs after the user is authenticated
+//this function below is called after the user is authenticated
 //AND there is a food_id in the url
 //which means they must be trying to edit, not create, SO, fill the text fields
 function renderPage() {
@@ -70,7 +64,7 @@ submitFoodButton.addEventListener("click", e => {
             console.log("Error writing document: " + error + ".");
         });
     } else {//food doesn't exist// you clicked add food item
-        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/" + vars['food_id']).set(
+        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/" + name).set(
             {
                 "FoodName": name,
                 "FoodPrice": price,
@@ -97,7 +91,7 @@ function getUrlVars() {
 }
 
 // function checkFoodName() {
-//still need this?
+//if provided food name exists, notify user
 // }//end checkFoodName
 
 firebase.auth().onAuthStateChanged(function (user) {
