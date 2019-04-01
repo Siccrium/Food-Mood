@@ -14,7 +14,7 @@ function renderPage() {
       var div = document.createElement('div');
       div.innerHTML = '<br><br><h3 id="h">' + data.RestaurantName + '</h3>' +
         '<h3 id="h">' + data.RestaurantAddress + '</h3>' +
-        '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit">View Restaurant</button>';
+        '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="btn btn-action">View Restaurant</button>';
       duplicator.appendChild(div);
       refs.push(document.getElementById(doc.id));
     });
