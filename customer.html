@@ -6,7 +6,7 @@
     <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-
+    
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
 
@@ -22,25 +22,38 @@
         <img src="./css/fm.jpg">
         <button type="submit" class="button_1" id="placeOrder" style="margin:5px;">Place Test Order</button>
         <button type="submit" class="button_1" id="signOut" style="margin:5px;">Sign Out</button>
-        <button type="submit" class="button_1" style="margin:5px;">Account</button>
-        <button type="orders" class="button_1" style="margin:5px;">Orders</button>
+        <button type="submit" class="button_1" id= "accountButton" style="margin:5px;">Account</button>
+        <button type="orders" class="button_1" id="ordersButton" style="margin:5px;">Orders</button>
 
       </div>
     </div>
     </header>
-    <section class="places">
+    <h5 id="notifyHeader"></h5>
+    
+    <section id="searchSection">
       <div class="container">
             <form>
-              <h2 id="hh">Find Restaurants Near You!<h2>
+                <h2>Find Restaurants Near You!</h2> <!-- the id was "hh" but the text was white ? -->
                 <input type="text" name="cusAddress" placeholder="Enter your delivery address">
                 <button type="submit" class="button_1">Find Food</button>
             </form>
       </div>
+    </section>
+    <hr/>
+    <section>
+      <header>
+        <h3><u>Orders</u></h3>
+      </header>
+      <div id="orderList">
+        <!-- orders are be added in here -->
+      </div>
+      <hr/>
+    </section>
+
     <script src="js/firebase.js"></script>
     <script src="js/signOut.js"></script>
     <script src="js/customer.js"></script>
     
-
     <footer>
       <p>Food Mood, Copyright &copy; 2019</p>
     </footer>

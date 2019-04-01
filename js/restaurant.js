@@ -41,6 +41,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
     querySnapshot.forEach(function (doc) {
         var data = doc.data();
         var div = document.createElement('div');
+        div.class = "inline";
         div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
             '<button name=" Complete Menu" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
         duplicator.appendChild(div);
