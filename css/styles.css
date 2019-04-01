@@ -3,7 +3,9 @@
   padding-top: 0px;
   max-height: 55px;
 }
-
+.bg{
+  background-image: url("dinner.jpg");
+}
 .bttn{
   float: right;
 }
@@ -37,7 +39,24 @@
 #editButton{
   z-index: 10000;
 }
+.view{
+  background-position: center;
+  background-repeat: no-repeat;
+    background-size: cover;
+}
+
 
 #h{
-  color:#808080;
+  color:#2e8b57;
+}
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+.navbar-toggler{
+  background-color: #fff;
+}
+.navbar-toggler-icon{
+  color:#fff;
 }
