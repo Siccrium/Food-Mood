@@ -9,6 +9,7 @@ const addFoodButton = document.getElementById('AddFoodButton');
 const newFoodPrice = document.getElementById('newFoodPrice');
 const newFoodName = document.getElementById('newFoodName');
 const deleteMenuButton = document.getElementById('DeleteMenuButton');
+const restPage = document.getElementById("restPage");
 
 errorHeader.style.visibility = "hidden";
 
@@ -119,6 +120,12 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
 function backToMenu() {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
 }
+
+restPage.addEventListener("click", e => {
+
+    window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+
+});
 
 //either set new menu, or update existing menu//redirect to menu.html?...
 submitButton.addEventListener("click", e => {
