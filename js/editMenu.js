@@ -9,6 +9,7 @@ const addFoodButton = document.getElementById('AddFoodButton');
 const newFoodPrice = document.getElementById('newFoodPrice');
 const newFoodName = document.getElementById('newFoodName');
 const deleteMenuButton = document.getElementById('DeleteMenuButton');
+const restPage = document.getElementById("restPage");
 
 errorHeader.style.visibility = "hidden";
 
@@ -38,7 +39,7 @@ function renderPage() {
                     //here is whats going inside the duplicator div when first rendered.
                     div.innerHTML = '<div id="' + FoodName + 'Div">' +
                         '<p>' +
-                        '<input type="submit" value="Edit" state ="unclicked" id="EditFoodButton' + FoodName + '"></input>' +
+                        '<input type="submit" value="Edit" class="btn btn-success" state ="unclicked" id="EditFoodButton' + FoodName + '"></input>' +
                         ' ' + FoodName + ' - $' + FoodPrice +
                         '</p>' +
                         '</div>';
@@ -63,11 +64,11 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
 
     editButton.addEventListener("click", e => {
         foodDiv.innerHTML = '<div id="duringEdit' + FoodName + '">' +
-            '<input type="submit" value="Discard Changes" id="DiscardEditButton' + FoodName + '"></input>' +
+            '<input type="submit" class="btn btn-danger" value="Discard Changes" id="DiscardEditButton' + FoodName + '"></input>' +
             ' Food Name: <input type="text" size="5" id="edit' + FoodName + '">' +
             ' Food Price: $ <input type="double" size="2" id="edit' + FoodPrice + '">' + ' ' +
-            '<input type="submit" value="Update" id="SubmitEditButton' + FoodName + '"></input>' + ' ' +
-            '<input type="submit" value="DELETE" id="DeleteFoodButton' + FoodName + '"></input>' +
+            '<input type="submit" class="btn btn-success" value="Update" id="SubmitEditButton' + FoodName + '"></input>' + ' ' +
+            '<input type="submit" class="btn btn-danger" value="DELETE" id="DeleteFoodButton' + FoodName + '"></input>' +
             '</div><hr/>';
         foodNameInput = document.getElementById("edit" + FoodName);
         priceInput = document.getElementById("edit" + FoodPrice);
@@ -80,7 +81,7 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
         discardEditButton.addEventListener("click", e => {
             foodDiv.innerHTML = '<div id="' + FoodName + 'Div">' +
                 '<p>' +
-                '<input type="submit" value="Edit" id="EditFoodButton' + FoodName + '"></input>' +
+                '<input type="submit" class="btn btn-success" value="Edit" id="EditFoodButton' + FoodName + '"></input>' +
                 ' ' + FoodName + ' - $' + FoodPrice +
                 '</p>' +
                 '</div>';
@@ -119,6 +120,12 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
 function backToMenu() {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
 }
+
+restPage.addEventListener("click", e => {
+
+    window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+
+});
 
 //either set new menu, or update existing menu//redirect to menu.html?...
 submitButton.addEventListener("click", e => {

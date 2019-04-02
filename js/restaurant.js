@@ -36,18 +36,17 @@ firestore.collection("Restaurants").doc(vars['restaurant_id']).get().then(functi
 
 });
 
-//show each menu for the specific restaurant
 firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
         var data = doc.data();
         var div = document.createElement('div');
-        div.class = "inline";
-        div.innerHTML = '<br><br><h1>' + data.MenuName + '</h1>' +
-            '<button name=" Complete Menu" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Menu</button>';
+        div.innerHTML = '<br><br><h3 id="h">' + data.MenuName + '</h3>' +
+            '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-success">View Menu</button>';
         duplicator.appendChild(div);
         refs.push(document.getElementById(doc.id));
         eventListeners();
     });
+    eventListeners();
 }).catch(function (error) {
     console.log("Error getting documents: " + error);
 });
@@ -72,7 +71,7 @@ function eventListeners() {
         });
     });
 
-}
+  }
 
 editButton.addEventListener('click', e => {
 

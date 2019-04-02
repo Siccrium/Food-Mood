@@ -3,21 +3,16 @@
   padding-top: 0px;
   max-height: 55px;
 }
-.bg{
-  background-image: url("dinner.jpg");
-}
+
 .bttn{
   float: right;
 }
-
-.btn{
-  background-color: #808080;
-  border-color: #ffffff;
+.bttn1{
+  float: right;
+  margin-top: 1%;
 }
-.btn-action{
-  color:#ffffff;
-  background-color: #808080;
-  border-color: #ffffff;
+#h1{
+  color:#808080;
 }
 #hh{
   margin-top:5%;
@@ -44,8 +39,12 @@
   background-repeat: no-repeat;
     background-size: cover;
 }
+.container1{
+    display: flex
+}
+.fix{
 
-
+}
 #h{
   color:#2e8b57;
 }
