@@ -39,7 +39,7 @@ function renderPage() {
                     //here is whats going inside the duplicator div when first rendered.
                     div.innerHTML = '<div id="' + FoodName + 'Div">' +
                         '<p>' +
-                        '<input type="submit" value="Edit" class="btn btn-success" state ="unclicked" id="EditFoodButton' + FoodName + '"></input>' +
+                        '<input type="submit" value="Edit Food Item" class="btn btn-info" state ="unclicked" id="EditFoodButton' + FoodName + '"></input>' +
                         ' ' + FoodName + ' - $' + FoodPrice +
                         '</p>' +
                         '</div>';
