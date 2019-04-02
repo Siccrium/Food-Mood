@@ -16,6 +16,7 @@
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
 
+
   <!--Firebase authentication-->
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
@@ -29,29 +30,53 @@
       <div class="container">
         <img src="./img/fm.jpg">
         <div class="bttn">
-          <a onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</a>
-          <a href="manager.html"><button type="submit" class="btn btn-action">Account Dashboard</button></a>
+
           <button type="submit" class="btn btn-action" id="restPage">Restaurant Page</button>
+
+          <button type="submit" class="btn btn-action" onclick="location.href='manager.html'">Account Dashboard</button>
+
+            <button onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</button>
         </div>
       </div>
-    </div>
-  </nav>
-</div>
+    </nav>
+  </div>
 
-<header class="masthead text-gray text-center">
-  <section class="container">
-    <div class="jumbotron">
-        <h3>Add Information about your Menu!</h3>
+  <header class="masthead text-gray text-center">
+      <div class="row">
+        <div class="container">
+          <div class="container1">
+        <div class="jumbotron text-center col-md-6" style="margin:15px;">
+          <h4 style="color:#4169e1">Menu</h4>
 
-        Menu name:<br>
-        <input type="text" id="menuName">
-        <br>
-        <h1 id="errorHeader"></h1>
-        <br>
-        <input type="submit" value="Submit" id="Sbutton" class="btn btn-action">
+          Menu name:<br>
+          <input type="text" id="menuName">
+          <br>
+          <p id="errorHeader"></p>
+          <br>
+          <button type="submit" value="Submit" id="Sbutton" class="btn btn-success">Edit Menu</button>
+          <button type="submit" value="DELETE MENU" id="DeleteMenuButton" class="btn btn-danger">Delete Menu</button>
+        </div>
+        <div class="jumbotron text-center col-md-6" style="margin:15px;">
+          <h4 style="color:#4169e1">Food Items</h4>
+          <br>
+          Food name:
+          <input type="text" id="newFoodName">
+          <br>
+          <br>
+          Food price: $
+          <input type="double" id="newFoodPrice">
+          <br>
+          <br>
+          <button type="submit" value="Add Item" id="AddFoodButton" class="btn btn-success">Add Food Item</button>
+          <h6 id="errorHeader"></h6>
+          <div id=foodDuplicator>
+          </div>
+        </div>
       </div>
-  </section>
-</header>
+      </div>
+    </div>
+
+  </header>
 
   <script src="js/firebase.js"></script>
   <script src="js/signOut.js"></script>
