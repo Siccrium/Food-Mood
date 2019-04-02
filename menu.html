@@ -20,7 +20,30 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg">
+
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Food Mood</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/landing-page.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg static-top">
+  <div class="container">
     <a class="navbar-brand" href="#">
       <img src="./img/fm.jpg" width="80" height="80" alt="">
     </a>
@@ -42,27 +65,25 @@
           <a class="nav-link" href="#" id="delete" style="color: #008000">Delete Menu</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <header class="masthead text-gray text-center">
-    <div class="container">
-      <div class="jumbotron">
-        <h3>Menu Information</h3>
-        Menu Name:
-        <p id="menuName"></p>
-        <input type="submit" value="Edit Information" id="editButton">
-        <!-- <input type="submit" value="Add Food Item" id="addFoodButton"> -->
-        <hr /> <!-- this hr element looks much nicer than I was expecting -->
-        <div id="foodDuplicator">
-        </div>
-      </div>
+
+
+<header class="masthead text-gray text-center">
+  <div class="container">
+    <div class="jumbotron">
+    <h3>Menu Information</h3>
+    Menu Name:
+    <p id="menuName"></p>
+    <input type="submit" class="btn btn-action" value="Edit Information" id="editButton">
+    <input type="submit" class="btn btn-action" value="Add Food Item" id="addFoodButton">
+    <div id="foodDuplicator">
     </div>
-  </header>
+  </div>
+  </div>
+</header>
 
 
   <footer class="footer">
