@@ -40,6 +40,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         } else console.log("The users document does not exist.");
 
       });
+
+      renderPage();
+      renderFilters();
     
     } else {
       // No user is signed in. Redirect them to the homepage.
