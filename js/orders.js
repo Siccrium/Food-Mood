@@ -71,8 +71,8 @@ function showButtonsOrNah(docId, orderStatus) {
     if (orderStatus == "Accepted" || orderStatus == "Rejected") {
         return ('<button style="margin:5px;" type="submit" class="button_2" id="deleteButton' + docId + '">Delete Order</button>');
     } else {
-        return ('<button style="margin:5px;" type="submit" class="button_2" id="acceptButton' + docId + '">Accept Order</button>' +
-            '<button style="margin:5px;" type="submit" class="button_2" id="rejectButton' + docId + '">Reject Order</button>');
+        return ('<button type="submit" class="btn btn-success" id="acceptButton' + docId + '">Accept Order</button>' +
+            '<button type="submit" class="btn btn-danger" id="rejectButton' + docId + '">Reject Order</button>');
     }//end if checkstatus
 }//end showbuttonsornah
 
