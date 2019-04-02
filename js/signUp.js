@@ -5,11 +5,11 @@ firestore = firebase.firestore();
 const textEmail = document.getElementById("textEmail");
 const textPassword = document.getElementById("textPassword");
 const confirmPassword = document.getElementById("confirmPassword");
-const nameField = document.getElementById("name");
-const addressField = document.getElementById("address");
-const cityField = document.getElementById("city");
-const stateField = document.getElementById("state");
-const zipCodeField = document.getElementById("zipCode");
+// const nameField = document.getElementById("name");
+// const addressField = document.getElementById("address");
+// const cityField = document.getElementById("city");
+// const stateField = document.getElementById("state");
+// const zipCodeField = document.getElementById("zipCode");
 const btnSignUp = document.getElementById("btnSignUp");
 const radioRole = document.getElementsByName("role");
 const errorHeader = document.getElementById("errorHeader");
@@ -22,11 +22,11 @@ var role = " ";
 var email = "";
 var pass = "";
 var confPass = "";
-var name = "";
-var address = "";
-var city = "";
-var state = "";
-var zipCode = "";
+// var name = "";
+// var address = "";
+// var city = "";
+// var state = "";
+// var zipCode = "";
 
 //Sign Up Event
 btnSignUp.addEventListener("click", e => {
@@ -34,11 +34,11 @@ btnSignUp.addEventListener("click", e => {
   email = textEmail.value.toLowerCase();
   var pass = textPassword.value;
   var confPass = confirmPassword.value;
-  var name = nameField.value;
-  var address = addressField.value;
-  var city = cityField.value;
-  var state = stateField.value;
-  var zipCode = zipCodeField.value;
+  // var name = nameField.value;
+  // var address = addressField.value;
+  // var city = cityField.value;
+  // var state = stateField.value;
+  // var zipCode = zipCodeField.value;
   role = getRadioVal();
 
   errorHeader.innerText = "";
@@ -64,32 +64,34 @@ btnSignUp.addEventListener("click", e => {
     errorHeader.style.visibility = "visible";
     console.log("The passwords do not match");
     return;
-  } else if (name == "") {
-    errorHeader.innerText = "Please enter your name.";
-    errorHeader.style.visibility = "visible";
-    console.log("No name was entered.");
-    return;
-  } else if (address == "") {
-    errorHeader.innerText = "Please enter your address.";
-    errorHeader.style.visibility = "visible";
-    console.log("No address was entered.");
-    return;
-  } else if (city == "") {
-    errorHeader.innerText = "Please enter your city.";
-    errorHeader.style.visibility = "visible";
-    console.log("No city was entered.");
-    return;
-  } else if (state == "") {
-    errorHeader.innerText = "Please enter your state.";
-    errorHeader.style.visibility = "visible";
-    console.log("No state was entered.");
-    return;
-  } else if (zipCode == "") {
-    errorHeader.innerText = "Please enter your zipCode.";
-    errorHeader.style.visibility = "visible";
-    console.log("No zipCode was entered.");
-    return;
-  } else if (role == " ") {
+  } 
+  // else if (name == "") {
+  //   errorHeader.innerText = "Please enter your name.";
+  //   errorHeader.style.visibility = "visible";
+  //   console.log("No name was entered.");
+  //   return;
+  // } else if (address == "") {
+  //   errorHeader.innerText = "Please enter your address.";
+  //   errorHeader.style.visibility = "visible";
+  //   console.log("No address was entered.");
+  //   return;
+  // } else if (city == "") {
+  //   errorHeader.innerText = "Please enter your city.";
+  //   errorHeader.style.visibility = "visible";
+  //   console.log("No city was entered.");
+  //   return;
+  // } else if (state == "") {
+  //   errorHeader.innerText = "Please enter your state.";
+  //   errorHeader.style.visibility = "visible";
+  //   console.log("No state was entered.");
+  //   return;
+  // } else if (zipCode == "") {
+  //   errorHeader.innerText = "Please enter your zipCode.";
+  //   errorHeader.style.visibility = "visible";
+  //   console.log("No zipCode was entered.");
+  //   return;
+  // } 
+  else if (role == " ") {
     errorHeader.innerText = "Please select a role.";
     errorHeader.style.visibility = "visible";
     console.log("No role was selected.");
@@ -124,11 +126,11 @@ firebase.auth().onAuthStateChanged(function (user) {
     //Creates the users file in the database.
     firestore.collection("Users").doc(email).set({
         UserEmail: email,
-        UserName: name,
-        UserAddress: address,
-        UserCity: city,
-        UserState: state,
-        UserZipCode: zipCode,
+        // UserName: name,
+        // UserAddress: address,
+        // UserCity: city,
+        // UserState: state,
+        // UserZipCode: zipCode,
         UserRole: role
       })
       .then(function () {
