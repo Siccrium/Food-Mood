@@ -64,11 +64,11 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
 
     editButton.addEventListener("click", e => {
         foodDiv.innerHTML = '<div id="duringEdit' + FoodName + '">' +
-            '<input type="submit" value="Discard Changes" id="DiscardEditButton' + FoodName + '"></input>' +
+            '<input type="submit" class="btn btn-danger" value="Discard Changes" id="DiscardEditButton' + FoodName + '"></input>' +
             ' Food Name: <input type="text" size="5" id="edit' + FoodName + '">' +
             ' Food Price: $ <input type="double" size="2" id="edit' + FoodPrice + '">' + ' ' +
-            '<input type="submit" value="Update" id="SubmitEditButton' + FoodName + '"></input>' + ' ' +
-            '<input type="submit" value="DELETE" id="DeleteFoodButton' + FoodName + '"></input>' +
+            '<input type="submit" class="btn btn-success" value="Update" id="SubmitEditButton' + FoodName + '"></input>' + ' ' +
+            '<input type="submit" class="btn btn-danger" value="DELETE" id="DeleteFoodButton' + FoodName + '"></input>' +
             '</div><hr/>';
         foodNameInput = document.getElementById("edit" + FoodName);
         priceInput = document.getElementById("edit" + FoodPrice);
@@ -81,7 +81,7 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
         discardEditButton.addEventListener("click", e => {
             foodDiv.innerHTML = '<div id="' + FoodName + 'Div">' +
                 '<p>' +
-                '<input type="submit" value="Edit" id="EditFoodButton' + FoodName + '"></input>' +
+                '<input type="submit" class="btn btn-success" value="Edit" id="EditFoodButton' + FoodName + '"></input>' +
                 ' ' + FoodName + ' - $' + FoodPrice +
                 '</p>' +
                 '</div>';
