@@ -75,7 +75,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
       });
       
-      renderFilters();
+      // renderFilters();
     
     } else {
       // No user is signed in. Redirect them to the homepage.
