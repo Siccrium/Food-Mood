@@ -3,46 +3,19 @@ firestore = firebase.firestore();
 
 var email = "";
 
-const duplicator = document.getElementById("duplicator");
-const filters = document.getElementById("filters");
+const placeOrder = document.getElementById("placeOrder");
 
-function renderPage() {
-  firestore.collection("Restaurants").get().then(function (querySnapshot) {
-    querySnapshot.forEach(function (doc) {
-      var data = doc.data();
-      var div = document.createElement('div');
-      div.innerHTML = '<br><br><h1>' + data.RestaurantName + '</h1>' +
-        '<h1>' + data.RestaurantAddress + '</h1>' +
-        '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
-      duplicator.appendChild(div);
-    });
-    // eventListeners();
-  }).catch(function (error) {
-    console.log("Error getting documents: " + error);
-  });
-}
+placeOrder.addEventListener("click", e => {
 
-function renderFilters() {
+  firestore.doc("Restaurants/RRWswvxp24gRBdBgYouD/Orders/OrderTest").set({
 
-  firestore.doc("Tags/Tags").get().then(function(doc) {
+    "FoodItem": "Spaghetti",
+    "AmountPaid": "$10",
+    "OrderStatus": "Pending"
 
-    var data = doc.data();
-    var allTags = data.Tags;
-    var tags = allTags.split(", ");
-
-    var filterHTML = "";
-    for(var i=0; i<tags.length; i++) {
-      var option = document.createElement('option');
-      filterHTML = filterHTML + '<option value=' + tags[i] + '>' + tags[i] + '</option>'
-    }
-
-    filters.innerHTML = filterHTML;
-
-  }).catch(function(error) {
-    console.log("Error getting Tags document: " + error);
   });
 
-}
+})
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

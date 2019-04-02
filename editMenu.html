@@ -25,33 +25,39 @@
 
 <body>
   <div class="header">
-  <nav class="navbar static-top">
-    <div class="container">
-      <img src="./img/fm.jpg">
-      <div class="bttn">
-      <a onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</a>
-      <a href="manager.html"><button type="submit" class="btn btn-action">Account Dashboard</button></a>
+    <nav class="navbar static-top">
+      <div class="container">
+        <img src="./img/fm.jpg">
+        <div class="bttn">
+          <a onclick="location.href='homepage.html'" id="signOut" class="btn btn-action" href="#">Sign Out</a>
+          <a href="manager.html"><button type="submit" class="btn btn-action">Account Dashboard</button></a>
+          <button type="submit" class="btn btn-action" id="restPage">Restaurant Page</button>
+        </div>
       </div>
     </div>
   </nav>
 </div>
+
+<header class="masthead text-gray text-center">
   <section class="container">
+    <div class="jumbotron">
         <h3>Add Information about your Menu!</h3>
 
         Menu name:<br>
         <input type="text" id="menuName">
         <br>
         <h1 id="errorHeader"></h1>
-        <input type="submit" value="Submit" id="Sbutton">
+        <br>
+        <input type="submit" value="Submit" id="Sbutton" class="btn btn-action">
       </div>
-    </div>
   </section>
+</header>
 
   <script src="js/firebase.js"></script>
   <script src="js/signOut.js"></script>
   <script src="js/editMenu.js"></script>
-  
-  <footer class="footer bg-light">
+
+  <footer class="footer">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 h-100 text-center text-lg-left my-auto">

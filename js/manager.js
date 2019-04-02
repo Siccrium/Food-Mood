@@ -12,9 +12,9 @@ function renderPage() {
     querySnapshot.forEach(function (doc) {
       var data = doc.data();
       var div = document.createElement('div');
-      div.innerHTML = '<br><br><h1>' + data.RestaurantName + '</h1>' +
-        '<h1>' + data.RestaurantAddress + '</h1>' +
-        '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="button_2" style="margin:5px;">View Restaurant</button>';
+      div.innerHTML = '<br><br><h3 id="h">' + data.RestaurantName + '</h3>' +
+        '<h3 id="h">' + data.RestaurantAddress + '</h3>' +
+        '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="btn btn-action">View Restaurant</button>';
       duplicator.appendChild(div);
       refs.push(document.getElementById(doc.id));
     });

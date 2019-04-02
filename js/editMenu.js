@@ -4,6 +4,12 @@ firestore = firebase.firestore();
 const submitButton = document.getElementById("Sbutton");
 const menuName = document.getElementById("menuName");
 const errorHeader = document.getElementById("errorHeader");
+const foodDuplicator = document.getElementById('foodDuplicator');
+const addFoodButton = document.getElementById('AddFoodButton');
+const newFoodPrice = document.getElementById('newFoodPrice');
+const newFoodName = document.getElementById('newFoodName');
+const deleteMenuButton = document.getElementById('DeleteMenuButton');
+const restPage = document.getElementById("restPage");
 
 errorHeader.style.visibility = "hidden";
 
@@ -43,6 +49,39 @@ function renderPage() {
     });
 
 }
+
+restPage.addEventListener("click", e => {
+
+    window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+
+});
+
+//either set new menu, or update existing menu//redirect to menu.html?...
+submitButton.addEventListener("click", e => {
+    name = menuName.value;
+    // console.log(checkMenuName());
+
+    //text fields will probably still accept space bar as acceptable input :(
+    if (name == "") {
+        errorHeader.innerText = "Please enter a Menu Name.";
+        errorHeader.style.visibility = "visible";
+        console.log("The 'menuName' field was left empty.");
+        return;
+    } else if (newFoodName.value != "" && newFoodPrice.value == "") {
+        errorHeader.innerText = "Please enter a Price for your New Food Item.";
+        errorHeader.style.visibility = "visible";
+        console.log("The 'Food Price' field was left empty.");
+        return;
+    } else if (newFoodName.value == "" && newFoodPrice.value != "") {
+        errorHeader.innerText = "Please enter a Name for your New Food Item.";
+        errorHeader.style.visibility = "visible";
+        console.log("The 'Food Name' field was left empty.");
+        return;
+    } else if (newFoodName.value == "" && newFoodPrice.value == "") {
+        console.log("all clear");
+    } else {
+        console.log("Whoops, you forgot to add that new food item. Let me get that for you :)");
+    }//end text field IF conditions
 
 
 
