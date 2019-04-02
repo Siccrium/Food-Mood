@@ -41,7 +41,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
         var data = doc.data();
         var div = document.createElement('div');
         div.innerHTML = '<br><br><h3 id="h">' + data.MenuName + '</h3>' +
-            '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-action">View Menu</button>';
+            '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-success">View Menu</button>';
         duplicator.appendChild(div);
         refs.push(document.getElementById(doc.id));
         eventListeners();

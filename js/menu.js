@@ -11,6 +11,8 @@ const deleteButton = document.getElementById("delete");
 const restPage = document.getElementById("restPage");
 const foodDuplicator = document.getElementById('foodDuplicator');
 const addFoodButton = document.getElementById("addFoodButton");
+const FoodName = document.getElementById("FoodName");
+const FoodPrice = document.getElementById("FoodPrice");
 
 getUrlVars();
 
@@ -24,7 +26,7 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
                 var data = doc.data();
                 console.log(data);
                 var div = document.createElement('div');
-                div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>'
+                div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>';
                 foodDuplicator.appendChild(div);
                 //next todo here: add a small button in front of each food item to edit. delete inside
                 //handle addToCart button later for customer view
@@ -38,9 +40,9 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
     console.log(vars);
 });
 
-addFoodButton.addEventListener("click", e => {
-    window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
-});
+// addFoodButton.addEventListener("click", e => {
+//     window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
+// });
 
 editButton.addEventListener("click", e => {
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
