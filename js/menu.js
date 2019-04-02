@@ -28,7 +28,6 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
                 var div = document.createElement('div');
                 div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>';
                 foodDuplicator.appendChild(div);
-                //next todo here: add a small button in front of each food item to edit. delete inside
                 //handle addToCart button later for customer view
             });
         }).catch(function (error) {

@@ -274,6 +274,7 @@ addFoodButton.addEventListener("click", e => {
         var menuInfo = { "MenuName": name, "ParentRestaurant": vars['restaurant_id'] };
         newMenuRef.set(menuInfo).then(function () {
             console.log("Menu successfully written.");
+            console.log(newMenuRef.id);
             addFood(newFoodName.value, newFoodPrice.value, newMenuRef.id);
             window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + newMenuRef.id);
         }).catch(function (error) {
@@ -322,7 +323,7 @@ function updateFood(foodId, newName, newPrice) {
 }//end updateFood
 
 function addFood(newName, newPrice, parentMenu) {
-    var newFoodRef = firestore.collection("/Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/").doc();
+    var newFoodRef = firestore.collection("/Restaurants/" + vars['restaurant_id'] + "/Menus/" + parentMenu + "/Food/").doc();
     var foodInfo = {
         "FoodName": newName,
         "FoodPrice": newPrice,
