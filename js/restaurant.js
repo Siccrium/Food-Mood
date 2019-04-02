@@ -17,6 +17,7 @@ const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
 const duplicator = document.getElementById('duplicator');
 const addMenuButton = document.getElementById("addMenuButton");
+const ordersButton = document.getElementById("ordersButton");
 
 getUrlVars();
 
@@ -43,6 +44,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
             '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-action">View Menu</button>';
         duplicator.appendChild(div);
         refs.push(document.getElementById(doc.id));
+        eventListeners();
     });
     eventListeners();
 }).catch(function (error) {
@@ -62,11 +64,11 @@ function getUrlVars() {
 
 function eventListeners() {
 
-    refs.forEach(function(elem) {
-      elem.addEventListener("click", e => {
-        menuName = elem.id;
-        window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z]/g, ""));
-      });
+    refs.forEach(function (elem) {
+        elem.addEventListener("click", e => {
+            menuName = elem.id;
+            window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + menuName.replace(/[^a-zA-Z0-9]/g, ""));
+        });
     });
 
   }
@@ -89,6 +91,12 @@ deleteButton.addEventListener('click', e => {
 addMenuButton.addEventListener('click', e => {
 
     window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
+
+});
+
+ordersButton.addEventListener("click", e => {
+
+    window.location.replace("orders.html?restaurant_id=" + vars['restaurant_id']);
 
 });
 
