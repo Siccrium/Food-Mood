@@ -7,7 +7,13 @@
 .bttn{
   float: right;
 }
-
+.bttn1{
+  float: right;
+  margin-top: 1%;
+}
+#h1{
+  color:#808080;
+}
 #hh{
   margin-top:5%;
   color:#ffffff;
@@ -36,7 +42,9 @@
 .container1{
     display: flex
 }
+.fix{
 
+}
 #h{
   color:#2e8b57;
 }

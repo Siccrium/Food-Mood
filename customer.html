@@ -1,30 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Food Mood</title>
-    <!-- Bootstrap core CSS -->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Your Restaurant Orders</title>
+
+  <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
 
-  <!--Firebase authentication-->
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
-  </head>
-  <body>
-    <header>
-    <div class="container">
-      <div class="buttn">
-        <img src="./css/fm.jpg">
-        <button type="submit" class="button_1" id="placeOrder" style="margin:5px;">Place Test Order</button>
-        <button type="submit" class="button_1" id="signOut" style="margin:5px;">Sign Out</button>
-        <button type="submit" class="button_1" style="margin:5px;">Account</button>
-        <button type="orders" class="button_1" style="margin:5px;">Orders</button>
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="css/style2.css">
 
+  <!--Firebase authentication-->
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="container">
+      <img src="./img/fm.jpg">
+      <div class="bttn1">
+        <button type="submit" class="btn btn-info" id="placeOrder">Place Test Order</button>
+        <button type="orders" class="btn btn-info" id="ordersButton">Orders</button>
+        <button onclick="location.href='homepage.html'" id="signOut" class="btn btn-info" href="#">Sign Out</button>
+      </div>
+
+    </div>
+    </nav>
+  </div>
+
+  <header class="masthead text-gray text-center">
+    <div class="container">
+      <div class="jumbotron vertical-center" style="width: 30rem;margin:auto">
+        <h5 id="notifyHeader"></h5>
+        <section id="searchSection">
+          <!-- <h4>Select a filter:</h4>
+          <select multiple id="filters">
+
+          </select> -->
+          <div id="duplicator">
+
+            <!-- <form>
+                <h2 id="h1">Find Restaurants Near You!</h2>
+                <label for="cusAddress"></label>
+                <input type="text" name="cusAddress" class="form-control" required autofocus placeholder="Enter your delivery address">
+                <br>
+                <button type="submit" class="btn btn-success">Find Food</button>
+              </form> -->
+          </div>
+        </section>
       </div>
     </div>
     </header>
@@ -72,17 +107,29 @@
     <h1>Select a filter:</h1>
     <select multiple id="filters">
 
-    </select>
-      <div id="duplicator">
-            
-      </div>
-    <script src="js/firebase.js"></script>
-    <script src="js/signOut.js"></script>
-    <script src="js/customer.js"></script>
-    
 
-    <footer>
-      <p>Food Mood, Copyright &copy; 2019</p>
-    </footer>
-  </body>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#">About</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Contact</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
 </html>
