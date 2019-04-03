@@ -1,7 +1,22 @@
 //Initialize Firestore
 firestore = firebase.firestore();
 
+const nameField = document.getElementById("userName");
+const addressField = document.getElementById("userAddress");
+const cityField = document.getElementById("userCity");
+const stateField = document.getElementById("userState");
+const zipField = document.getElementById("userZip");
+const emailField = document.getElementById("userEmail");
+const phoneNumberField = document.getElementById("userPhone");
+
+var name = "";
+var address = "";
+var city = "";
+var state = "";
+var zip = "";
 var email = "";
+var phoneNumber = "";
+
 
 const placeOrder = document.getElementById("placeOrder");
 
@@ -29,7 +44,15 @@ firebase.auth().onAuthStateChanged(function(user) {
         if(doc.exists){
                 
           var docData = doc.data();
-          role = docData.UserRole;
+          var role = docData.UserRole;
+
+          nameField.innerText = docData.UserName;
+          addressField.innerText = docData.UserAddress;
+          cityField.innerText = docData.UserAddress;
+          stateField.innerText = docData.UserAddress;
+          zipField.innerText = docData.UserAddress;
+          emailField.innerText = docData.UserEmail;
+          phoneNumberField.innerText = docData.UserPhoneNumber;
 
           //Redirect user to the dashboard for their role.
           if(role === "Customer") return;
@@ -41,8 +64,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
       });
 
-      renderPage();
-      renderFilters();
+      // renderPage();
+      // renderFilters();
     
     } else {
       // No user is signed in. Redirect them to the homepage.
