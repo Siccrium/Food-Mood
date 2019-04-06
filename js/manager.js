@@ -64,9 +64,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         nameField.innerText = docData.UserName;
         addressField.innerText = docData.UserAddress;
-        cityField.innerText = docData.UserAddress;
-        stateField.innerText = docData.UserAddress;
-        zipField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserCity;
+        stateField.innerText = docData.UserState;
+        zipField.innerText = docData.UserZipCode;
         emailField.innerText = docData.UserEmail;
         phoneNumberField.innerText = docData.UserPhoneNumber;
         
