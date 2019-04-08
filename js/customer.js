@@ -19,6 +19,7 @@ var zip = "";
 var email = "";
 var phoneNumber = "";
 var restaurants = [];
+var restIDs = [];
 
 
 const placeOrder = document.getElementById("placeOrder");
@@ -35,10 +36,14 @@ function renderRestaurants() {
     documents.forEach(function (doc) {
       var data = doc.data();
       var div = document.createElement("div");
-      div.innerHTML = "<h1>" + data.RestaurantName + "</h1>";
+      div.innerHTML = "<h1>" + data.RestaurantName + "</h1>"
+      + "<button id='" + doc.id + "' type=submit class=btn btn-success>View Restaurant</button>";
       searchSection.appendChild(div);
       restaurants.push(data);
+      restIDs.push(doc.id);
     });
+
+    eventListeners(restIDs);
 
   });
 
@@ -68,8 +73,10 @@ function renderFilters() {
 function filterRestaurants() {
 
   var filteredRestaurants = [];
+  var filteredRestIDs = [];
   for (var i = 0; i < restaurants.length; i++) {
     filteredRestaurants[i] = restaurants[i];
+    filteredRestIDs[i] = restIDs[i];
   }
 
   console.log(filteredRestaurants);
@@ -81,6 +88,7 @@ function filterRestaurants() {
         var thisRestTags = filteredRestaurants[j]['RestaurantTags'];
         if (!thisRestTags.includes(tagsArray[i])) {
           delete filteredRestaurants[j];
+          delete filteredRestIDs[j];
         }
       }
     }
@@ -91,11 +99,25 @@ console.log(filteredRestaurants);
 
 searchSection.innerHTML = '';
 
-filteredRestaurants.forEach(function (element) {
+filteredRestaurants.forEach(function (element, index) {
   var div = document.createElement("div");
-  div.innerHTML = "<h1>" + element['RestaurantName'] + "</h1>";
+  div.innerHTML = "<h1>" + element['RestaurantName'] + "</h1>"
+  + "<button id='" + filteredRestIDs[index] + "' type=submit class=btn btn-success>View Restaurant</button>";
   searchSection.appendChild(div);
 });
+
+eventListeners(filteredRestIDs);
+
+}
+
+function eventListeners(IDs) {
+
+  IDs.forEach(function(elem) {
+    var buttonReference = document.getElementById(elem);
+    buttonReference.addEventListener("click", e => {
+      window.location.replace("restaurant.html?restaurant_id=" + elem);
+    });
+  });
 
 }
 
