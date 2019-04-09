@@ -13,11 +13,12 @@ const restCity = document.getElementById("restCity");
 const restState = document.getElementById("restState");
 const restZip = document.getElementById("restZip");
 const restPhoneNumber = document.getElementById("restPhoneNumber");
+const duplicator = document.getElementById('duplicator');
 const editButton = document.getElementById("editButton");
 const deleteButton = document.getElementById("delete");
-const duplicator = document.getElementById('duplicator');
 const addMenuButton = document.getElementById("addMenuButton");
 const ordersButton = document.getElementById("ordersButton");
+const accDashboard = document.getElementById("accDashboard");
 
 getUrlVars();
 
@@ -71,40 +72,75 @@ function eventListeners() {
         });
     });
 
-  }
+}
 
-editButton.addEventListener('click', e => {
+function managerPage() {
 
-    window.location.replace("editRestaurant.html?restaurant_id=" + vars['restaurant_id']);
+    editButton.addEventListener('click', e => {
 
-});
+        window.location.replace("editRestaurant.html?restaurant_id=" + vars['restaurant_id']);
 
-deleteButton.addEventListener('click', e => {
-    firestore.collection("Restaurants").doc(vars['restaurant_id']).delete().then(function () {
-        console.log("Document successfully deleted!");
-        window.location.replace("manager.html");
-    }).catch(function (error) {
-        console.error("Error removing document: ", error);
     });
-});
 
-addMenuButton.addEventListener('click', e => {
+    deleteButton.addEventListener('click', e => {
+        firestore.collection("Restaurants").doc(vars['restaurant_id']).delete().then(function () {
+            console.log("Document successfully deleted!");
+            window.location.replace("manager.html");
+        }).catch(function (error) {
+            console.error("Error removing document: ", error);
+        });
+    });
 
-    window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
+    addMenuButton.addEventListener('click', e => {
 
-});
+        window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id']);
 
-ordersButton.addEventListener("click", e => {
+    });
 
-    window.location.replace("orders.html?restaurant_id=" + vars['restaurant_id']);
+    ordersButton.addEventListener("click", e => {
 
-});
+        window.location.replace("orders.html?restaurant_id=" + vars['restaurant_id']);
+
+    });
+
+    accDashboard.href = "manager.html";
+
+}
+
+function customerPage() {
+
+    editButton.parentNode.removeChild(editButton);
+    addMenuButton.parentNode.removeChild(addMenuButton);
+    deleteButton.parentNode.removeChild(deleteButton);
+    ordersButton.parentNode.removeChild(ordersButton);
+
+    accDashboard.href = "customer.html";
+
+}
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
         console.log("The currently logged in user is: " + user.email + ".");
         email = user.email;
+
+        firestore.doc("/Users/" + email).get().then(function (doc) {
+
+            if (doc.exists) {
+
+                var docData = doc.data();
+                var role = docData.UserRole;
+
+                //Redirect user to the dashboard for their role.
+                if (role === "Manager") managerPage();
+                else if (role === "Customer") customerPage();
+                else if (role === "Deliverer") return;
+                else console.log("The value of role is not an accepted value: -" + role + ".");
+
+            } else console.log("The users document does not exist.");
+
+        });
+
     } else {
         // No user is signed in.
         console.log("No user is signed in");

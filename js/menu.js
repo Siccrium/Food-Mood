@@ -13,6 +13,7 @@ const foodDuplicator = document.getElementById('foodDuplicator');
 const addFoodButton = document.getElementById("addFoodButton");
 const FoodName = document.getElementById("FoodName");
 const FoodPrice = document.getElementById("FoodPrice");
+const accDashboard = document.getElementById("accDashboard");
 
 getUrlVars();
 
@@ -39,24 +40,33 @@ firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id
     console.log(vars);
 });
 
-// addFoodButton.addEventListener("click", e => {
-//     window.location.replace("editFood.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
-// });
+function managerPage() {
 
-editButton.addEventListener("click", e => {
-    window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
-});
-
-deleteButton.addEventListener("click", e => {
-
-    firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function () {
-        console.log("Document successfully deleted!");
-        window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
-    }).catch(function (error) {
-        console.log("Error deleting document: " + error);
+    editButton.addEventListener("click", e => {
+        window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
     });
+    
+    deleteButton.addEventListener("click", e => {
+    
+        firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).delete().then(function () {
+            console.log("Document successfully deleted!");
+            window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+        }).catch(function (error) {
+            console.log("Error deleting document: " + error);
+        });
+    
+    });
+    accDashboard.href = "manager.html";
 
-});
+}
+
+function customerPage() {
+
+    editButton.parentNode.removeChild(editButton);
+    deleteButton.parentNode.removeChild(deleteButton);
+    accDashboard.href = "customer.html";
+
+}
 
 restPage.addEventListener("click", e => {
     window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -78,6 +88,23 @@ firebase.auth().onAuthStateChanged(function (user) {
         // User is signed in.
         console.log("The currently logged in user is: " + user.email + ".");
         email = user.email;
+
+        firestore.doc("/Users/" + email).get().then(function (doc) {
+
+            if (doc.exists) {
+
+                var docData = doc.data();
+                var role = docData.UserRole;
+
+                //Redirect user to the dashboard for their role.
+                if (role === "Manager") managerPage();
+                else if (role === "Customer") customerPage();
+                else if (role === "Deliverer") return;
+                else console.log("The value of role is not an accepted value: -" + role + ".");
+
+            } else console.log("The users document does not exist.");
+
+        });
     } else {
         // No user is signed in.
         console.log("No user is signed in");

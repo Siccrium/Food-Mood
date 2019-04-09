@@ -37,6 +37,7 @@
 
   </head>
     <body>
+
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
           <span><img src="./img/FMW.jpg"></span>
@@ -60,8 +61,12 @@
         </div>
       </nav>
 
-<header class="masthead text-gray text-center">
-    <div class="container-fluid">
+        <header class="masthead text-gray text-center">
+          <div class="container-fluid">
+        <!-- <div class="form-group">
+          <textarea class="form-control" id="deliveryAddress" rows="4" placeholder="Enter your delivery address"></textarea>
+        </div> -->
+      <br>
       <div class="row">
       <div class="col-md-8 col-md-80">
 
@@ -70,7 +75,8 @@
                   <div class="card">
                       <div class="card-body">
                           <div class="card-title">
-                              <h3 class="text-center">Pay Invoice</h3>
+                              <h3 class="text-xs-center">Pay Invoice</h3>
+                              <img class="img-fluid cc-img" src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
                           </div>
                           <hr>
                           <form action="/echo" method="post" novalidate="novalidate" class="needs-validation">
@@ -147,7 +153,24 @@
                                       <hr>
                                       <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
                                       <hr>
-                                      <button type="button" class="btn btn-danger btn-lg btn-block">Place Order</button>
+                                      <div class="summary-item"><span class="text">Tip:</span><span class="price"></span></div>
+                                      <br>
+                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                          <input type="radio" name="options" id="option1" autocomplete="off" checked> 1%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" id="option2" autocomplete="off"> 2%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" id="option3" autocomplete="off"> 3%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" class="text" id="option4" autocomplete="off">Other
+                                        </label>
+                                      </div>
+                                      <hr>
+                                      <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href='appFeedback.html';">Place Order</button>
 
                                 </div>
                               </div>
