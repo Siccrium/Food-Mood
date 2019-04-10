@@ -11,10 +11,32 @@ const restCity = document.getElementById("restCity");
 const restState = document.getElementById("restState");
 const restZip = document.getElementById("restZip");
 var restPhoneNumber = document.getElementById("restPhoneNumber");
+const restTags = document.getElementById("restTags");
 const errorHeader = document.getElementById('errorHeader');
 var Sbutton = document.getElementById("Sbutton");
 
 errorHeader.style.visibility = "hidden";
+
+function renderFilters() {
+
+    firestore.doc("Tags/Tags").get().then(function(doc) {
+
+        if(doc && doc.exists) {
+
+            var data = doc.data();
+            var filters = data.Tags.split(", ");
+
+            filters.forEach(element => {
+                
+                restTags.innerHTML += "<option value='" + element + "'>" + element + "</option>";
+
+            });
+
+        }
+
+    })
+
+}
 
 function renderPage() {
 
@@ -28,6 +50,7 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
+            populateTags(docData.RestaurantTags);
         } else console.log("The restaurant document does not exist.");
 
     }).catch(function (error) {
@@ -36,6 +59,20 @@ function renderPage() {
         console.log(error);
 
     });
+
+}
+
+function populateTags(string) {
+
+    var tagsArray = string.split(",");
+    var tagsIndex = 0;
+    
+    for(var i=0; i<restTags.length; i++) {
+        if(tagsArray[tagsIndex] === restTags[i].value) {
+            restTags[i].setAttribute("selected", "selected");
+            tagsIndex++;
+        }
+    }
 
 }
 
@@ -51,6 +88,42 @@ function getUrlVars() {
     return vars;
 }
 
+function getTagsString() {
+
+    var tagsArray = getSelections(restTags);
+    var string = "";
+
+    console.log(tagsArray);
+
+    tagsArray.forEach(element => {
+
+        string += element + ",";
+
+    });
+
+    string = string.substring(0, string.length - 1);
+
+    return string;
+
+}
+
+function getSelections(select) {
+
+    var result = [];
+    var options = select && select.options;
+    var opt;
+
+    for (var i=0, iLen=options.length; i<iLen; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+        result.push(opt.value || opt.text);
+        }
+    }
+    return result;
+
+}
+
 console.log("The currently logged in user is: " + email + ".");
 
 Sbutton.addEventListener('click', e => {
@@ -60,6 +133,7 @@ Sbutton.addEventListener('click', e => {
     var state = restState.value;
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
+    var tags = getTagsString();
     // var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
     if (name == "") {
@@ -101,7 +175,8 @@ Sbutton.addEventListener('click', e => {
             "RestaurantCity": city,
             "RestaurantState": state,
             "RestaurantZip": zip,
-            "RestaurantPhoneNumber": phoneNumber
+            "RestaurantPhoneNumber": phoneNumber,
+            "RestaurantTags": tags
         }).then(function () {
             console.log("Document Successfully Updated.");
             window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -117,7 +192,8 @@ Sbutton.addEventListener('click', e => {
             "RestaurantCity": city,
             "RestaurantState": state,
             "RestaurantZip": zip,
-            "RestaurantPhoneNumber": phoneNumber
+            "RestaurantPhoneNumber": phoneNumber,
+            "RestaurantTags": tags
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
@@ -149,6 +225,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         email = user.email;
         console.log("The currently logged in user is: " + email + ".");
         getUrlVars();
+        renderFilters();
         if (vars[0] == "restaurant_id") renderPage();
     } else {
         // No user is signed in.

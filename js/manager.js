@@ -1,7 +1,21 @@
 //Initialize Firestore
 firestore = firebase.firestore();
 
+const nameField = document.getElementById("userName");
+const addressField = document.getElementById("userAddress");
+const cityField = document.getElementById("userCity");
+const stateField = document.getElementById("userState");
+const zipField = document.getElementById("userZip");
+const emailField = document.getElementById("userEmail");
+const phoneNumberField = document.getElementById("userPhone");
+
+var name = "";
+var address = "";
+var city = "";
+var state = "";
+var zip = "";
 var email = "";
+var phoneNumber = "";
 var refs = [];
 
 //Create HTML References
@@ -46,8 +60,16 @@ firebase.auth().onAuthStateChanged(function (user) {
       if (doc.exists) {
 
         var docData = doc.data();
-        role = docData.UserRole;
+        var role = docData.UserRole;
 
+        nameField.innerText = docData.UserName;
+        addressField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserCity;
+        stateField.innerText = docData.UserState;
+        zipField.innerText = docData.UserZipCode;
+        emailField.innerText = docData.UserEmail;
+        phoneNumberField.innerText = docData.UserPhoneNumber;
+        
         //Redirect user to the dashboard for their role.
         if (role === "Manager") return;
         else if (role === "Customer") window.location.replace("customer.html");
