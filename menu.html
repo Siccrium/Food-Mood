@@ -36,6 +36,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
+  <!-- popup css -->
+  <link href="css/popup.css" rel="stylesheet">
+
 
 </head>
 
@@ -50,10 +53,10 @@
       <div class="inSidebar">
         <br>
         <br>
-         Menu Name:
+        Menu Name:
         <p style="color:#008000">
-        <strong id="menuName"></strong>
-      </p>
+          <strong id="menuName"></strong>
+        </p>
         <input type="submit" value="Edit Information" class="btn btn-info" id="editButton">
       </div>
     </div>
@@ -84,6 +87,9 @@
               <li class="nav-item active">
                 <a class="nav-link" id="restPage" href="#">Restaurant Page</a>
               </li>
+              <li class="nav-item active">
+                <a class="nav-link" id="cartButton" href="OrderCart.html">Cart</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" id="delete">Delete Menu</a>
               </li>
@@ -93,24 +99,20 @@
       </nav>
 
 
-        <div class="container">
-          <div class="row">
-            <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="jumbotron">
             <div class="col-lg-10 mx-auto col-12 text-center mb-3">
               <br>
               <br>
-              <h1 class="mt-0 text-success">Food Items in your Menu</h1>
+              <h1 class="mt-0 text-success" id="menuHeader"></h1><br>
             </div>
 
-            <div class="card-columns">
-              <div class="card card-body">
-
-                <div class="float-right font-weight-bold" id="foodDuplicator"></div>
-              </div>
+            <div class="card-columns" id="foodDuplicator">
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
 
       <section class="features-icons bg-light text-center">
@@ -118,17 +120,17 @@
           <div class="row">
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                <p class="lead mb-0">Create, edit and delete restaurants quickly!</p>
+                <p class="lead mb-0" id="bottom1">Create, edit and delete restaurants quickly!</p>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                <p class="lead mb-0">Add interesting menus to your Restaurant.</p>
+                <p class="lead mb-0" id="bottom2">Add interesting menus to your Restaurant.</p>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                <p class="lead mb-0">Have a smooth delivery from your restaurant to customers!</p>
+                <p class="lead mb-0" id="bottom3">Have a smooth delivery from your restaurant to customers!</p>
               </div>
             </div>
           </div>

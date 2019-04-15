@@ -19,6 +19,10 @@ const deleteButton = document.getElementById("delete");
 const addMenuButton = document.getElementById("addMenuButton");
 const ordersButton = document.getElementById("ordersButton");
 const accDashboard = document.getElementById("accDashboard");
+const youCan = document.getElementById("youCan");
+const bottom1 = document.getElementById("bottom1");
+const bottom2 = document.getElementById("bottom2");
+const bottom3 = document.getElementById("bottom3");
 
 getUrlVars();
 
@@ -108,13 +112,15 @@ function managerPage() {
 }
 
 function customerPage() {
-
+    youCan.innerHTML = "Choose Your Favorite Menu!";
     editButton.parentNode.removeChild(editButton);
     addMenuButton.parentNode.removeChild(addMenuButton);
     deleteButton.parentNode.removeChild(deleteButton);
     ordersButton.parentNode.removeChild(ordersButton);
-
     accDashboard.href = "customer.html";
+    bottom1.innerHTML = "1. need new text here for customer";
+    bottom2.innerHTML = "2. need new text here for customer";
+    bottom3.innerHTML = "3. need new text here for customer";
 
 }
 
