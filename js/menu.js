@@ -18,13 +18,14 @@ const menuHeader = document.getElementById("menuHeader");
 const bottom1 = document.getElementById("bottom1");
 const bottom2 = document.getElementById("bottom2");
 const bottom3 = document.getElementById("bottom3");
+const cartButton = document.getElementById("cartButton")
 
 getUrlVars();
 
 
 
 function managerPage() {
-
+    cartButton.parentNode.removeChild(cartButton);
     menuHeader.innerHTML = "Food Items In Your Menu";
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
         if (doc && doc.exists) {
@@ -65,7 +66,7 @@ function managerPage() {
     });
     accDashboard.href = "manager.html";
 
-}
+}//end managerPage
 
 function customerPage() {
 
@@ -73,9 +74,24 @@ function customerPage() {
     deleteButton.parentNode.removeChild(deleteButton);
     accDashboard.href = "customer.html";
     menuHeader.innerHTML = "Start Your Order";
-    bottom1.innerHTML = "1. need new text here for customer";
-    bottom2.innerHTML = "2. need new text here for customer";
-    bottom3.innerHTML = "3. need new text here for customer";
+    bottom1.innerHTML = "Order your favourite meal from your favourite restaurant!";
+    bottom2.innerHTML = "Place an order and chill! Your food will be on the way!";
+    bottom3.innerHTML = "Expect to have a very smooth food mood experience!";
+    var cartCount = 0;
+
+
+    //get cart count and put correct number next to cart button
+    firestore.collection("Users/" + email + "/cart").get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            cartCount = cartCount += 1;
+            console.log(cartCount);
+        });//end foreach
+        if (cartCount == 0) {
+            cartButton.innerText = "Cart"
+        } else {
+            cartButton.innerText = "Cart (" + cartCount + ")"
+        }
+    });//end get.then
 
 
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
@@ -88,18 +104,16 @@ function customerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
-                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button></div>';
+                    div.innerHTML = '<div><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
+                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
                     div.className = 'card card-body float-right font-weight-bold';
                     foodDuplicator.appendChild(div);
-                    console.log("no wayy")
                 });//end forEach
                 //issues with listener.. get all food again and set listeners
                 firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc(vars['menu_id']).collection("Food").get().then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                         var data = doc.data();
-                        console.log(data);
-                        handleAddToCart(doc.id, data.FoodName);
+                        handleAddToCart(doc.id, data.FoodName, data.FoodPrice);
                     });
                 }).catch(function (error) {
                     console.log("Error getting documents: " + error);
@@ -114,18 +128,37 @@ function customerPage() {
         console.log(vars);
     });
 
+    function handleAddToCart(docId, FoodName, FoodPrice) {
+        var addToCartButton = document.getElementById(docId);
+        var popup = document.getElementById("popup" + docId);
+        var intPrice = parseFloat(FoodPrice);
+
+        addToCartButton.addEventListener("click", e => {
+            console.log("clicked addtocart btn for " + docId);
+
+            cartCount += 1;
+            cartButton.innerText = "Cart (" + cartCount + ")"
+
+            //popup.. plz help me edit the location of which this pops up via popup.css
+            popup.classList.add("show");
+            setTimeout(function () {
+                popup.classList.remove("show");
+            }, 1950);
+
+            firestore.doc("Users/" + email + "/cart/" + FoodName).set({
+                FoodName: FoodName,
+                FoodPrice: intPrice
+            }).then(function () {
+                console.log("Document successfully written!");
+            })
+                .catch(function (error) {
+                    console.log("Error writing document: " + error);
+                });
+
+        });//end addtocartButton listener
+    }//end handleAddToCart
+
 }//end CustomerPage
-
-
-
-function handleAddToCart(docId, FoodName) {
-    var buttonId = document.getElementById(docId);
-
-    buttonId.addEventListener("click", e => {
-        console.log("it worked" + docId);
-    });
-
-}//end handleAddToCart
 
 restPage.addEventListener("click", e => {
     window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
