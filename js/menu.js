@@ -141,7 +141,6 @@ function customerPage() {
         var addToCartButton = document.getElementById(docId);
         var popup = document.getElementById("popup" + docId);
         var intPrice = parseFloat(FoodPrice);
-        
         addToCartButton.addEventListener("click", e => {
             console.log("clicked addtocart btn for " + docId);
 
@@ -156,26 +155,25 @@ function customerPage() {
 
             //get all items in cart, gets food that exists if you are adding multiple
             //FoodName/FoodPrice/Quantity are set to the cart item, not the menu item, sorry that I used the same name
-            var cartRef = firestore.collection("Users/"+email+"/cart");
+            var cartRef = firestore.collection("Users/" + email + "/cart");
             var query = cartRef.where("FoodName", "==", FoodName).get().then(querySnapshot => {
-                console.log("you made it here");
-                    if (querySnapshot.empty) {//that item isnt in cart yet
-                        console.log("that food item isnt in cart yet, lets add 1");
-                        var itemCount = 0;
-                        firestore.doc("Users/" + email + "/cart/" + FoodName).set({
-                            FoodName: FoodName,
-                            FoodPrice: intPrice,
-                            Quantity: itemCount += 1,
-                            TotalCost: intPrice
-                        }).then(function () {
-                            console.log("Document successfully written!");
-                        }).catch(function (error) {
-                                console.log("Error writing document: " + error);
-                            });
-                        
-                    } else {//cart has the item
-                        querySnapshot.forEach(function (doc) {
-                            var data = doc.data();
+                if (querySnapshot.empty) {//that item isnt in cart yet
+                    console.log("that food item isnt in cart yet, lets add 1");
+                    var itemCount = 0;
+                    firestore.doc("Users/" + email + "/cart/" + FoodName).set({
+                        FoodName: FoodName,
+                        FoodPrice: intPrice,
+                        Quantity: itemCount += 1,
+                        TotalCost: intPrice
+                    }).then(function () {
+                        console.log("Document successfully written!");
+                    }).catch(function (error) {
+                        console.log("Error writing document: " + error);
+                    });
+
+                } else {//cart has the item
+                    querySnapshot.forEach(function (doc) {
+                        var data = doc.data();
                         console.log("found the same food you added to cart already in cart, get quantity and set it")
                         console.log(data);
                         var itemCount = data.Quantity;
@@ -185,12 +183,12 @@ function customerPage() {
                         }).then(function () {
                             console.log("Document successfully updated!");
                         }).catch(function (error) {
-                                console.log("Error updating document: " + error);
-                            });
-                        console.log("itemcount: "+itemCount);
+                            console.log("Error updating document: " + error);
+                        });
+                        console.log("itemcount: " + itemCount);
                     });//end foreach
-                    }//end if
-               
+                }//end if
+
             }).catch(err => {
                 console.log('Error getting document', err);
             });
@@ -224,7 +222,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         email = user.email;
 
         firestore.doc("/Users/" + email).get().then(function (doc) {
-            
+
             if (doc.exists) {
 
                 var docData = doc.data();
