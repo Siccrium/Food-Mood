@@ -65,7 +65,7 @@ btnSignUp.addEventListener("click", e => {
     errorHeader.style.visibility = "visible";
     console.log("The passwords do not match");
     return;
-  }
+  } 
   else if (name == "") {
     errorHeader.innerText = "Please enter your name.";
     errorHeader.style.visibility = "visible";
@@ -105,23 +105,23 @@ btnSignUp.addEventListener("click", e => {
 
   //Sign Up
   firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function (error) {
-    var errorCode = error.code;
-    if (errorCode === "auth/email-already-in-use") {
-      errorHeader.innerText =
-        "Email already has an account, please sign in";
-      errorHeader.style.visibility = "visible";
-      console.log("The provided email is already being used.");
-    } else if (errorCode === "auth/invalid-email") {
-      errorHeader.innerText = "The provided email is not valid.";
-      errorHeader.style.visibility = "visible";
-      console.log("The provided email is not a valid format.");
-    } else if (errorCode === "auth/weak-password") {
-      errorHeader.innerText =
-        "The password provided is too weak, please choose another.";
-      errorHeader.style.visibility = "visible";
-      console.log("The provided password is not strong enough.");
-    }
-  });
+      var errorCode = error.code;
+      if (errorCode === "auth/email-already-in-use") {
+        errorHeader.innerText =
+          "Email already has an account, please sign in";
+        errorHeader.style.visibility = "visible";
+        console.log("The provided email is already being used.");
+      } else if (errorCode === "auth/invalid-email") {
+        errorHeader.innerText = "The provided email is not valid.";
+        errorHeader.style.visibility = "visible";
+        console.log("The provided email is not a valid format.");
+      } else if (errorCode === "auth/weak-password") {
+        errorHeader.innerText =
+          "The password provided is too weak, please choose another.";
+        errorHeader.style.visibility = "visible";
+        console.log("The provided password is not strong enough.");
+      }
+    });
 });
 
 //Detecting Sign-In.
@@ -130,15 +130,15 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     //Creates the users file in the database.
     firestore.collection("Users").doc(email).set({
-      UserEmail: email,
-      UserName: name,
-      UserAddress: address,
-      UserCity: city,
-      UserState: state,
-      UserZipCode: zipCode,
-      UserRole: role,
-      UserPhoneNumber: phoneNumber
-    })
+        UserEmail: email,
+        UserName: name,
+        UserAddress: address,
+        UserCity: city,
+        UserState: state,
+        UserZipCode: zipCode,
+        UserRole: role,
+        UserPhoneNumber: phoneNumber
+      })
       .then(function () {
         console.log("Document successfully written!");
 
