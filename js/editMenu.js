@@ -308,7 +308,6 @@ function deleteFood(name) {
 }//end deleteFood
 
 function updateFood(foodId, newName, newPrice) {
-    //if there is an error now, maybe parseFloat doesn't work on normal int? aka 1.0 vs 1
     var intPrice = parseFloat(newPrice);
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/" + foodId).update(
         {
