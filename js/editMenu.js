@@ -254,7 +254,7 @@ addFoodButton.addEventListener("click", e => {
     } else if (newFoodName.value != "" && newFoodPrice.value != "") {
         console.log("Both Fields contain info, continue to creation!");
     } else {
-        console.log("might need another condition")
+        console.log("need another condition")
     }//end text field IF conditions
 
     //create the food item AND update menu JIC new info, then Redirect back to correct editmenu.html?...
@@ -308,11 +308,10 @@ function deleteFood(name) {
 }//end deleteFood
 
 function updateFood(foodId, newName, newPrice) {
-    var intPrice = parseFloat(newPrice);
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/" + foodId).update(
         {
             "FoodName": newName,
-            "FoodPrice": intPrice
+            "FoodPrice": newPrice
         }).then(function () {
             errorHeader.innerText = "Update In Progress! Please Wait..."
             errorHeader.style.visibility = "visible";
@@ -324,10 +323,9 @@ function updateFood(foodId, newName, newPrice) {
 
 function addFood(newName, newPrice, parentMenu) {
     var newFoodRef = firestore.collection("/Restaurants/" + vars['restaurant_id'] + "/Menus/" + parentMenu + "/Food/").doc();
-    var intPrice = parseFloat(newPrice);
     var foodInfo = {
         "FoodName": newName,
-        "FoodPrice": intPrice,
+        "FoodPrice": newPrice,
         "ParentMenu": parentMenu
     };
     newFoodRef.set(foodInfo).then(function () {
