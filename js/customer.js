@@ -36,8 +36,9 @@ function renderRestaurants() {
     documents.forEach(function (doc) {
       var data = doc.data();
       var div = document.createElement("div");
-      div.innerHTML = "<h1>" + data.RestaurantName + "</h1>"
-      + "<button id='" + doc.id + "' type=submit class=btn btn-success>View Restaurant</button>";
+      div.innerHTML = "<h3 style='color:#006400;'>" + data.RestaurantName + "</h3>"
+      + "<button id='" + doc.id + "' type=submit class='btn btn-success'>View Restaurant</button>";
+      div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
       searchSection.appendChild(div);
       restaurants.push(data);
       restIDs.push(doc.id);
@@ -61,6 +62,7 @@ function renderFilters() {
       filters.forEach(element => {
 
         restTags.innerHTML += "<option value='" + element + "'>" + element + "</option>";
+        restTags.className = "'mdb-select md-form colorful-select dropdown-primary' multiple searchable='Search here..'"
 
       });
 
@@ -102,7 +104,10 @@ searchSection.innerHTML = '';
 filteredRestaurants.forEach(function (element, index) {
   var div = document.createElement("div");
   div.innerHTML = "<h1>" + element['RestaurantName'] + "</h1>"
-  + "<button id='" + filteredRestIDs[index] + "' type=submit class=btn btn-success>View Restaurant</button>";
+  + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
+  // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
+  div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body font-weight-bold';
+
   searchSection.appendChild(div);
 });
 

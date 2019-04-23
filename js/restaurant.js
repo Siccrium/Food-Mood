@@ -47,6 +47,7 @@ firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Menus").get().th
         var div = document.createElement('div');
         div.innerHTML = '<br><br><h3 id="h">' + data.MenuName + '</h3>' +
             '<button name="' + restName.innerText + 'Menu' + '" id="' + doc.id + '" type="submit" class="btn btn-success">View Menu</button>';
+        div.className = 'col-lg-10 mx-left col-12 text-center mb-3 card card-body font-weight-bold';
         duplicator.appendChild(div);
         refs.push(document.getElementById(doc.id));
         eventListeners();
@@ -118,9 +119,9 @@ function customerPage() {
     deleteButton.parentNode.removeChild(deleteButton);
     ordersButton.parentNode.removeChild(ordersButton);
     accDashboard.href = "customer.html";
-    bottom1.innerHTML = "1. need new text here for customer";
-    bottom2.innerHTML = "2. need new text here for customer";
-    bottom3.innerHTML = "3. need new text here for customer";
+    bottom1.innerHTML = "Order your favourite meal from your favourite restaurant!";
+    bottom2.innerHTML = "Place an order and chill! Your food will be on the way!";
+    bottom3.innerHTML = "Expect to have a very smooth food mood experience!";
 
 }
 
