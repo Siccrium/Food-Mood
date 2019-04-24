@@ -17,8 +17,8 @@
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/style2.css">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="css/style2.css">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -42,8 +42,8 @@
 
 <body>
 
-<div class="wrapper">
-  <!-- Sidebar  -->
+  <div class="wrapper">
+    <!-- Sidebar  -->
     <div id="sidebar">
       <div class="sidebar-header">
         <h3>Your Account Information</h3>
@@ -82,135 +82,137 @@
       </div>
     </div>
 
-        <!-- Page Content  -->
-        <div id="content" style="background-image:url('./img/bg.jpg')" ;>
+    <!-- Page Content  -->
+    <div id="content" style="background-image:url('./img/bg.jpg')" ;>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-                    <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
+          <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav mr-auto">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">
-                              <span><img src="./img/FMW.jpg"></span>
-                            </a>
-                          </li>
-                          </ul>
-                            <a class="nav-link" href="OrdersCustomer.html">Orders</a>
-                            <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
-                    </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span><img src="./img/FMW.jpg"></span>
+                </a>
+              </li>
+            </ul>
+            <a class="nav-link" href="OrdersCustomer.html">Orders</a>
+            <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
+          </div>
 
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
-                        <span id="right">
-                          <i class="fas fa-shopping-cart fa-lg"></i>
-                        </span>
-                    </button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            <span id="right">
+              <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
+            </span>
+          </button>
 
-                </div>
-            </nav>
+        </div>
+      </nav>
 
-            <!-- The Modal -->
-            <div class="modal" id="myModal">
-              <div class="modal-dialog">
-                <div class="modal-content">
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
 
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                    <h4 class="modal-title">Your Cart</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-
-                  <!-- Modal body -->
-                  <div class="modal-body">
-
-                  </div>
-
-                  <!-- Modal footer -->
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-info">Checkout</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                  </div>
-
-                </div>
-              </div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="subtotal">Your Cart</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <div class="py-5">
-              <div class="container">
-                <div class="row hidden-md-up">
-                  <div class="col-md-4">
-                    <div class="jumbotron">
-                      <h5>Select a filter:</h5>
-                      <p>(Hold control to select multiple)</p>
-                      <select onchange="filterRestaurants()" multiple id="restTags">
-                      </select>
-                        <hr>
-                      <section id="searchSection">
-                      </section>
+            <!-- Modal body -->
+            <div class="modal-body" id="itemSummary">
 
-                      <h5 id="notifyHeader"></h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" id="checkout">Checkout</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
 
-<section class="features-icons bg-light text-center">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-          <p class="lead mb-0">Order your favourite meal from your favourite restaurant!</p>
+          </div>
         </div>
       </div>
-      <div class="col-lg-4">
-        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-          <p class="lead mb-0">Place an order and chill! Your food will be on the way!</p>
+
+      <div class="py-5">
+        <div class="container">
+          <div class="row hidden-md-up">
+            <div class="col-md-4">
+              <div class="jumbotron">
+                <h5>Select a filter:</h5>
+                <p>(Hold control to select multiple)</p>
+                <select onchange="filterRestaurants()" multiple id="restTags">
+                </select>
+                <hr>
+                <section id="searchSection">
+                </section>
+
+                <h5 id="notifyHeader"></h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-lg-4">
-        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-          <p class="lead mb-0">Expect to have a very smooth food mood experience!</p>
+
+
+      <section class="features-icons bg-light text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <p class="lead mb-0">Order your favourite meal from your favourite restaurant!</p>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <p class="lead mb-0">Place an order and chill! Your food will be on the way!</p>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                <p class="lead mb-0">Expect to have a very smooth food mood experience!</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+              <ul class="list-inline mb-2">
+                <li class="list-inline-item">
+                  <a href="#">About</a>
+                </li>
+                <li class="list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                  <a href="#">Contact</a>
+                </li>
+                <li class="list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                  <a href="#">Terms of Use</a>
+                </li>
+              </ul>
+              <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
     </div>
   </div>
-</section>
+  <script src="js/firebase.js"></script>
+  <script src="js/customer.js"></script>
 
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-        <ul class="list-inline mb-2">
-          <li class="list-inline-item">
-            <a href="#">About</a>
-          </li>
-          <li class="list-inline-item">&sdot;</li>
-          <li class="list-inline-item">
-            <a href="#">Contact</a>
-          </li>
-          <li class="list-inline-item">&sdot;</li>
-          <li class="list-inline-item">
-            <a href="#">Terms of Use</a>
-          </li>
-        </ul>
-        <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
-      </div>
-    </div>
-  </div>
-</footer>
-
-</div>
-</div>
-    <script src="js/firebase.js"></script>
-    <script src="js/customer.js"></script>
-
-<!-- jQuery CDN - Slim version (=without AJAX) -->
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
