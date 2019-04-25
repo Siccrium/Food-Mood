@@ -45,7 +45,6 @@ function renderPage() {
                         '</div>';
                     foodDuplicator.appendChild(div);
                     handleFoodDiv(doc.id, FoodName, FoodPrice);
-                    //handle addToCart button later for customer view
                 });
             }).catch(function (error) {
                 console.log("Error getting documents: " + error);

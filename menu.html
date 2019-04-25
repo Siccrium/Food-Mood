@@ -12,6 +12,16 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
   <!-- Bootstrap CSS CDN -->
@@ -36,6 +46,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
+  <!-- popup css -->
+  <link href="css/popup.css" rel="stylesheet">
+
 
 </head>
 
@@ -50,10 +63,14 @@
       <div class="inSidebar">
         <br>
         <br>
-         Menu Name:
+        Menu Name:
         <p style="color:#008000">
-        <strong id="menuName"></strong>
-      </p>
+          <strong id="menuName"></strong>
+        </p>
+        <!-- Menu Image:
+      <div id="fileButton">
+      </div> -->
+
         <input type="submit" value="Edit Information" class="btn btn-info" id="editButton">
       </div>
     </div>
@@ -84,6 +101,18 @@
               <li class="nav-item active">
                 <a class="nav-link" id="restPage" href="#">Restaurant Page</a>
               </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="homepage.html">Sign Out</a>
+              </li>
+              <!-- <li class="nav-item active">
+                <a class="nav-link" id="cartButton" href="OrderCart.html">Cart</a>
+              </li> -->
+              <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
+                data-target="#myModal">
+                <span id="right">
+                  <i id="cartIcon" class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
+                </span>
+              </button>
               <li class="nav-item">
                 <a class="nav-link" href="#" id="delete">Delete Menu</a>
               </li>
@@ -92,25 +121,47 @@
         </div>
       </nav>
 
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
 
-        <div class="container">
-          <div class="row">
-            <div class="jumbotron">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="subtotal">Your Cart</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="modalBody">
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" id="checkout">Checkout</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="jumbotron">
             <div class="col-lg-10 mx-auto col-12 text-center mb-3">
               <br>
               <br>
-              <h1 class="mt-0 text-success">Food Items in your Menu</h1>
+              <h1 class="mt-0 text-success" id="menuHeader"></h1><br>
             </div>
 
-            <div class="card-columns">
-              <div class="card card-body">
-
-                <div class="float-right font-weight-bold" id="foodDuplicator"></div>
-              </div>
+            <div class="card-columns" id="foodDuplicator">
             </div>
           </div>
         </div>
-        </div>
+      </div>
+
 
 
       <section class="features-icons bg-light text-center">
@@ -118,17 +169,17 @@
           <div class="row">
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                <p class="lead mb-0">Create, edit and delete restaurants quickly!</p>
+                <p class="lead mb-0" id="bottom1">Create, edit and delete restaurants quickly!</p>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                <p class="lead mb-0">Add interesting menus to your Restaurant.</p>
+                <p class="lead mb-0" id="bottom2">Add interesting menus to your Restaurant.</p>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                <p class="lead mb-0">Have a smooth delivery from your restaurant to customers!</p>
+                <p class="lead mb-0" id="bottom3">Have a smooth delivery from your restaurant to customers!</p>
               </div>
             </div>
           </div>
