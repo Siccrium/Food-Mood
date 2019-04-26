@@ -42,7 +42,13 @@
     animation: fadeOut 2s;
   }
 
-
+  .popup .showBad {
+    visibility: visible;
+    -webkit-animation: fadeIn 2s;
+    animation: fadeIn 2s;
+    -webkit-animation: fadeOut 4s;
+    animation: fadeOut 4s;
+  }
 
   
   /* Add animation (fade in the popup) */

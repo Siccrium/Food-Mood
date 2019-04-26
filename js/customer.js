@@ -13,6 +13,7 @@ const restTags = document.getElementById("restTags");
 const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
+const cartButton = document.getElementById("cartButton");
 
 var name = "";
 var address = "";
@@ -189,21 +190,23 @@ function getSelections(select) {
 ///////////////////////////////////////////
 var total = 0;
 var cartCount = 0;
-var listNumber = 0;
 var itemTotal = 0;
 
 function fillCart() {
+  var listNumber = 0;
+  total = 0;
 
   firestore.collection("Users/" + email + "/cart").get().then(function (querySnapshot) {
+
     querySnapshot.forEach(function (itemDoc) {
       docData = itemDoc.data();
-      cartCount += docData.Quantity;
-      temp = docData.TotalCost;
-      total += temp;
+      // cartCount += docData.Quantity;
+      total += docData.TotalCost;
       listNumber += 1;
-      console.log("cartCount: " + cartCount);
-      console.log("total: " + total.toFixed(2));
-      console.log("docquantity: " + docData.Quantity)
+
+      // console.log("cartCount: " + cartCount);
+      // console.log("total: " + total.toFixed(2));
+      // console.log("docquantity: " + docData.Quantity)
       var div = document.createElement('div');
       div.innerHTML = '<br><div id="' + itemDoc.id + 'Div">' +
         '<p>' + listNumber + '. ' +
@@ -238,7 +241,7 @@ function handleQuantity(docId, price, quantity) {
     console.log("addOne" + docId);
     cartCount++;
     total += price;
-    quantity += 1;
+    quantity++;
     itemTotal = quantity * price;
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     quantityNumber.innerText = "Quantity: " + quantity + "";
@@ -251,8 +254,14 @@ function handleQuantity(docId, price, quantity) {
     console.log("takeOne" + docId);
     cartCount--;
     total -= price;
-    quantity -= 1;
+    quantity--;
     itemTotal = quantity * price;
+    if (quantity <= 0) {//not allowed to make quantity negative. DONT LET THEM
+      total += price;
+      cartCount++;
+      quantity++;
+      return;
+    }//end if
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     quantityNumber.innerText = "Quantity: " + quantity + "";
     cartCounter.innerText = cartCount;
@@ -265,6 +274,9 @@ function handleQuantity(docId, price, quantity) {
     cartCount -= quantity;
     itemTotal = quantity * price;
     total -= itemTotal;
+    if (total <= 0) {//dont allow negative total or weird negative 0 to show up
+      total = 0;
+    }//end if
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     cartCounter.innerText = cartCount;
     deleteItem(docId);
@@ -296,7 +308,7 @@ function deleteItem(foodId) {
 }//end deleteItem
 
 function setCartCount() {
-  var cartCount = 0;
+  // var cartCount = 0;
   var quantityCount = 0;
 
   //get cart count and put correct number next to cart button
@@ -313,6 +325,14 @@ function setCartCount() {
     }
   });//end get.then
 }
+
+cartButton.addEventListener("click", e => {
+  //remove the items in the cart modal and reload them just incase it changed
+  while (itemSummary.firstChild) {
+    itemSummary.removeChild(itemSummary.firstChild);
+  }
+  fillCart();
+})
 
 checkout.addEventListener("click", e => {
   window.location.replace("orderCart.html");
