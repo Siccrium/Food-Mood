@@ -1,13 +1,14 @@
 //Initialize Firestore
+"<link rel='stylesheet' href='css/style2.css'>";
 firestore = firebase.firestore();
 
-// const nameField = document.getElementById("userName");
-// const addressField = document.getElementById("userAddress");
-// const cityField = document.getElementById("userCity");
-// const stateField = document.getElementById("userState");
-// const zipField = document.getElementById("userZip");
-// const emailField = document.getElementById("userEmail");
-// const phoneNumberField = document.getElementById("userPhone");
+const nameField = document.getElementById("userName");
+const addressField = document.getElementById("userAddress");
+const cityField = document.getElementById("userCity");
+const stateField = document.getElementById("userState");
+const zipField = document.getElementById("userZip");
+const emailField = document.getElementById("userEmail");
+const phoneNumberField = document.getElementById("userPhone");
 const searchSection = document.getElementById("searchSection");
 const restTags = document.getElementById("restTags");
 const itemSummary = document.getElementById("itemSummary");
@@ -43,7 +44,8 @@ function renderRestaurants() {
       var div = document.createElement("div");
       div.innerHTML = "<h3 style='color:#006400;'>" + data.RestaurantName + "</h3>"
         + "<button id='" + doc.id + "' type=submit class='btn btn-success'>View Restaurant</button>";
-      div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
+      // div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
+      div.className = 'card card-body fixed float-left font-weight-bold';
       searchSection.appendChild(div);
       restaurants.push(data);
       restIDs.push(doc.id);
@@ -108,11 +110,10 @@ function filterRestaurants() {
 
   filteredRestaurants.forEach(function (element, index) {
     var div = document.createElement("div");
-    div.innerHTML = "<h1>" + element['RestaurantName'] + "</h1>"
+    div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
       + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
     // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
-    div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body font-weight-bold';
-
+      div.className = 'card card-body fixed float-left font-weight-bold';
     searchSection.appendChild(div);
   });
 
@@ -353,13 +354,13 @@ firebase.auth().onAuthStateChanged(function (user) {
         var docData = doc.data();
         var role = docData.UserRole;
 
-        // nameField.innerText = docData.UserName;
-        // addressField.innerText = docData.UserAddress;
-        // cityField.innerText = docData.UserAddress;
-        // stateField.innerText = docData.UserAddress;
-        // zipField.innerText = docData.UserAddress;
-        // emailField.innerText = docData.UserEmail;
-        // phoneNumberField.innerText = docData.UserPhoneNumber;
+        nameField.innerText = docData.UserName;
+        addressField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserAddress;
+        stateField.innerText = docData.UserAddress;
+        zipField.innerText = docData.UserAddress;
+        emailField.innerText = docData.UserEmail;
+        phoneNumberField.innerText = docData.UserPhoneNumber;
 
         //Redirect user to the dashboard for their role.
         if (role === "Customer") return;
