@@ -71,19 +71,44 @@
                 </a>
               </li>
             </ul>
-            <a class="nav-link" href="#" id="accountButton">Account</a>
-            <a class="nav-link" href="#">Restaurant Page</a>
+            <a class="nav-link" href="customer.html" >Account</a>
             <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
           </div>
 
-          <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
+            data-target="#myModal">
             <span id="right">
-              <i class="fas fa-shopping-cart fa-lg"></i>
+              <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
             </span>
           </button>
-
         </div>
       </nav>
+
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="subtotal">Your Cart</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="itemSummary">
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" id="checkout">Checkout</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
 
       <header class="masthead text-gray text-center">
         <div class="container-fluid">
