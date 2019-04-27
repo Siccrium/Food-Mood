@@ -1,18 +1,20 @@
 //Initialize Firestore
+"<link rel='stylesheet' href='css/style2.css'>";
 firestore = firebase.firestore();
 
-// const nameField = document.getElementById("userName");
-// const addressField = document.getElementById("userAddress");
-// const cityField = document.getElementById("userCity");
-// const stateField = document.getElementById("userState");
-// const zipField = document.getElementById("userZip");
-// const emailField = document.getElementById("userEmail");
-// const phoneNumberField = document.getElementById("userPhone");
+const nameField = document.getElementById("userName");
+const addressField = document.getElementById("userAddress");
+const cityField = document.getElementById("userCity");
+const stateField = document.getElementById("userState");
+const zipField = document.getElementById("userZip");
+const emailField = document.getElementById("userEmail");
+const phoneNumberField = document.getElementById("userPhone");
 const searchSection = document.getElementById("searchSection");
 const restTags = document.getElementById("restTags");
 const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
+const cartButton = document.getElementById("cartButton");
 
 var name = "";
 var address = "";
@@ -42,7 +44,8 @@ function renderRestaurants() {
       var div = document.createElement("div");
       div.innerHTML = "<h3 style='color:#006400;'>" + data.RestaurantName + "</h3>"
         + "<button id='" + doc.id + "' type=submit class='btn btn-success'>View Restaurant</button>";
-      div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
+      // div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
+      div.className = 'card card-body fixed float-left font-weight-bold';
       searchSection.appendChild(div);
       restaurants.push(data);
       restIDs.push(doc.id);
@@ -107,11 +110,10 @@ function filterRestaurants() {
 
   filteredRestaurants.forEach(function (element, index) {
     var div = document.createElement("div");
-    div.innerHTML = "<h1>" + element['RestaurantName'] + "</h1>"
+    div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
       + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
     // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
-    div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body font-weight-bold';
-
+      div.className = 'card card-body fixed float-left font-weight-bold';
     searchSection.appendChild(div);
   });
 
@@ -189,21 +191,23 @@ function getSelections(select) {
 ///////////////////////////////////////////
 var total = 0;
 var cartCount = 0;
-var listNumber = 0;
 var itemTotal = 0;
 
 function fillCart() {
+  var listNumber = 0;
+  total = 0;
 
   firestore.collection("Users/" + email + "/cart").get().then(function (querySnapshot) {
+
     querySnapshot.forEach(function (itemDoc) {
       docData = itemDoc.data();
-      cartCount += docData.Quantity;
-      temp = docData.TotalCost;
-      total += temp;
+      // cartCount += docData.Quantity;
+      total += docData.TotalCost;
       listNumber += 1;
-      console.log("cartCount: " + cartCount);
-      console.log("total: " + total.toFixed(2));
-      console.log("docquantity: " + docData.Quantity)
+
+      // console.log("cartCount: " + cartCount);
+      // console.log("total: " + total.toFixed(2));
+      // console.log("docquantity: " + docData.Quantity)
       var div = document.createElement('div');
       div.innerHTML = '<br><div id="' + itemDoc.id + 'Div">' +
         '<p>' + listNumber + '. ' +
@@ -238,7 +242,7 @@ function handleQuantity(docId, price, quantity) {
     console.log("addOne" + docId);
     cartCount++;
     total += price;
-    quantity += 1;
+    quantity++;
     itemTotal = quantity * price;
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     quantityNumber.innerText = "Quantity: " + quantity + "";
@@ -251,8 +255,14 @@ function handleQuantity(docId, price, quantity) {
     console.log("takeOne" + docId);
     cartCount--;
     total -= price;
-    quantity -= 1;
+    quantity--;
     itemTotal = quantity * price;
+    if (quantity <= 0) {//not allowed to make quantity negative. DONT LET THEM
+      total += price;
+      cartCount++;
+      quantity++;
+      return;
+    }//end if
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     quantityNumber.innerText = "Quantity: " + quantity + "";
     cartCounter.innerText = cartCount;
@@ -265,6 +275,9 @@ function handleQuantity(docId, price, quantity) {
     cartCount -= quantity;
     itemTotal = quantity * price;
     total -= itemTotal;
+    if (total <= 0) {//dont allow negative total or weird negative 0 to show up
+      total = 0;
+    }//end if
     subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
     cartCounter.innerText = cartCount;
     deleteItem(docId);
@@ -296,7 +309,7 @@ function deleteItem(foodId) {
 }//end deleteItem
 
 function setCartCount() {
-  var cartCount = 0;
+  // var cartCount = 0;
   var quantityCount = 0;
 
   //get cart count and put correct number next to cart button
@@ -313,6 +326,14 @@ function setCartCount() {
     }
   });//end get.then
 }
+
+cartButton.addEventListener("click", e => {
+  //remove the items in the cart modal and reload them just incase it changed
+  while (itemSummary.firstChild) {
+    itemSummary.removeChild(itemSummary.firstChild);
+  }
+  fillCart();
+})
 
 checkout.addEventListener("click", e => {
   window.location.replace("orderCart.html");
@@ -333,13 +354,13 @@ firebase.auth().onAuthStateChanged(function (user) {
         var docData = doc.data();
         var role = docData.UserRole;
 
-        // nameField.innerText = docData.UserName;
-        // addressField.innerText = docData.UserAddress;
-        // cityField.innerText = docData.UserAddress;
-        // stateField.innerText = docData.UserAddress;
-        // zipField.innerText = docData.UserAddress;
-        // emailField.innerText = docData.UserEmail;
-        // phoneNumberField.innerText = docData.UserPhoneNumber;
+        nameField.innerText = docData.UserName;
+        addressField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserAddress;
+        stateField.innerText = docData.UserAddress;
+        zipField.innerText = docData.UserAddress;
+        emailField.innerText = docData.UserEmail;
+        phoneNumberField.innerText = docData.UserPhoneNumber;
 
         //Redirect user to the dashboard for their role.
         if (role === "Customer") return;

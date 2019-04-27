@@ -88,32 +88,36 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-          <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse"
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span><img src="./img/fm.jpg"></span>
+
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span><img src="./img/FMW.jpg"></span>
-                </a>
+              <ul class="nav navbar-nav ml-auto" id="ul">
+                <li class="nav-item active">
+                <a class="nav-link" href="OrdersCustomer.html">Orders</a>
               </li>
-            </ul>
-            <a class="nav-link" href="OrdersCustomer.html">Orders</a>
+              <li class="nav-item active">
             <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
-          </div>
+            </li>
 
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+          <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
+            data-target="#myModal">
             <span id="right">
               <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
             </span>
           </button>
-
-        </div>
-      </nav>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
       <!-- The Modal -->
       <div class="modal" id="myModal">
@@ -141,10 +145,8 @@
         </div>
       </div>
 
-      <div class="py-5">
         <div class="container">
-          <div class="row hidden-md-up">
-            <div class="col-md-4">
+          <div class="row">
               <div class="jumbotron">
                 <h5>Select a filter:</h5>
                 <p>(Hold control to select multiple)</p>
@@ -158,8 +160,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
 
       <section class="features-icons bg-light text-center">

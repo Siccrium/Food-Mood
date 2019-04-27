@@ -1,6 +1,6 @@
 //Initialize Firestore
 firestore = firebase.firestore();
-
+"<link rel='stylesheet' href='css/style2.css'>";
 var email = "";
 var vars = [];
 var refs = [];
@@ -21,7 +21,6 @@ const bottom3 = document.getElementById("bottom3");
 const cartCounter = document.getElementById("cartCounter");
 const cartButton = document.getElementById("cartButton");
 const modalBody = document.getElementById("modalBody");
-var clickedOnce = false; //this boolean is essential to correct cart functionality dont delete
 getUrlVars();
 
 
@@ -41,7 +40,8 @@ function managerPage() {
                     var div = document.createElement('div');
                     div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body float-right font-weight-bold';
+                    // div.className = 'card card-body float-right font-weight-bold';
+                      div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
                     //handle addToCart button later for customer view
                 });
@@ -72,17 +72,18 @@ function managerPage() {
 
 }
 
+var cartCount = 0;
+var quantityCount = 0;
+
 function customerPage() {
 
     editButton.parentNode.removeChild(editButton);
     deleteButton.parentNode.removeChild(deleteButton);
     accDashboard.href = "customer.html";
     menuHeader.innerHTML = "Start Your Order";
-    bottom1.innerHTML = "1. need new text here for customer";
-    bottom2.innerHTML = "2. need new text here for customer";
-    bottom3.innerHTML = "3. need new text here for customer";
-    var cartCount = 0;
-    var quantityCount = 0;
+    bottom1.innerHTML = "Order your favourite meal from your favourite restaurant!";
+    bottom2.innerHTML = "Place an order and chill! Your food will be on the way!";
+    bottom3.innerHTML = "Expect to have a very smooth food mood experience!";
 
     //get cart count and put correct number next to cart button
     firestore.collection("Users/" + email + "/cart").get().then(function (querySnapshot) {
@@ -98,14 +99,7 @@ function customerPage() {
         }
     });//end get.then
 
-
-    cartButton.addEventListener("click", e => {
-        while (modalBody.firstChild) {
-            modalBody.removeChild(modalBody.firstChild);
-        }
-        fillCart();
-    })
-
+    //show all food items in the menu
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
         if (doc && doc.exists) {
             var data = doc.data();
@@ -118,14 +112,13 @@ function customerPage() {
                     var div = document.createElement('div');
                     div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body float-right font-weight-bold';
+                    div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
                 });//end forEach
                 //issues with listener.. get all food again and set listeners
                 firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc(vars['menu_id']).collection("Food").get().then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                         var data = doc.data();
-                        console.log(data);
                         handleAddToCart(doc.id, data.FoodName, data.FoodPrice);
                     });
                 }).catch(function (error) {
@@ -136,73 +129,110 @@ function customerPage() {
                 console.log("Error getting documents: " + error);
             });
             //end foodDuplicator div
-        } else
-            console.log("The menu document doesn't exist");
-        console.log(vars);
+        } else {
+            console.log("menu doesn't not found");
+            console.log(vars);
+        }//end if doc && doc.exists
     });
 
 }//end CustomerPage
 
-
+// var sameRestBool = false;
 
 function handleAddToCart(docId, FoodName, FoodPrice) {
+
     var addToCartButton = document.getElementById(docId);
     var popup = document.getElementById("popup" + docId);
     var intPrice = parseFloat(FoodPrice);
     addToCartButton.addEventListener("click", e => {
         console.log("clicked addtocart btn for " + docId);
 
-        cartCount += 1;
-        cartCounter.innerText = cartCount;
+        sameRest();
+        //check if item clicked is from the same restaurant
+        function sameRest() {
+            var cartRef = firestore.collection("Users/" + email + "/cart");
 
-        //popup.. plz help me edit the location of which this pops up via popup.css
-        popup.classList.add("show");
-        setTimeout(function () {
-            popup.classList.remove("show");
-        }, 1950);
+            //see if there are any items in the cart at all
+            cartRef.get().then(querySnapshot => {
+                if (querySnapshot.empty) {//cart must be empty
+                    putInCart();
+                } else {//cart is not empty
+                    var query = cartRef.where("ParentRest", "==", vars['restaurant_id']).get().then(querySnapshot => {
+                        if (querySnapshot.empty) {//that item is from a different rest, dont allow
+                            console.log("That Item is from a different Restaurant than other cart items, that's not allowed");
+                            popup.innerText = "Only Pick From One Restaurant";
+                            popup.classList.add("showBad");
+                            setTimeout(function () {
+                                popup.classList.remove("showBad");
+                            }, 3950);
+                        } else {//item is from same rest, this is good
+                            //popup.. plz help me edit the location of which this pops up via popup.css
+                            popup.innerText = "Item Added To Cart";
+                            popup.classList.add("show");
+                            setTimeout(function () {
+                                popup.classList.remove("show");
+                            }, 1950);
 
-        //get all items in cart, gets food that exists if you are adding multiple
-        //FoodName/FoodPrice/Quantity are set to the cart item, not the menu item, sorry that I used the same name
-        var cartRef = firestore.collection("Users/" + email + "/cart");
-        var query = cartRef.where("FoodName", "==", FoodName).get().then(querySnapshot => {
-            if (querySnapshot.empty) {//that item isnt in cart yet
-                console.log("that food item isnt in cart yet, lets add 1");
-                var itemCount = 0;
-                firestore.doc("Users/" + email + "/cart/" + FoodName).set({
-                    FoodName: FoodName,
-                    FoodPrice: intPrice,
-                    Quantity: itemCount += 1,
-                    TotalCost: intPrice
-                }).then(function () {
-                    console.log("cart item successfully written!");
-                    fillCart();
-                    var itemQuantity = document.getElementById("quantity" + docId);
-                    itemQuantity.innerText = "Quantity: 1";
-                }).catch(function (error) {
-                    console.log("Error writing document: " + error);
-                });
+                            putInCart();
+                        }//end if query2Snapshot.empty
+                    }).catch(err => {
+                        console.log('Error getting document', err);
+                    });//end query2
 
-            } else {//cart has the item
-                querySnapshot.forEach(function (doc) {
-                    var data = doc.data();
-                    console.log("found the same food you added to cart already in cart, get quantity and set it")
-                    console.log(data);
-                    var itemCount = data.Quantity;
-                    firestore.doc("Users/" + email + "/cart/" + FoodName).update({
-                        Quantity: itemCount += 1,
-                        TotalCost: intPrice * (itemCount)
+                }//end if query1Snapshot.empty
+            }).catch(err => {
+                console.log('Error getting document', err);
+            });//end query
+
+        }//end sameRest
+
+        function putInCart() {
+            cartCount += 1;
+            cartCounter.innerText = cartCount;
+
+            //get all items in cart, gets food that exists if you are adding multiple
+            //FoodName/FoodPrice/Quantity are set to the cart item, not the menu item, sorry that I used the same name
+            var cartRef = firestore.collection("Users/" + email + "/cart");
+            var query = cartRef.where("FoodName", "==", FoodName).get().then(querySnapshot => {
+                if (querySnapshot.empty) {//that item isnt in cart yet
+                    console.log("that food item isnt in cart yet, lets add 1");
+                    var itemCount = 1;
+                    firestore.doc("Users/" + email + "/cart/" + FoodName).set({
+                        FoodName: FoodName,
+                        FoodPrice: intPrice,
+                        Quantity: itemCount,
+                        TotalCost: intPrice,
+                        ParentRest: vars['restaurant_id']
                     }).then(function () {
-                        console.log("Document successfully updated!");
+                        console.log("cart item successfully written!");
+                        fillCart();
+                        var itemQuantity = document.getElementById("quantity" + docId);
+                        itemQuantity.innerText = "Quantity: 1";
                     }).catch(function (error) {
-                        console.log("Error updating document: " + error);
+                        console.log("Error writing document: " + error);
                     });
-                    console.log("itemcount: " + itemCount);
-                });//end foreach
-            }//end if
 
-        }).catch(err => {
-            console.log('Error getting document', err);
-        });
+                } else {//cart has the item
+                    querySnapshot.forEach(function (doc) {
+                        var data = doc.data();
+                        console.log("found the same food you added to cart already in cart, get quantity and set it")
+                        var itemCount = data.Quantity;
+                        firestore.doc("Users/" + email + "/cart/" + FoodName).update({
+                            Quantity: itemCount += 1,
+                            TotalCost: intPrice * (itemCount)
+                        }).then(function () {
+                            console.log("Document successfully updated!");
+                        }).catch(function (error) {
+                            console.log("Error updating document: " + error);
+                        });
+                        console.log("itemcount: " + itemCount);
+                    });//end foreach
+                }//end if
+
+            }).catch(err => {
+                console.log('Error getting document', err);
+            });
+        }//end putInCart
 
 
 
@@ -224,30 +254,32 @@ function getUrlVars() {
     return vars;
 }
 
+
+
+
 //cart modal functions, sorry for confusion.
 ///////////////////////////////////////////
-var total = 0;
-var cartCount = 0;
+
+// var cartCount = 0;
 var itemTotal = 0;
-var listNumber = 0;
+var total = 0;
+
 function fillCart() {
+    var listNumber = 0;
+    total = 0;
 
     firestore.collection("Users/" + email + "/cart").get().then(function (querySnapshot) {
-
 
         querySnapshot.forEach(function (itemDoc) {
             docData = itemDoc.data();
 
-            if (!clickedOnce) {
-                cartCount += docData.Quantity;
-                total += docData.TotalCost;
-                listNumber += 1;
-            } else {
-                //nothing?
-            }//end if
-            console.log("cartCount: " + cartCount);
-            console.log("total: " + total.toFixed(2));
-            console.log("docquantity: " + docData.Quantity)
+            total += docData.TotalCost;
+            listNumber += 1;
+
+            // console.log("cartCount: " + cartCount);
+            // console.log("total: " + total.toFixed(2));
+            // console.log("docdata.totalcost: " + docData.TotalCost);
+            // console.log("docquantity: " + docData.Quantity);
             var div = document.createElement('div');
             div.innerHTML = '<br><div id="' + itemDoc.id + 'Div">' +
                 '<p>' + listNumber + '. ' +
@@ -263,7 +295,6 @@ function fillCart() {
             modalBody.appendChild(div);
             handleQuantity(itemDoc.id, docData.FoodPrice, docData.Quantity);
         });//end foreach
-        clickedOnce = true;
         if (cartCount == 0) {
             subtotal.innerText = "Your Cart Is Empty";
         } else {
@@ -284,7 +315,7 @@ function handleQuantity(docId, price, quantity) {
         console.log("addOne" + docId);
         cartCount++;
         total += price;
-        quantity += 1;
+        quantity++;
         itemTotal = quantity * price;
         subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
         quantityNumber.innerText = "Quantity: " + quantity + "";
@@ -297,8 +328,14 @@ function handleQuantity(docId, price, quantity) {
         console.log("takeOne" + docId);
         cartCount--;
         total -= price;
-        quantity -= 1;
+        quantity--;
         itemTotal = quantity * price;
+        if (quantity <= 0) {//not allowed to make quantity negative. DONT LET THEM
+            total += price;
+            cartCount++;
+            quantity++;
+            return;
+        }//end if
         subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
         quantityNumber.innerText = "Quantity: " + quantity + "";
         console.log("newindvPrice: " + itemTotal);
@@ -311,6 +348,9 @@ function handleQuantity(docId, price, quantity) {
         cartCount -= quantity;
         itemTotal = quantity * price;
         total -= itemTotal;
+        if (total <= 0) {//dont allow negative total or weird negative 0 to show up
+            total = 0;
+        }//end if
         subtotal.innerText = "Cart Subtotal (" + cartCount + " items): $" + total.toFixed(2) + "";
         cartCounter.innerText = cartCount;
         deleteItem(docId);
@@ -340,6 +380,14 @@ function deleteItem(foodId) {
         console.error("Error removing document: ", error);
     });
 }//end deleteItem
+
+cartButton.addEventListener("click", e => {
+    //remove the items in the cart modal and reload them just incase it changed
+    while (modalBody.firstChild) {
+        modalBody.removeChild(modalBody.firstChild);
+    }
+    fillCart();
+})
 
 checkout.addEventListener("click", e => {
     window.location.replace("orderCart.html");
