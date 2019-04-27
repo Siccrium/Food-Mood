@@ -1,6 +1,6 @@
 //Initialize Firestore
 firestore = firebase.firestore();
-
+"<link rel='stylesheet' href='css/style2.css'>";
 var email = "";
 var vars = [];
 var refs = [];
@@ -40,7 +40,8 @@ function managerPage() {
                     var div = document.createElement('div');
                     div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body float-right font-weight-bold';
+                    // div.className = 'card card-body float-right font-weight-bold';
+                      div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
                     //handle addToCart button later for customer view
                 });
@@ -111,7 +112,7 @@ function customerPage() {
                     var div = document.createElement('div');
                     div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body float-right font-weight-bold';
+                    div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
                 });//end forEach
                 //issues with listener.. get all food again and set listeners
