@@ -7,6 +7,9 @@ const signOut = document.getElementById("signOut");
 const yourOrders = document.getElementById("h1");
 const notifyHeader = document.getElementById("notifyHeader");
 const restPage = document.getElementById("restPage");
+const itemSummary = document.getElementById("itemSummary");
+const subtotal = document.getElementById("subtotal");
+const checkout = document.getElementById("checkout");
 
 restPage.style.visibility = "hidden";
 var email = "";
@@ -157,6 +160,8 @@ function getUrlVars() {
 restPage.addEventListener("click", e => {
     window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
 });
+
+
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
