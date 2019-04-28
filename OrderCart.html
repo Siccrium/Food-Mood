@@ -81,11 +81,6 @@
                           <hr>
                           <form action="/echo" method="post" novalidate="novalidate" class="needs-validation">
 
-                              <div class="form-group">
-                                  <label for="cc-payment" class="control-label mb-1">Payment amount</label>
-                                  <input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                                  <span class="invalid-feedback">Enter the payment amount</span>
-                              </div>
                               <div class="form-group has-success">
                                   <label for="cc-name" class="control-label mb-1">Name on card</label>
                                   <input id="cc-name" name="cc-name" type="text" class="form-control cc-name" required autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name-error">
@@ -146,29 +141,30 @@
                                 <div class="card-title">
                                       <h3>Summary</h3>
                                       <div class="summary-item"><span class="text">Subtotal:</span><span class="price"></span></div>
+                                      <h1 id="Subtotal"></h1>
                                       <hr>
-                                      <div class="summary-item"><span class="text">Discount:</span><span class="price"></span></div>
-                                      <hr>
-                                      <div class="summary-item"><span class="text">Shipping:</span><span class="price"></span></div>
-                                      <hr>
-                                      <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
+                                      <div class="summary-item"><span class="text">Delivery Fee:</span><span class="price"></span></div>
+                                      <h1 id="Delivery"></h1>
                                       <hr>
                                       <div class="summary-item"><span class="text">Tip:</span><span class="price"></span></div>
                                       <br>
                                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-info active">
-                                          <input type="radio" name="options" id="option1" autocomplete="off" checked> 1%
+                                          <input type="radio" name="options" id="option1" autocomplete="off" value=0.01 checked onchange="getRadioVal()"> 1%
                                         </label>
                                         <label class="btn btn-info">
-                                          <input type="radio" name="options" id="option2" autocomplete="off"> 2%
+                                          <input type="radio" name="options" id="option2" autocomplete="off" value=0.02 onchange="getRadioVal()"> 2%
                                         </label>
                                         <label class="btn btn-info">
-                                          <input type="radio" name="options" id="option3" autocomplete="off"> 3%
+                                          <input type="radio" name="options" id="option3" autocomplete="off" value=0.03 onchange="getRadioVal()"> 3%
                                         </label>
                                         <label class="btn btn-info">
-                                          <input type="radio" name="options" class="text" id="option4" autocomplete="off">Other
+                                          <input type="radio" name="options" class="text" id="option4" autocomplete="off" value="Other" onchange="getRadioVal()">Other
                                         </label>
                                       </div>
+                                      <hr>
+                                      <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
+                                      <h1 id="Total"></h1>
                                       <hr>
                                       <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href='appFeedback.html';">Place Order</button>
 
@@ -230,9 +226,7 @@
 
 
     <script src="js/firebase.js"></script>
-    <script src="js/orders.js"></script>
-    <script src="js/signOut.js"></script>
-    <script src="js/customer.js"></script>
+    <script src="js/orderCart.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
