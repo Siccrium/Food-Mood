@@ -1,6 +1,7 @@
 //Initialize Firestore
 firestore = firebase.firestore();
 
+
 const nameField = document.getElementById("userName");
 const addressField = document.getElementById("userAddress");
 const cityField = document.getElementById("userCity");
@@ -8,6 +9,8 @@ const stateField = document.getElementById("userState");
 const zipField = document.getElementById("userZip");
 const emailField = document.getElementById("userEmail");
 const phoneNumberField = document.getElementById("userPhone");
+const editButton = document.getElementById("editButton");
+
 
 var name = "";
 var address = "";
@@ -17,6 +20,7 @@ var zip = "";
 var email = "";
 var phoneNumber = "";
 var refs = [];
+// var vars = [];
 
 //Create HTML References
 const duplicator = document.getElementById('duplicator');
@@ -48,6 +52,21 @@ function eventListeners() {
 
 }
 
+editButton.addEventListener("click", e => {
+  window.location.replace("editAccount.html");
+});//end editButton listener
+
+// function getUrlVars() {
+//   var hash;
+//   var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+//   for (var i = 0; i < hashes.length; i++) {
+//     hash = hashes[i].split('=');
+//     vars.push(hash[0]);
+//     vars[hash[0]] = hash[1];
+//   }
+//   return vars;
+// }
+
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in. Get their email.
@@ -69,7 +88,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         zipField.innerText = docData.UserZipCode;
         emailField.innerText = docData.UserEmail;
         phoneNumberField.innerText = docData.UserPhoneNumber;
-        
+
         //Redirect user to the dashboard for their role.
         if (role === "Manager") return;
         else if (role === "Customer") window.location.replace("customer.html");
