@@ -15,6 +15,7 @@ const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
 const cartButton = document.getElementById("cartButton");
+const editButton = document.getElementById("editButton");
 
 var name = "";
 var address = "";
@@ -55,7 +56,7 @@ function renderRestaurants() {
 
   });
 
-}
+}//end renderRestaurants
 
 function renderFilters() {
 
@@ -77,7 +78,7 @@ function renderFilters() {
 
   })
 
-}
+}//end renderFilters
 
 function filterRestaurants() {
 
@@ -113,13 +114,13 @@ function filterRestaurants() {
     div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
       + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
     // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
-      div.className = 'card card-body fixed float-left font-weight-bold';
+    div.className = 'card card-body fixed float-left font-weight-bold';
     searchSection.appendChild(div);
   });
 
   eventListeners(filteredRestIDs);
 
-}
+}//end filterRestaurants
 
 function eventListeners(IDs) {
 
@@ -130,7 +131,7 @@ function eventListeners(IDs) {
     });
   });
 
-}
+}//end eventListeners IDs
 
 function getSelections(select) {
 
@@ -147,51 +148,17 @@ function getSelections(select) {
   }
   return result;
 
-}
-
-// placeOrder.addEventListener("click", e => {
-//   notifyHeader.innerText = "Order Placed!";
-//   notifyHeader.style.visibility = "visible";
-//   //instead of specific rest id, use vars restaurant_id of rest menu you are adding from
-//   firestore.doc("Restaurants/PsB7bBjf63vmiOrKoc3M").get().then(function (doc) {
-//     console.log("get restaurant worked")
-
-//     var restData = doc.data();
-//     console.log(restData);
-//     var managerEmail = restData.RestaurantManager;
-//     var newOrderRef = firestore.collection("Restaurants/PsB7bBjf63vmiOrKoc3M/Orders/").doc();
-//     var orderInfo = {
-//       FoodItem: "Spaghetti",
-//       AmountPaid: "$14.95",
-//       OrderStatus: "Pending",
-//       OrderAuthor: email,
-//       OrderManager: managerEmail,
-//       ParentRest: doc.id
-//     }
-//     newOrderRef.set(orderInfo).then(function () {
-//       console.log("Order successfully written.");
-//       firestore.doc("Users/" + email + "/Orders/" + newOrderRef.id).set({
-//         OrderId: newOrderRef.id,
-//         RestaurantId: doc.id
-//       })
-//     }).catch(function (error) {
-//       console.log("Error writing document: " + error + ".");
-//     });
-
-//   });
-
-
-// })
-
-// ordersButton.addEventListener("click", e => {
-//   window.location.replace("orders.html");
-// });
+}//end getSelections
 
 //cart modal functions, sorry for confusion.
 ///////////////////////////////////////////
 var total = 0;
 var cartCount = 0;
 var itemTotal = 0;
+
+editButton.addEventListener("click", e => {
+  window.location.replace("editAccount.html");
+});//end editButton listener
 
 function fillCart() {
   var listNumber = 0;
@@ -325,7 +292,7 @@ function setCartCount() {
       cartCounter.innerText = cartCount;
     }
   });//end get.then
-}
+}//end setCartCount
 
 cartButton.addEventListener("click", e => {
   //remove the items in the cart modal and reload them just incase it changed
@@ -333,11 +300,12 @@ cartButton.addEventListener("click", e => {
     itemSummary.removeChild(itemSummary.firstChild);
   }
   fillCart();
-})
+})//end cartButton EventListener
 
 checkout.addEventListener("click", e => {
   window.location.replace("orderCart.html");
-})
+})//end checkoutButton listener
+
 //////////////////////////////////////////
 
 firebase.auth().onAuthStateChanged(function (user) {
@@ -356,9 +324,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         nameField.innerText = docData.UserName;
         addressField.innerText = docData.UserAddress;
-        cityField.innerText = docData.UserAddress;
-        stateField.innerText = docData.UserAddress;
-        zipField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserCity;
+        stateField.innerText = docData.UserState;
+        zipField.innerText = docData.UserZipCode;
         emailField.innerText = docData.UserEmail;
         phoneNumberField.innerText = docData.UserPhoneNumber;
 
@@ -385,4 +353,4 @@ firebase.auth().onAuthStateChanged(function (user) {
     console.log("No user is signed in, redirecting...");
     window.location.replace("homepage.html");
   }
-});
+});//end auth
