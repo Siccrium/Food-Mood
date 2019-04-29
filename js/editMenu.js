@@ -8,6 +8,8 @@ const foodDuplicator = document.getElementById('foodDuplicator');
 const addFoodButton = document.getElementById('AddFoodButton');
 const newFoodPrice = document.getElementById('newFoodPrice');
 const newFoodName = document.getElementById('newFoodName');
+const newDescription = document.getElementById('newDescription');
+const newSpiceLevel = document.getElementById('newSpiceLevel');
 const deleteMenuButton = document.getElementById('DeleteMenuButton');
 const restPage = document.getElementById("restPage");
 
@@ -34,6 +36,8 @@ function renderPage() {
                     var data = doc.data();
                     var FoodName = data.FoodName
                     var FoodPrice = data.FoodPrice;
+                    var FoodDescription = data.FoodDescription;
+                    var FoodSpiceLevel = data.FoodSpiceLevel;
                     console.log(data);
                     var div = document.createElement('div');
                     //here is whats going inside the duplicator div when first rendered.
@@ -41,10 +45,14 @@ function renderPage() {
                         '<p>' +
                         '<input type="submit" value="Edit Food Item" class="btn btn-info" state ="unclicked" id="EditFoodButton' + FoodName + '"></input>' +
                         ' ' + FoodName + ' - $' + FoodPrice +
+                        '<br>'+ '->' +
+                        FoodDescription+
+                        '<br>'+ '->Spice Level: '+
+                        FoodSpiceLevel+
                         '</p>' +
                         '</div>';
                     foodDuplicator.appendChild(div);
-                    handleFoodDiv(doc.id, FoodName, FoodPrice);
+                    handleFoodDiv(doc.id, FoodName, FoodPrice,FoodDescription,FoodSpiceLevel);
                 });
             }).catch(function (error) {
                 console.log("Error getting documents: " + error);
@@ -57,22 +65,34 @@ function renderPage() {
 }//end renderPage
 
 
-function handleFoodDiv(foodId, FoodName, FoodPrice) {
+function handleFoodDiv(foodId, FoodName, FoodPrice, FoodDescription, FoodSpiceLevel) {
     var foodDiv = document.getElementById(FoodName + "Div");
     var editButton = document.getElementById("EditFoodButton" + FoodName);
 
     editButton.addEventListener("click", e => {
         foodDiv.innerHTML = '<div id="duringEdit' + FoodName + '">' +
             '<input type="submit" class="btn btn-danger" value="Discard Changes" id="DiscardEditButton' + FoodName + '"></input>' +
-            ' Food Name: <input type="text" size="5" id="edit' + FoodName + '">' +
-            ' Food Price: $ <input type="double" size="2" id="edit' + FoodPrice + '">' + ' ' +
+            '<br>'+
+            '<hr>'+
+            ' Food Name: <input type="text" size="20" id="edit' + FoodName + '">' + '<br>'+
+            ' Food Price: $ <input type="double" size="2" id="edit' + FoodPrice + '">' + ' '+ '<br>'+
+            ' Veg/Non-Veg: <input type="text" size="14" id="edit' + FoodDescription + '">' + ' '+ '<br>'+
+            ' Spice Level: <input type="double" size="2" id="edit' + FoodSpiceLevel + '">' + ' '+
+            '<br>'+
+            '<hr>'+
             '<input type="submit" class="btn btn-success" value="Update" id="SubmitEditButton' + FoodName + '"></input>' + ' ' +
+            '<hr'+
+            '<br>'+
             '<input type="submit" class="btn btn-danger" value="DELETE" id="DeleteFoodButton' + FoodName + '"></input>' +
             '</div><hr/>';
         foodNameInput = document.getElementById("edit" + FoodName);
         priceInput = document.getElementById("edit" + FoodPrice);
+        descriptionInput = document.getElementById("edit"+FoodDescription);
+        spiceLevel = document.getElementById("edit"+FoodSpiceLevel);
         foodNameInput.defaultValue = FoodName;
         priceInput.defaultValue = FoodPrice;
+        descriptionInput.defaultValue = FoodDescription;
+        spiceLevel.defaultValue = FoodSpiceLevel;
         discardEditButton = document.getElementById("DiscardEditButton" + FoodName);
         updateFoodButton = document.getElementById("SubmitEditButton" + FoodName);
         deleteFoodButton = document.getElementById("DeleteFoodButton" + FoodName);
@@ -81,10 +101,14 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
             foodDiv.innerHTML = '<div id="' + FoodName + 'Div">' +
                 '<p>' +
                 '<input type="submit" class="btn btn-success" value="Edit" id="EditFoodButton' + FoodName + '"></input>' +
-                ' ' + FoodName + ' - $' + FoodPrice +
+                + FoodName + ' - $' + FoodPrice + ' -> '+
+                '<br>'+
+                FoodDescription+ ' -> '+
+                '<br>'+ 'Spice Level'+
+                FoodSpiceLevel+
                 '</p>' +
                 '</div>';
-            handleFoodDiv(foodId, FoodName, FoodPrice);
+            handleFoodDiv(foodId, FoodName, FoodPrice, FoodDescription, FoodSpiceLevel);
         });//end discard listener
 
         updateFoodButton.addEventListener("click", e => {
@@ -104,7 +128,7 @@ function handleFoodDiv(foodId, FoodName, FoodPrice) {
                 console.log("if you see this, add more conditions")
             }//end text field conditions if
 
-            updateFood(foodId, foodNameInput.value, priceInput.value);
+            updateFood(foodId, foodNameInput.value, priceInput.value, descriptionInput.value, spiceLevel.value);
             setTimeout(backToMenu, 2000);
         });//end update listener
 
@@ -165,12 +189,12 @@ submitButton.addEventListener("click", e => {
             }).catch(function (error) {
                 console.log("Error updating menu: " + error + ".");
             });
-        } else if (newFoodName.value != "" && newFoodPrice != "") {//new food item fields aren't empty, update menu AND set new food item
+        } else if (newFoodName.value != "" && newFoodPrice != "" && newDescription != "" && newSpiceLevel != "") {//new food item fields aren't empty, update menu AND set new food item
             firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).update({
                 "MenuName": name,
             }).then(function () {//updated menu, now add new food item too
                 console.log("Document successfully Updated.");
-                addFood(newFoodName.value, newFoodPrice.value, vars['menu_id']);
+                addFood(newFoodName.value, newFoodPrice.value, newDescription.value, newSpiceLevel.value, vars['menu_id']);
                 window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
             }).catch(function (error) {
                 console.log("Error updating menu: " + error + ".");
@@ -185,7 +209,7 @@ submitButton.addEventListener("click", e => {
         //save text field info as parameters for menu
         //create new menu doc using the newMenuRef and give it menuInfo
         //Redirect to new url
-        if (newFoodName.value == "" && newFoodPrice.value == "") {//new food item fields are empty, only set menu info
+        if (newFoodName.value == "" && newFoodPrice.value == "" && newDescription.value == "" && newSpiceLevel.value == "") {//new food item fields are empty, only set menu info
             var newMenuRef = firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc();
             var menuInfo = { "MenuName": name, "ParentRestaurant": vars['restaurant_id'] };
             newMenuRef.set(menuInfo).then(function () {
@@ -194,12 +218,12 @@ submitButton.addEventListener("click", e => {
             }).catch(function (error) {
                 console.log("Error writing document: " + error + ".");
             });
-        } else if (newFoodName.value != "" && newFoodPrice.value != "") {//new food item fields aren't empty, set menu AND set new food item
+        } else if (newFoodName.value != "" && newFoodPrice.value != "" && newDescription.value!="" && newSpiceLevel.value!="") {//new food item fields aren't empty, set menu AND set new food item
             var newMenuRef = firestore.collection("Restaurants").doc(vars['restaurant_id']).collection("Menus").doc();
             var menuInfo = { "MenuName": name, "ParentRestaurant": vars['restaurant_id'] };
             newMenuRef.set(menuInfo).then(function () {
                 console.log("Document successfully written.");
-                addFood(newFoodName.value, newFoodPrice.value, newMenuRef.id);
+                addFood(newFoodName.value, newFoodPrice.value, newDescription.value, newSpiceLevel.value, newMenuRef.id);
                 window.location.replace("menu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + newMenuRef.id);
             }).catch(function (error) {
                 console.log("Error writing document: " + error + ".");
@@ -263,7 +287,7 @@ addFoodButton.addEventListener("click", e => {
             "MenuName": name,
         }).then(function () {//updated menu, now add new food item too
             console.log("Menu successfully Updated.");
-            addFood(newFoodName.value, newFoodPrice.value, vars['menu_id']);
+            addFood(newFoodName.value, newFoodPrice.value, newDescription.value, newSpiceLevel.value, vars['menu_id']);
             window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
         }).catch(function (error) {
             console.log("Error updating menu: " + error + ".");
@@ -274,7 +298,7 @@ addFoodButton.addEventListener("click", e => {
         newMenuRef.set(menuInfo).then(function () {
             console.log("Menu successfully written.");
             console.log(newMenuRef.id);
-            addFood(newFoodName.value, newFoodPrice.value, newMenuRef.id);
+            addFood(newFoodName.value, newFoodPrice.value, newDescription.value , newSpiceLevel.value, newMenuRef.id);
             window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + newMenuRef.id);
         }).catch(function (error) {
             console.log("Error writing document: " + error + ".");
@@ -307,11 +331,13 @@ function deleteFood(name) {
     });
 }//end deleteFood
 
-function updateFood(foodId, newName, newPrice) {
+function updateFood(foodId, newName, newPrice, newDescription, newSpiceLevel) {
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id'] + "/Food/" + foodId).update(
         {
             "FoodName": newName,
-            "FoodPrice": newPrice
+            "FoodPrice": newPrice,
+            "FoodDescription":newDescription,
+            "FoodSpiceLevel":newSpiceLevel
         }).then(function () {
             errorHeader.innerText = "Update In Progress! Please Wait..."
             errorHeader.style.visibility = "visible";
@@ -321,11 +347,13 @@ function updateFood(foodId, newName, newPrice) {
         });
 }//end updateFood
 
-function addFood(newName, newPrice, parentMenu) {
+function addFood(newName, newPrice, newDescription, newSpiceLevel, parentMenu) {
     var newFoodRef = firestore.collection("/Restaurants/" + vars['restaurant_id'] + "/Menus/" + parentMenu + "/Food/").doc();
     var foodInfo = {
         "FoodName": newName,
         "FoodPrice": newPrice,
+        "FoodDescription": newDescription,
+        "FoodSpiceLevel":newSpiceLevel,
         "ParentMenu": parentMenu
     };
     newFoodRef.set(foodInfo).then(function () {
