@@ -19,6 +19,7 @@
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- Our Custom CSS -->
   <link rel="stylesheet" href="css/style2.css">
+  <link rel="stylesheet" href="css/tabs.css">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -30,13 +31,20 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
     integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
     crossorigin="anonymous"></script>
-
   <!--Firebase authentication-->
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
 
+  <!-- material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
 
 </head>
 
@@ -147,26 +155,37 @@
         </div>
       </div>
 
+      <!-- <div class="trumbojon" style="padding-left: 20px; background-color:#e9ecef"> -->
 
 
       <!-- Filter Section -->
       <div class="container">
         <div class="row">
           <div class="jumbotron">
-            <h5>Find Your Favorite Restaurant:</h5>
-            <input type="text" id="searchBar" onkeyup="filterRestaurants('name')" placeholder="Search...">
-            <br><br>
-            <h5>Select a filter:</h5>
-            <p>(Hold control to select multiple)</p>
-            <select onchange="filterRestaurants('tags')" multiple id="restTags">
-            </select>
+            <div class="wrapp">
+              <nav class="tabs">
+                <div class="selector"></div>
+                <a href="#" id="filterRest" class="active"><i class="material-icons">store</i>Find Restaurants/Food</a>
+                <a href="#" id="showMap"><i class="material-icons">map</i></i>Local Map</a>
+              </nav>
+            </div>
+            <br>
+            <div id="filterRestDiv">
+              <h5>Find Your Favorite Restaurant or Cuisine:</h5>
+              <input type="text" id="searchbar" onkeyup="filterRestaurants('name')" placeholder="Search...">
+              <br><br>
+              <h5>Select a filter:</h5>
+              <p>(Hold control to select multiple)</p>
+              <select onchange="filterRestaurants('tags')" multiple id="restTags">
+              </select>
+            </div>
+            <div class="hidetab" id="map"></div>
             <hr>
-
             <section id="searchSection">
             </section>
             <br>
             <h5 id="notifyHeader"></h5>
-            <!-- ******Need to add error-header conditions!****** -->
+            <!-- ******Might Need to add error-header conditions?****** -->
           </div>
         </div>
       </div>
@@ -238,6 +257,33 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var tabs = $('.tabs');
+      var selector = $('.tabs').find('a').length;
+      //var selector = $(".tabs").find(".selector");
+      var activeItem = tabs.find('.active');
+      var activeWidth = activeItem.innerWidth();
+      $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+      });
+
+      $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+          "left": itemPos.left + "px",
+          "width": activeWidth + "px"
+        });
+      });
+    });
+  </script>
+
   <script type="text/javascript">
     $(document).ready(function () {
       $("#sidebar").mCustomScrollbar({
@@ -252,6 +298,9 @@
     });
   </script>
 
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrTxZzj68DwsURo6av-XwjV5k8fI6GgP8&callback=initMap">
+    </script>
 </body>
 
 </html>
