@@ -112,7 +112,7 @@ function customerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ '*'+data.FoodDescription+ '<br>'+'*'+data.FoodSpiceLevel+'</p>' +
+                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+ 'Spice Level: '+ data.FoodSpiceLevel+'</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
                     div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
