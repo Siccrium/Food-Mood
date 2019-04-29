@@ -159,6 +159,11 @@ function handleAddToCart(docId, FoodName, FoodPrice) {
             cartRef.get().then(querySnapshot => {
                 if (querySnapshot.empty) {//cart must be empty
                     putInCart();
+                    popup.innerText = "Item Added To Cart";
+                            popup.classList.add("show");
+                            setTimeout(function () {
+                                popup.classList.remove("show");
+                            }, 1950);
                 } else {//cart is not empty
                     var query = cartRef.where("ParentRest", "==", vars['restaurant_id']).get().then(querySnapshot => {
                         if (querySnapshot.empty) {//that item is from a different rest, dont allow
@@ -170,13 +175,12 @@ function handleAddToCart(docId, FoodName, FoodPrice) {
                             }, 3950);
                         } else {//item is from same rest, this is good
                             //popup.. plz help me edit the location of which this pops up via popup.css
+                           putInCart();
                             popup.innerText = "Item Added To Cart";
                             popup.classList.add("show");
                             setTimeout(function () {
                                 popup.classList.remove("show");
                             }, 1950);
-
-                            putInCart();
                         }//end if query2Snapshot.empty
                     }).catch(err => {
                         console.log('Error getting document', err);
