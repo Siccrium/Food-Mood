@@ -16,6 +16,7 @@ const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
 const cartButton = document.getElementById("cartButton");
 const editButton = document.getElementById("editButton");
+const searchBar = document.getElementById("searchBar");
 
 var name = "";
 var address = "";
@@ -26,6 +27,7 @@ var email = "";
 var phoneNumber = "";
 var restaurants = [];
 var restIDs = [];
+var filtersUsed = [];
 
 
 // const placeOrder = document.getElementById("placeOrder");
@@ -80,14 +82,39 @@ function renderFilters() {
 
 }//end renderFilters
 
-function filterRestaurants() {
+function filterRestaurants(filterHow) {
 
+  if (filtersUsed.includes(filterHow)) {//already using that filter
+    //do nothing
+  } else {//add new filter
+    filtersUsed.push(filterHow);
+  }//end if
+
+  console.log(filtersUsed);
+
+  if (filtersUsed.includes("name") && filtersUsed.includes("tags")) {//filter by name and tags
+    console.log("filter w both");
+    filterByNameAndTags();
+  } else if (filtersUsed.includes("tags")) {//filter by tags
+    filterByTags();
+  } else if (filtersUsed.includes("name")) {//filter by name
+    filterByName();
+  } else {
+    //you done fucked up A A ron
+    console.log(filtersUsed);
+    console.log(filterHow);
+  }//end if filterHow
+
+}//end filterRestaurants
+
+
+function filterByTags() {
   var filteredRestaurants = [];
   var filteredRestIDs = [];
   for (var i = 0; i < restaurants.length; i++) {
     filteredRestaurants[i] = restaurants[i];
     filteredRestIDs[i] = restIDs[i];
-  }
+  }//end for i
 
   console.log(filteredRestaurants);
   var tagsArray = getSelections(restTags);
@@ -99,16 +126,90 @@ function filterRestaurants() {
         if (!thisRestTags.includes(tagsArray[i])) {
           delete filteredRestaurants[j];
           delete filteredRestIDs[j];
-        }
-      }
-    }
-  }
-
+        }//end if !includes
+      }//end if != null
+    }//end for j
+  }//end for i
 
   console.log(filteredRestaurants);
 
   searchSection.innerHTML = '';
 
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+}//end filterByTags
+
+function filterByName() {
+  var searchedName = searchBar.value;
+  searchedName = searchedName.toUpperCase();
+
+  var filteredRestaurants = [];
+  var filteredRestIDs = [];
+  for (var i = 0; i < restaurants.length; i++) {
+    filteredRestaurants[i] = restaurants[i];
+    filteredRestIDs[i] = restIDs[i];
+  }//end for i
+
+  for (var j = 0; j < filteredRestaurants.length; j++) {
+    if (filteredRestaurants[j] != null) {
+      var thisRestName = filteredRestaurants[j]['RestaurantName'].toUpperCase();
+      if (!thisRestName.includes(searchedName)) {
+        delete filteredRestaurants[j];
+        delete filteredRestIDs[j];
+      }//end if !includes
+    }//end if != null
+  }//end for j
+
+  console.log(filteredRestaurants);
+  searchSection.innerHTML = '';
+
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+
+}//end filterByName
+
+function filterByNameAndTags() {
+  var searchedName = searchBar.value;
+  searchedName = searchedName.toUpperCase();
+
+  var filteredRestaurants = [];
+  var filteredRestIDs = [];
+  for (var i = 0; i < restaurants.length; i++) {
+    filteredRestaurants[i] = restaurants[i];
+    filteredRestIDs[i] = restIDs[i];
+  }//end for i
+
+  console.log(filteredRestaurants);
+  var tagsArray = getSelections(restTags);
+
+  for (var i = 0; i < tagsArray.length; i++) {
+    for (var j = 0; j < filteredRestaurants.length; j++) {
+      if (filteredRestaurants[j] != null) {
+        var thisRestTags = filteredRestaurants[j]['RestaurantTags'];
+        var thisRestName = filteredRestaurants[j]['RestaurantName'].toUpperCase();
+        if (!thisRestTags.includes(tagsArray[i])) {
+          delete filteredRestaurants[j];
+          delete filteredRestIDs[j];
+        }//end if !includes tag
+        if (!thisRestName.includes(searchedName)) {
+          delete filteredRestaurants[j];
+          delete filteredRestIDs[j];
+        }//end if !includes name
+      }//end if !=null
+    }//end for j
+  }//end for i
+
+  console.log(filteredRestaurants);
+
+  searchSection.innerHTML = '';
+
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+
+}//end filterByNameAndTags
+
+
+function reRenderRestauraunts(filteredRestaurants, filteredRestIDs) {
   filteredRestaurants.forEach(function (element, index) {
     var div = document.createElement("div");
     div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
@@ -117,10 +218,7 @@ function filterRestaurants() {
     div.className = 'card card-body fixed float-left font-weight-bold';
     searchSection.appendChild(div);
   });
-
-  eventListeners(filteredRestIDs);
-
-}//end filterRestaurants
+}//end reRender
 
 function eventListeners(IDs) {
 
