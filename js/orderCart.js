@@ -71,15 +71,38 @@ placeOrder.addEventListener("click", function() {
                 });
             });
 
-            firestore.collection("Users/" + email + "/Orders").add({
-                "RestaurantId": parentRest,
-                "FoodOrdered": foodOrdered,
-                "OrderStatus": "In progress"
-            }).then(function(){
-                console.log("Order successfully placed!");
-                window.location.replace("OrdersCustomer.html");
+            firestore.doc("Restaurants/" + parentRest).get().then(function(doc) {
+
+                var data = doc.data();
+
+                firestore.collection("Users/" + email + "/Orders").add({
+                    "RestaurantId": parentRest,
+                    "RestaurantName": data.RestaurantName,
+                    "OrderingCustomer": email,
+                    "FoodOrdered": foodOrdered,
+                    "OrderStatus": "In Progress - New"
+                }).then(function(docRef){
+                    console.log("Order successfully written to customer!");
+
+                    firestore.doc("Restaurants/" + parentRest + "/Orders/" + docRef.id).set({
+                        "RestaurantId": parentRest,
+                        "RestaurantName": data.RestaurantName,
+                        "OrderingCustomer": email,
+                        "FoodOrdered": foodOrdered,
+                        "OrderStatus": "In Progress - New"
+                    }).then(function(){
+                        console.log("Order successfully placed to restaurant!");
+                        window.location.replace("OrdersCustomer.html");
+                    }).catch(function(error) {
+                        console.log("Error writing to database: " + error);
+                    });
+
+                }).catch(function(error) {
+                    console.log("Error writing to database: " + error);
+                });
+
             }).catch(function(error) {
-                console.log("Error writing to database: " + error);
+                console.log("Error getting document: " + error);
             });
 
         }).catch(function(error) {
