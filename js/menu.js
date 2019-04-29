@@ -39,11 +39,14 @@ function managerPage() {
                     console.log(data);
                     var div = document.createElement('div');
                     div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
-                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
+                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Edit</button>';
                     // div.className = 'card card-body float-right font-weight-bold';
-                      div.className = 'card card-body fixed float-left font-weight-bold';
+                    div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
-                    //handle addToCart button later for customer view
+                    var editFood = document.getElementById(doc.id);
+                    editFood.addEventListener("click", e => {
+                        window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
+                    });
                 });
             }).catch(function (error) {
                 console.log("Error getting documents: " + error);
