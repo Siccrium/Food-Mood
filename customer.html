@@ -99,25 +99,27 @@
             <i class="fas fa-align-justify"></i>
           </button>
 
+
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="nav navbar-nav ml-auto" id="ul">
-                <li class="nav-item active">
+            <ul class="nav navbar-nav ml-auto" id="ul">
+              <li class="nav-item active">
                 <a class="nav-link" href="OrdersCustomer.html">Orders</a>
               </li>
               <li class="nav-item active">
-            <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
-            </li>
+                <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
+              </li>
 
-          <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
-            data-target="#myModal">
-            <span id="right">
-              <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
-            </span>
-          </button>
-        </ul>
-      </div>
-    </div>
-  </nav>
+              <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
+                data-target="#myModal">
+                <span id="right">
+                  <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
+                </span>
+              </button>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
       <!-- The Modal -->
       <div class="modal" id="myModal">
@@ -145,21 +147,29 @@
         </div>
       </div>
 
-        <div class="container">
-          <div class="row">
-              <div class="jumbotron">
-                <h5>Select a filter:</h5>
-                <p>(Hold control to select multiple)</p>
-                <select onchange="filterRestaurants()" multiple id="restTags">
-                </select>
-                <hr>
-                <section id="searchSection">
-                </section>
 
-                <h5 id="notifyHeader"></h5>
-              </div>
-            </div>
+
+      <!-- Filter Section -->
+      <div class="container">
+        <div class="row">
+          <div class="jumbotron">
+            <h5>Find Your Favorite Restaurant:</h5>
+            <input type="text" id="searchBar" onkeyup="filterRestaurants('name')" placeholder="Search...">
+            <br><br>
+            <h5>Select a filter:</h5>
+            <p>(Hold control to select multiple)</p>
+            <select onchange="filterRestaurants('tags')" multiple id="restTags">
+            </select>
+            <hr>
+
+            <section id="searchSection">
+            </section>
+            <br>
+            <h5 id="notifyHeader"></h5>
+            <!-- ******Need to add error-header conditions!****** -->
           </div>
+        </div>
+      </div>
 
 
       <section class="features-icons bg-light text-center">
