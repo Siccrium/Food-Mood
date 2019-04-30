@@ -10,6 +10,7 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/tabs.css">
 
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
@@ -45,6 +46,9 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
     integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
     crossorigin="anonymous"></script>
+
+    <!-- material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
@@ -111,37 +115,27 @@
       </div>
 
       <header class="masthead text-gray text-center">
-        <div class="container-fluid">
-          <h4>Orders</h4>
-          <br>
-          <p>
-            <a class="btn btn-info" data-toggle="collapse" href="#multiCollapseExample1" role="button"
-              aria-expanded="false" aria-controls="multiCollapseExample1">Past</a>
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
-              aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming</button>
+        <div class="container">
+          <div class="jumbotron">
             <div class="row">
-              <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div class="card card-body">
-                    All your past orders will be here.
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample2">
-                  <div class="card card-body">
-                    All your current orders will be here.
-                  </div>
-                </div>
-              </div>
-              <!-- <h2 id="h1">Your Orders</h2>
-        <br>
-        </div>
+            <div class="wrapp">
+                <h1 style="color:#008000">Your Orders</h1>
+                <hr>
+              <nav class="tabs">
+                <div class="selector"></div>
+                <br>
 
-        <div id="orderDuplicator">
-        </div> -->
+                <a href="#" id="pastOrders" class="active"><i class="material-icons"></i>Past</a>
+                  <a href="#" id="currentOrders"><i class="material-icons"></i>Current</a>
+                  <a href="#" id="upcomingOrders"><i class="material-icons"></i>Upcoming</a>
+                </nav>
             </div>
+            <br>
+            <!-- <div class="hidetab" id="map"></div> -->
+            <hr>
+          </div>
         </div>
+      </div>
       </header>
 
       <section class="features-icons bg-light text-center">
@@ -223,6 +217,32 @@
   <!-- jQuery Custom Scroller CDN -->
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          var tabs = $('.tabs');
+          var selector = $('.tabs').find('a').length;
+          //var selector = $(".tabs").find(".selector");
+          var activeItem = tabs.find('.active');
+          var activeWidth = activeItem.innerWidth();
+          $(".selector").css({
+            "left": activeItem.position.left + "px",
+            "width": activeWidth + "px"
+          });
+
+          $(".tabs").on("click", "a", function (e) {
+            e.preventDefault();
+            $('.tabs a').removeClass("active");
+            $(this).addClass('active');
+            var activeWidth = $(this).innerWidth();
+            var itemPos = $(this).position();
+            $(".selector").css({
+              "left": itemPos.left + "px",
+              "width": activeWidth + "px"
+            });
+          });
+        });
+      </script>
 
   <script type="text/javascript">
     $(document).ready(function () {
