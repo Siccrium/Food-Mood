@@ -43,10 +43,102 @@ function renderOrders() {
                 "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" + 
                 "<input type='submit' class='btn btn-success' value='Mark Pickup' id='Order" + orderNumber + "MarkPickup'>";
             inProgressDiv.appendChild(div);
-            
+            addPickupEventListener(data, orderNumber, currOrder);
+            orderNumber++;
+        } else if(data.OrderStatus == "Delivery en route") {
+            var div = document.createElement("div");
+            div.id = "Order " + orderNumber;
+            div.innerHTML = "<h1>" + div.id + "</h1>" +
+                "<p>" + data.RestaurantName + "</p>" +
+                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
+                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" + 
+                "<input type='submit' class='btn btn-success' value='Mark Delivery' id='Order" + orderNumber + "MarkDelivery'>";
+            inProgressDiv.appendChild(div);
+            addDeliveryEventListener(data, orderNumber, currOrder);
+            orderNumber++;
+        } else if (data.OrderStatus == "Completed") {
+            var div = document.createElement("div");
+            div.id = "Order " + orderNumber;
+            div.innerHTML = "<h1>" + div.id + "</h1>" +
+                "<p>" + data.RestaurantName + "</p>" +
+                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
+                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" +
+                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>";
+            pastDiv.appendChild(div);
+            addDeleteEventListener(orderNumber, currOrder);
             orderNumber++;
         }
     }
+
+}
+
+function addDeliveryEventListener(data, ordNum, currentOrder) {
+
+    const deliveryButton = document.getElementById("Order" + ordNum + "MarkDelivery");
+
+    deliveryButton.addEventListener("click", function() {
+
+        firestore.doc("Users/" + data.OrderingCustomer + "/Orders/" + currentOrder).update({
+            "OrderStatus": "Completed"
+        }).then(function() {
+
+            firestore.doc("Users/" + email + "/Orders/" + currentOrder).update({
+                "OrderStatus": "Completed"
+            }).then(function() {
+
+                var orderDiv = deliveryButton.parentElement;
+                orderDiv.innerHTML = "<h1>" + orderDiv.id + "</h1>" +
+                    "<p>" + data.RestaurantName + "</p>" +
+                    "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
+                    "<p id='Order" + orderNumber + "OrderStatus'>Order Status: Completed</p>" +
+                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + orderDiv.id.replace(' ', '') + "DeleteButton'>";
+                inProgressDiv.removeChild(orderDiv);
+                pastDiv.appendChild(orderDiv);
+                addDeleteEventListener(ordNum, currentOrder);
+
+            }).catch(function(error) {
+                console.log("Error updating document: " + error);
+            });
+
+        }).catch(function(error) {
+            console.log("Error updating document: " + error);
+        });
+
+    });
+
+}
+
+function addPickupEventListener(data, ordNum, currentOrder) {
+
+    const pickUpButton = document.getElementById("Order" + ordNum + "MarkPickup");
+
+    pickUpButton.addEventListener("click", function() {
+
+        firestore.doc("Users/" + data.OrderingCustomer + "/Orders/" + currentOrder).update({
+            "OrderStatus": "Delivery en route"
+        }).then(function() {
+
+            firestore.doc("Users/" + email + "/Orders/" + currentOrder).update({
+                "OrderStatus": "Delivery en route"
+            }).then(function() {
+
+                var orderDiv = pickUpButton.parentElement;
+                orderDiv.innerHTML = "<h1>" + orderDiv.id + "</h1>" +
+                    "<p>" + data.RestaurantName + "</p>" +
+                    "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
+                    "<p id='Order" + ordNum + "OrderStatus'>Order Status: Delivery en route</p>" + 
+                    "<input type='submit' class='btn btn-success' value='Mark Delivery' id='Order" + ordNum + "MarkDelivery'>";
+                addDeliveryEventListener(data, ordNum, currentOrder);
+
+            }).catch(function(error) {
+                console.log("Error updating document: " + error);
+            });
+
+        }).catch(function(error) {
+            console.log("Error updating document: " + error);
+        });
+
+    });
 
 }
 
@@ -118,22 +210,22 @@ function addEventListeners(orderData, orderNum, currentOrder) {
 
 }
 
-// function addDeleteEventListener(ordNum, currentOrder) {
+function addDeleteEventListener(ordNum, currentOrder) {
 
-//     const delButton = document.getElementById("Order" + ordNum + "DeleteButton");
-//     delButton.addEventListener("click", function() {
+    const delButton = document.getElementById("Order" + ordNum + "DeleteButton");
+    delButton.addEventListener("click", function() {
         
-//         firestore.doc("Users/" + email + "/Orders/" + currentOrder).delete().then(function() {
-//             console.log("Successfully deleted document!");
-//             var ref = delButton.parentElement;
-//             ref.parentElement.removeChild(ref);
-//         }).catch(function(error) {
-//             console.log("Error deleting document: " + error);
-//         });
+        firestore.doc("Users/" + email + "/Orders/" + currentOrder).delete().then(function() {
+            console.log("Successfully deleted document!");
+            var ref = delButton.parentElement;
+            ref.parentElement.removeChild(ref);
+        }).catch(function(error) {
+            console.log("Error deleting document: " + error);
+        });
 
-//     });
+    });
 
-// }
+}
 
 function getOrders() {
     firestore.collection("Users/" + email + "/Orders").get().then(function(querySnapshot) {
