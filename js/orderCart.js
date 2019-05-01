@@ -91,7 +91,8 @@ placeOrder.addEventListener("click", function() {
                     "OrderingCustomer": email,
                     "FoodOrdered": foodOrdered,
                     "OrderStatus": "In Progress - New",
-                    "ServerTimestamp": time
+                    "ServerTimestamp": time,
+                    "FeedbackSubmitted": "False"
                 }).then(function(docRef){
                     console.log("Order successfully written to customer!");
 

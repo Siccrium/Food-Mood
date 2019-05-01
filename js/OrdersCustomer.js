@@ -12,7 +12,7 @@ function renderOrders() {
     for(var i=0; i<orders.length; i++) {
         var data = orders[i].data();
         currOrder = orders[i].id;
-        if((data.OrderStatus == "Rejected" || data.OrderStatus == "Cancelled") || data.OrderStatus == "Completed") {
+        if((data.OrderStatus == "Rejected" || data.OrderStatus == "Cancelled") || (data.OrderStatus == "Completed" && data.FeedbackSubmitted == "True")) {
             var div = document.createElement("div");
               "<br>";
             div.id = "Order " + orderNumber;
@@ -20,11 +20,23 @@ function renderOrders() {
                 "<h3>" + data.RestaurantName + "</h3>" +
                 "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
                 "<h5 id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</h5>" +
-                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>"+'<hr>';
-                "<hr>";
-
+                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>" + "<hr>";
             pastDiv.appendChild(div);
             addDeleteEventListener(orderNumber, currOrder);
+            orderNumber++;
+        } else if(data.OrderStatus == "Completed" && data.FeedbackSubmitted == "False") {
+            var div = document.createElement("div");
+              "<br>";
+            div.id = "Order " + orderNumber;
+            div.innerHTML = "<h1>" + div.id + "</h1>" +
+                "<h3>" + data.RestaurantName + "</h3>" +
+                "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
+                "<h5 id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</h5>" +
+                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>" + 
+                "<input type='submit' value='Feedback' class='btn btn-success' id='" + div.id.replace(' ', '') + "FeedbackButton'>" + "<hr>";
+            pastDiv.appendChild(div);
+            addDeleteEventListener(orderNumber, currOrder);
+            addFeedbackEventListener(orderNumber, currOrder);
             orderNumber++;
         } else if(data.OrderStatus == "In Progress - New" || data.OrderStatus == "In progress") {
             var div = document.createElement("div");
@@ -83,6 +95,17 @@ function addCancelEventListener(data, ordNum, currentOrder) {
         }).catch(function(error) {
             console.log("Error deleting document: " + error);
         });
+
+    });
+
+}
+
+function addFeedbackEventListener(ordNum, currentOrder) {
+
+    const feedbackButton = document.getElementById("Order" + ordNum + "FeedbackButton");
+    feedbackButton.addEventListener("click", function() {
+
+        window.location.replace("appFeedback.html?order_id=" + currentOrder);
 
     });
 
