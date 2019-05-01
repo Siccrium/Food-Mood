@@ -12,7 +12,7 @@ function renderOrders() {
     for(var i=0; i<orders.length; i++) {
         var data = orders[i].data();
         currOrder = orders[i].id;
-        if((data.OrderStatus == "Rejected" || data.OrderStatus == "Cancelled") || data.OrderStatus == "Completed") {
+        if(data.OrderStatus == "Rejected") {
             var div = document.createElement("div");
             div.id = "Order " + orderNumber;
             div.innerHTML = "<h1>" + div.id + "</h1>" +
@@ -22,17 +22,6 @@ function renderOrders() {
                 "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>";
             pastDiv.appendChild(div);
             addDeleteEventListener(orderNumber, currOrder);
-            orderNumber++;
-        } else if(data.OrderStatus == "In Progress - New" || data.OrderStatus == "In progress") {
-            var div = document.createElement("div");
-            div.id = "Order " + orderNumber;
-            div.innerHTML = "<h1>" + div.id + "</h1>" +
-                "<p>" + data.RestaurantName + "</p>" +
-                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" +
-                "<input type='submit' value='Cancel Order' class='btn btn-danger' id='" + div.id.replace(' ', '') + "CancelButton'>";
-            inProgressDiv.appendChild(div);
-            addCancelEventListener(data, orderNumber, currOrder);
             orderNumber++;
         } else {
             var div = document.createElement("div");
@@ -45,38 +34,6 @@ function renderOrders() {
             orderNumber++;
         }
     }
-
-}
-
-function addCancelEventListener(data, ordNum, currentOrder) {
-
-    const canButton = document.getElementById("Order" + ordNum + "CancelButton");
-    canButton.addEventListener("click", function() {
-        
-        firestore.doc("Users/" + email + "/Orders/" + currentOrder).update({
-            "OrderStatus": "Cancelled"
-        }).then(function() {
-            
-            firestore.doc("Restaurants/" + data.RestaurantId + "/Orders/" + currentOrder).delete().then(function() {
-                var ref = canButton.parentElement;
-                ref.innerHTML = "<h1>" + ref.id + "</h1>" +
-                    "<p>" + data.RestaurantName + "</p>" +
-                    "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                    "<p id='Order" + ordNum + "OrderStatus'>Order Status: Cancelled</p>" +
-                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + ref.id.replace(' ', '') + "DeleteButton'>"
-                ref.parentElement.removeChild(ref);
-                pastDiv.appendChild(ref);
-                addDeleteEventListener(ordNum, currentOrder);
-                console.log("Successfully deleted document!");
-            }).catch(function(error) {
-                console.log("Error deleting document: " + error);
-            });
-
-        }).catch(function(error) {
-            console.log("Error deleting document: " + error);
-        });
-
-    });
 
 }
 
