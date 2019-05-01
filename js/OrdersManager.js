@@ -61,7 +61,7 @@ function renderOrders() {
             pastDiv.appendChild(div);
             addDeleteEventListener(orderNumber, currOrder);
             orderNumber++;
-        } else if(data.OrderStatus == "In Progress - New") {
+        } else {
             var div = document.createElement("div");
             div.id = "Order " + orderNumber;
             div.innerHTML = "<h1>" + div.id + "</h1>" +
@@ -94,15 +94,10 @@ function addPickupEventListener(data, ordNum, currentOrder) {
                 firestore.doc("Users/" + data.Deliverer + "/Orders/" + currentOrder).update({
                     "OrderStatus": "Restaurant Acknowledged Pickup"
                 }).then(function() {
-                    var orderDiv = pickUpButton.parentElement;
-                    orderDiv.innerHTML = "<h1>" + orderDiv.id + "</h1>" +
-                    "<p>" + data.RestaurantName + "</p>" +
-                    "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                    "<p id='Order" + orderNumber + "OrderStatus'>Order Status: Restaurant Acknowleged Pickup</p>" +
-                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + orderDiv.id.replace(' ', '') + "DeleteButton'>";
-                    pastDiv.appendChild(orderDiv);
-                    addDeleteEventListener(ordNum, currentOrder);
-                    console.log("Successfully updated document!");      
+                    document.getElementById("Order" + ordNum + "OrderStatus").innerText = "Order Status: Restaurant Acknowledged Pickup";
+                    pickUpButton.parentElement.removeChild(pickUpButton);
+                    pickUpButton.parentElement.removeChild(document.getElementById("note" + ordNum));
+                    console.log("Successfully updated document!");
                 }).catch(function(error) {
                     console.log("Error updating document: " + error);
                 });
@@ -165,19 +160,13 @@ function addEventListeners(data, ordNum, currentOrder, custEmail) {
                 swap.parentElement.removeChild(swap);
                 swap.removeChild(rejButton);
                 swap.removeChild(accButton);
-                swap.innerHTML = swap.innerHTML + 
-                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + swap.id.replace(' ', '') + "DeleteButton'>";
                 pastDiv.appendChild(swap);
-                addDeleteEventListener(ordNum, currentOrder);
                 console.log("Document successfully updated.");
             }).catch(function(error) {
                 console.log("Error updating document: " + error);
             });
             console.log("Document successfully updated.");
         }).catch(function(error) {
-            var orderDiv = rejButton.parentElement;
-            orderDiv.innerHTML = "<h1>" + orderDiv.id + "</h1>" + 
-                "<p>This order has been cancelled by the customer, please refresh the page.</p>";
             console.log("Error updating document: " + error);
         });
     });
@@ -217,9 +206,6 @@ function addEventListeners(data, ordNum, currentOrder, custEmail) {
             });
             console.log("Document successfully updated.");
         }).catch(function(error) {
-            var orderDiv = accButton.parentElement;
-            orderDiv.innerHTML = "<h1>" + orderDiv.id + "</h1>" + 
-                "<p>This order has been cancelled by the customer, please refresh the page.</p>";
             console.log("Error updating document: " + error);
         });
     });
