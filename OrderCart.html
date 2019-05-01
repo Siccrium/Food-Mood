@@ -37,7 +37,24 @@
 
 </head>
 
-<body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <span><img src="./img/FMW.jpg"></span>
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarText">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="customer.html" id="accountButton">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Restaurant Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
+            </li>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
@@ -81,8 +98,47 @@
                     <img class="img-fluid cc-img"
                       src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
                   </div>
-                  <hr>
-                  <form action="/echo" method="post" novalidate="novalidate" class="needs-validation">
+                </div>
+              </div>
+              </div>
+              <hr>
+              <div class="col-md-4 col-md-50">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mx-right">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                      <h3>Summary</h3>
+                                      <div class="summary-item"><span class="text">Subtotal:</span><span class="price"></span></div>
+                                      <h1 id="Subtotal"></h1>
+                                      <hr>
+                                      <div class="summary-item"><span class="text">Delivery Fee:</span><span class="price"></span></div>
+                                      <h1 id="Delivery"></h1>
+                                      <hr>
+                                      <div class="summary-item"><span class="text">Tip:</span><span class="price"></span></div>
+                                      <br>
+                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                          <input type="radio" name="options" id="option1" autocomplete="off" value=0.15 checked onchange="getRadioVal()"> 15%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" id="option2" autocomplete="off" value=0.18 onchange="getRadioVal()"> 18%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" id="option3" autocomplete="off" value=0.2 onchange="getRadioVal()"> 20%
+                                        </label>
+                                        <label class="btn btn-info">
+                                          <input type="radio" name="options" class="text" id="option4" autocomplete="off" value="Other" onchange="getRadioVal()">Other
+                                        </label>
+                                      </div>
+                                      <p id="tipExplain">Enter tip amount in decimal format. (ex: 5% is 0.05)</p>
+                                      <input type="text" id="otherTip">
+                                      <input type="submit" id="submitOther" value="Submit">
+                                      <hr>
+                                      <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
+                                      <h1 id="Total"></h1>
+                                      <hr>
+                                      <button type="button" class="btn btn-danger btn-lg btn-block" id="placeOrder">Place Order</button>
 
                     <div class="form-group has-success">
                       <label for="cc-name" class="control-label mb-1">Name on card</label>
