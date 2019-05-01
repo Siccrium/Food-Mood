@@ -6,7 +6,7 @@ const pastDiv = document.getElementById("pastDiv");
 
 var email = "";
 var orderNumber = 0;
-var orders = [];
+var orders = []
 
 function renderOrders() {
     for(var i=0; i<orders.length; i++) {
