@@ -14,33 +14,40 @@ function renderOrders() {
         currOrder = orders[i].id;
         if((data.OrderStatus == "Rejected" || data.OrderStatus == "Cancelled") || data.OrderStatus == "Completed") {
             var div = document.createElement("div");
+              "<br>";
             div.id = "Order " + orderNumber;
             div.innerHTML = "<h1>" + div.id + "</h1>" +
-                "<p>" + data.RestaurantName + "</p>" +
-                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" +
-                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>";
+                "<h3>" + data.RestaurantName + "</h3>" +
+                "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
+                "<h5 id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</h5>" +
+                "<input type='submit' value='Delete' class='btn btn-danger' id='" + div.id.replace(' ', '') + "DeleteButton'>"+'<hr>';
+                "<hr>";
+
             pastDiv.appendChild(div);
             addDeleteEventListener(orderNumber, currOrder);
             orderNumber++;
         } else if(data.OrderStatus == "In Progress - New" || data.OrderStatus == "In progress") {
             var div = document.createElement("div");
+            "<br>";
             div.id = "Order " + orderNumber;
             div.innerHTML = "<h1>" + div.id + "</h1>" +
-                "<p>" + data.RestaurantName + "</p>" +
-                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" +
-                "<input type='submit' value='Cancel Order' class='btn btn-danger' id='" + div.id.replace(' ', '') + "CancelButton'>";
+                "<h3>" + data.RestaurantName + "</h3>" +
+                "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
+                "<h5 id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</h5>" +
+                "<input type='submit' value='Cancel Order' class='btn btn-danger' id='" + div.id.replace(' ', '') + "CancelButton'>"+'<hr>';
+                "<hr>";
             inProgressDiv.appendChild(div);
             addCancelEventListener(data, orderNumber, currOrder);
             orderNumber++;
         } else {
             var div = document.createElement("div");
+              "<br>";
             div.id = "Order " + orderNumber;
             div.innerHTML = "<h1>" + div.id + "</h1>" +
-                "<p>" + data.RestaurantName + "</p>" +
-                "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>";
+                "<h3>" + data.RestaurantName + "</h3>" +
+                "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
+                "<h5 id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</h5>"+'<hr>';
+                "<hr>";
             inProgressDiv.appendChild(div);
             orderNumber++;
         }
@@ -52,18 +59,19 @@ function addCancelEventListener(data, ordNum, currentOrder) {
 
     const canButton = document.getElementById("Order" + ordNum + "CancelButton");
     canButton.addEventListener("click", function() {
-        
+
         firestore.doc("Users/" + email + "/Orders/" + currentOrder).update({
             "OrderStatus": "Cancelled"
         }).then(function() {
-            
+
             firestore.doc("Restaurants/" + data.RestaurantId + "/Orders/" + currentOrder).delete().then(function() {
                 var ref = canButton.parentElement;
                 ref.innerHTML = "<h1>" + ref.id + "</h1>" +
-                    "<p>" + data.RestaurantName + "</p>" +
-                    "<p>Food Ordered: " + data.FoodOrdered + "</p>" +
-                    "<p id='Order" + ordNum + "OrderStatus'>Order Status: Cancelled</p>" +
-                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + ref.id.replace(' ', '') + "DeleteButton'>"
+                    "<h3>" + data.RestaurantName + "</h3>" +
+                    "<h5>Food Ordered: " + data.FoodOrdered + "</h5>" +
+                    "<h5 id='Order" + ordNum + "OrderStatus'>Order Status: Cancelled</h5>" +
+                    "<input type='submit' value='Delete' class='btn btn-danger' id='" + ref.id.replace(' ', '') + "DeleteButton'>"+'<hr>';
+                    "<hr>";
                 ref.parentElement.removeChild(ref);
                 pastDiv.appendChild(ref);
                 addDeleteEventListener(ordNum, currentOrder);
@@ -84,7 +92,7 @@ function addDeleteEventListener(ordNum, currentOrder) {
 
     const delButton = document.getElementById("Order" + ordNum + "DeleteButton");
     delButton.addEventListener("click", function() {
-        
+
         firestore.doc("Users/" + email + "/Orders/" + currentOrder).delete().then(function() {
             console.log("Successfully deleted document!");
             var ref = delButton.parentElement;
