@@ -15,6 +15,8 @@ const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
 const cartButton = document.getElementById("cartButton");
+const editButton = document.getElementById("editButton");
+const searchBar = document.getElementById("searchBar");
 
 var name = "";
 var address = "";
@@ -25,6 +27,7 @@ var email = "";
 var phoneNumber = "";
 var restaurants = [];
 var restIDs = [];
+var filtersUsed = [];
 
 
 // const placeOrder = document.getElementById("placeOrder");
@@ -55,7 +58,7 @@ function renderRestaurants() {
 
   });
 
-}
+}//end renderRestaurants
 
 function renderFilters() {
 
@@ -77,16 +80,41 @@ function renderFilters() {
 
   })
 
-}
+}//end renderFilters
 
-function filterRestaurants() {
+function filterRestaurants(filterHow) {
 
+  if (filtersUsed.includes(filterHow)) {//already using that filter
+    //do nothing
+  } else {//add new filter
+    filtersUsed.push(filterHow);
+  }//end if
+
+  console.log(filtersUsed);
+
+  if (filtersUsed.includes("name") && filtersUsed.includes("tags")) {//filter by name and tags
+    console.log("filter w both");
+    filterByNameAndTags();
+  } else if (filtersUsed.includes("tags")) {//filter by tags
+    filterByTags();
+  } else if (filtersUsed.includes("name")) {//filter by name
+    filterByName();
+  } else {
+    //you done fucked up A A ron
+    console.log(filtersUsed);
+    console.log(filterHow);
+  }//end if filterHow
+
+}//end filterRestaurants
+
+
+function filterByTags() {
   var filteredRestaurants = [];
   var filteredRestIDs = [];
   for (var i = 0; i < restaurants.length; i++) {
     filteredRestaurants[i] = restaurants[i];
     filteredRestIDs[i] = restIDs[i];
-  }
+  }//end for i
 
   console.log(filteredRestaurants);
   var tagsArray = getSelections(restTags);
@@ -98,28 +126,99 @@ function filterRestaurants() {
         if (!thisRestTags.includes(tagsArray[i])) {
           delete filteredRestaurants[j];
           delete filteredRestIDs[j];
-        }
-      }
-    }
-  }
-
+        }//end if !includes
+      }//end if != null
+    }//end for j
+  }//end for i
 
   console.log(filteredRestaurants);
 
   searchSection.innerHTML = '';
 
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+}//end filterByTags
+
+function filterByName() {
+  var searchedName = searchBar.value;
+  searchedName = searchedName.toUpperCase();
+
+  var filteredRestaurants = [];
+  var filteredRestIDs = [];
+  for (var i = 0; i < restaurants.length; i++) {
+    filteredRestaurants[i] = restaurants[i];
+    filteredRestIDs[i] = restIDs[i];
+  }//end for i
+
+  for (var j = 0; j < filteredRestaurants.length; j++) {
+    if (filteredRestaurants[j] != null) {
+      var thisRestName = filteredRestaurants[j]['RestaurantName'].toUpperCase();
+      if (!thisRestName.includes(searchedName)) {
+        delete filteredRestaurants[j];
+        delete filteredRestIDs[j];
+      }//end if !includes
+    }//end if != null
+  }//end for j
+
+  console.log(filteredRestaurants);
+  searchSection.innerHTML = '';
+
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+
+}//end filterByName
+
+function filterByNameAndTags() {
+  var searchedName = searchBar.value;
+  searchedName = searchedName.toUpperCase();
+
+  var filteredRestaurants = [];
+  var filteredRestIDs = [];
+  for (var i = 0; i < restaurants.length; i++) {
+    filteredRestaurants[i] = restaurants[i];
+    filteredRestIDs[i] = restIDs[i];
+  }//end for i
+
+  console.log(filteredRestaurants);
+  var tagsArray = getSelections(restTags);
+
+  for (var i = 0; i < tagsArray.length; i++) {
+    for (var j = 0; j < filteredRestaurants.length; j++) {
+      if (filteredRestaurants[j] != null) {
+        var thisRestTags = filteredRestaurants[j]['RestaurantTags'];
+        var thisRestName = filteredRestaurants[j]['RestaurantName'].toUpperCase();
+        if (!thisRestTags.includes(tagsArray[i])) {
+          delete filteredRestaurants[j];
+          delete filteredRestIDs[j];
+        }//end if !includes tag
+        if (!thisRestName.includes(searchedName)) {
+          delete filteredRestaurants[j];
+          delete filteredRestIDs[j];
+        }//end if !includes name
+      }//end if !=null
+    }//end for j
+  }//end for i
+
+  console.log(filteredRestaurants);
+
+  searchSection.innerHTML = '';
+
+  reRenderRestauraunts(filteredRestaurants, filteredRestIDs);
+  eventListeners(filteredRestIDs);
+
+}//end filterByNameAndTags
+
+
+function reRenderRestauraunts(filteredRestaurants, filteredRestIDs) {
   filteredRestaurants.forEach(function (element, index) {
     var div = document.createElement("div");
     div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
       + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
     // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
-      div.className = 'card card-body fixed float-left font-weight-bold';
+    div.className = 'card card-body fixed float-left font-weight-bold';
     searchSection.appendChild(div);
   });
-
-  eventListeners(filteredRestIDs);
-
-}
+}//end reRender
 
 function eventListeners(IDs) {
 
@@ -130,7 +229,7 @@ function eventListeners(IDs) {
     });
   });
 
-}
+}//end eventListeners IDs
 
 function getSelections(select) {
 
@@ -147,51 +246,17 @@ function getSelections(select) {
   }
   return result;
 
-}
-
-// placeOrder.addEventListener("click", e => {
-//   notifyHeader.innerText = "Order Placed!";
-//   notifyHeader.style.visibility = "visible";
-//   //instead of specific rest id, use vars restaurant_id of rest menu you are adding from
-//   firestore.doc("Restaurants/PsB7bBjf63vmiOrKoc3M").get().then(function (doc) {
-//     console.log("get restaurant worked")
-
-//     var restData = doc.data();
-//     console.log(restData);
-//     var managerEmail = restData.RestaurantManager;
-//     var newOrderRef = firestore.collection("Restaurants/PsB7bBjf63vmiOrKoc3M/Orders/").doc();
-//     var orderInfo = {
-//       FoodItem: "Spaghetti",
-//       AmountPaid: "$14.95",
-//       OrderStatus: "Pending",
-//       OrderAuthor: email,
-//       OrderManager: managerEmail,
-//       ParentRest: doc.id
-//     }
-//     newOrderRef.set(orderInfo).then(function () {
-//       console.log("Order successfully written.");
-//       firestore.doc("Users/" + email + "/Orders/" + newOrderRef.id).set({
-//         OrderId: newOrderRef.id,
-//         RestaurantId: doc.id
-//       })
-//     }).catch(function (error) {
-//       console.log("Error writing document: " + error + ".");
-//     });
-
-//   });
-
-
-// })
-
-// ordersButton.addEventListener("click", e => {
-//   window.location.replace("orders.html");
-// });
+}//end getSelections
 
 //cart modal functions, sorry for confusion.
 ///////////////////////////////////////////
 var total = 0;
 var cartCount = 0;
 var itemTotal = 0;
+
+editButton.addEventListener("click", e => {
+  window.location.replace("editAccount.html");
+});//end editButton listener
 
 function fillCart() {
   var listNumber = 0;
@@ -325,7 +390,7 @@ function setCartCount() {
       cartCounter.innerText = cartCount;
     }
   });//end get.then
-}
+}//end setCartCount
 
 cartButton.addEventListener("click", e => {
   //remove the items in the cart modal and reload them just incase it changed
@@ -333,11 +398,12 @@ cartButton.addEventListener("click", e => {
     itemSummary.removeChild(itemSummary.firstChild);
   }
   fillCart();
-})
+})//end cartButton EventListener
 
 checkout.addEventListener("click", e => {
   window.location.replace("orderCart.html");
-})
+})//end checkoutButton listener
+
 //////////////////////////////////////////
 
 firebase.auth().onAuthStateChanged(function (user) {
@@ -356,9 +422,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         nameField.innerText = docData.UserName;
         addressField.innerText = docData.UserAddress;
-        cityField.innerText = docData.UserAddress;
-        stateField.innerText = docData.UserAddress;
-        zipField.innerText = docData.UserAddress;
+        cityField.innerText = docData.UserCity;
+        stateField.innerText = docData.UserState;
+        zipField.innerText = docData.UserZipCode;
         emailField.innerText = docData.UserEmail;
         phoneNumberField.innerText = docData.UserPhoneNumber;
 
@@ -385,4 +451,4 @@ firebase.auth().onAuthStateChanged(function (user) {
     console.log("No user is signed in, redirecting...");
     window.location.replace("homepage.html");
   }
-});
+});//end auth
