@@ -43,6 +43,7 @@ function renderOrders() {
                 "<p id='Order" + orderNumber + "OrderStatus'>Order Status: " + data.OrderStatus + "</p>" + 
                 "<input type='submit' class='btn btn-success' value='Mark Pickup' id='Order" + orderNumber + "MarkPickup'>";
             inProgressDiv.appendChild(div);
+            
             orderNumber++;
         }
     }
