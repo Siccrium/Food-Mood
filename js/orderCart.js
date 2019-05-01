@@ -9,17 +9,21 @@ const otherTip = document.getElementById("otherTip");
 const submitOther = document.getElementById("submitOther");
 const tipExplain = document.getElementById("tipExplain");
 const placeOrder = document.getElementById("placeOrder");
+const restPage = document.getElementById("restPage");
 
 var email = "";
 var subtotal = 0;
 var deliveryFee = 5;
 var total = 0;
+var parentRest = "";
 getRadioVal();
 
 //gets total of all items in the customer's cart
 function renderTotals() {
 
     firestore.collection("Users/"+email+"/cart").get().then(function(querySnapshot) {
+        parentRest = querySnapshot.docs[0].data().ParentRest;
+        console.log(parentRest);
 
         querySnapshot.forEach(function(doc) {
             var data = doc.data();
@@ -32,7 +36,6 @@ function renderTotals() {
         total = total + (total*tip);
         totalText.innerHTML = "$" + total;
 
-        
     }).catch(function(error) {
         console.log("Error getting documents: " + error);
     });
@@ -47,10 +50,17 @@ function updateTotal() {
 
 }
 
+restPage.addEventListener("click", function() {
+            
+    window.location.replace("restaurant.html?restaurant_id=" + parentRest);
+
+});
+
 placeOrder.addEventListener("click", function() {
 
     var parentRest = "";
     var foodOrdered = [];
+    var time = Date.now();
 
     firestore.collection("Users/" + email + "/cart").get().then(function(querySnapshot) {
         var data = querySnapshot.docs[0].data();
@@ -80,7 +90,8 @@ placeOrder.addEventListener("click", function() {
                     "RestaurantName": data.RestaurantName,
                     "OrderingCustomer": email,
                     "FoodOrdered": foodOrdered,
-                    "OrderStatus": "In Progress - New"
+                    "OrderStatus": "In Progress - New",
+                    "ServerTimestamp": time
                 }).then(function(docRef){
                     console.log("Order successfully written to customer!");
 
@@ -89,7 +100,8 @@ placeOrder.addEventListener("click", function() {
                         "RestaurantName": data.RestaurantName,
                         "OrderingCustomer": email,
                         "FoodOrdered": foodOrdered,
-                        "OrderStatus": "In Progress - New"
+                        "OrderStatus": "In Progress - New",
+                        "ServerTimestamp": time
                     }).then(function(){
                         console.log("Order successfully placed to restaurant!");
                         window.location.replace("OrdersCustomer.html");

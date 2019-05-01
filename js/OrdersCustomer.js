@@ -6,7 +6,7 @@ const pastDiv = document.getElementById("pastDiv");
 
 var email = "";
 var orderNumber = 0;
-var orders = []
+var orders = [];
 
 function renderOrders() {
     for(var i=0; i<orders.length; i++) {
@@ -98,7 +98,7 @@ function addDeleteEventListener(ordNum, currentOrder) {
 }
 
 function getOrders() {
-    firestore.collection("Users/" + email + "/Orders").get().then(function(querySnapshot) {
+    firestore.collection("Users/" + email + "/Orders").orderBy("ServerTimestamp").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             orders.push(doc);
         });
