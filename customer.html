@@ -20,6 +20,7 @@
   <!-- Our Custom CSS -->
   <link rel="stylesheet" href="css/style2.css">
   <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/checkbox.css">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -175,9 +176,13 @@
               <input type="text" id="searchbar" onkeyup="filterRestaurants('name')" placeholder="Search...">
               <br><br>
               <h5>Select a filter:</h5>
-              <p>(Hold control to select multiple)</p>
-              <select onchange="filterRestaurants('tags')" multiple id="restTags">
-              </select>
+              <!-- <p>(Hold control to select multiple)</p>
+              <select onchange="console.log('old')" multiple id="restTags">
+              </select> -->
+            </div>
+            <div class="containerrr">
+              <ul id="checkboxSection" onchange="filterRestaurants('tags')" class="ks-cboxtags">
+              </ul>
             </div>
             <div class="hidetab" id="map"></div>
             <hr>
