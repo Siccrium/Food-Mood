@@ -40,9 +40,7 @@ function managerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+'Spice Level: '+data.FoodSpiceLevel+'</p>' +
-                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    // div.className = 'card card-body float-right font-weight-bold';
+                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+'Spice Level: '+data.FoodSpiceLevel+'</p>';
                       div.className = 'card card-body fixed float-left font-weight-bold';
                     foodDuplicator.appendChild(div);
                     //handle addToCart button later for customer view
