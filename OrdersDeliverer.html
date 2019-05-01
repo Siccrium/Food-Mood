@@ -34,6 +34,7 @@
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- Our Custom CSS -->
   <link rel="stylesheet" href="css/style3.css">
+  <link rel="stylesheet" href="css/tab1.css">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -75,12 +76,12 @@
             <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
           </div>
 
-          <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
+          <!-- <button type="button" class="btn btn-info" id="cartButton" href="OrderCart.html" data-toggle="modal"
             data-target="#myModal">
             <span id="right">
               <i class="fas fa-shopping-cart fa-lg"></i><span id="cartCounter"></span>
             </span>
-          </button>
+          </button> -->
         </div>
       </nav>
 
@@ -111,38 +112,27 @@
       </div>
 
       <header class="masthead text-gray text-center">
-        <div class="container-fluid">
-          <h4>Orders</h4>
-          <br>
-          <p>
-            <a class="btn btn-info" data-toggle="collapse" href="#multiCollapseExample1" role="button"
-              aria-expanded="false" aria-controls="multiCollapseExample1">Past Orders</a>
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
-              aria-expanded="false" aria-controls="multiCollapseExample2">Available Orders</button>
-            <div class="row">
-              <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div class="card card-body" id="pastDiv">
-                    
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample2">
-                  <div class="card card-body" id="inProgressDiv">
-                    
-                  </div>
-                </div>
-              </div>
-              <!-- <h2 id="h1">Your Orders</h2>
-        <br>
-        </div>
+            <div class="container"></div>
+            <div id="exTab1" class="container">
+              <div class="jumbotron">
+                <h1 style="color:#3cb371">Your Orders</h1>
+              <ul  class="nav nav-pills">
+			             <li class="active">
+                     <a href="#pastDiv" data-toggle="tab" class="style">Past</a>
+			                </li>
+			                   <li><a href="#inProgressDiv" data-toggle="tab" class="style">In-Progress</a>
+			                      </li>
+		                        </ul>
 
-        <div id="orderDuplicator">
-        </div> -->
-            </div>
-        </div>
-      </header>
+			                         <div class="tab-content clearfix">
+			                              <div class="tab-pane active" id="pastDiv">
+				                                </div>
+				                                    <div class="tab-pane" id="inProgressDiv">
+				                                        </div>
+			                                       </div>
+                                        </div>
+                                    </div>
+                              </header>
 
       <section class="features-icons bg-light text-center">
         <div class="container">
