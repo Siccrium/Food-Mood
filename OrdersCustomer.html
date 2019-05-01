@@ -10,6 +10,7 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/tabs.css">
 
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
@@ -47,6 +48,9 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
     integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
     crossorigin="anonymous"></script>
+
+    <!-- material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
@@ -221,6 +225,32 @@
     	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          var tabs = $('.tabs');
+          var selector = $('.tabs').find('a').length;
+          //var selector = $(".tabs").find(".selector");
+          var activeItem = tabs.find('.active');
+          var activeWidth = activeItem.innerWidth();
+          $(".selector").css({
+            "left": activeItem.position.left + "px",
+            "width": activeWidth + "px"
+          });
+
+          $(".tabs").on("click", "a", function (e) {
+            e.preventDefault();
+            $('.tabs a').removeClass("active");
+            $(this).addClass('active');
+            var activeWidth = $(this).innerWidth();
+            var itemPos = $(this).position();
+            $(".selector").css({
+              "left": itemPos.left + "px",
+              "width": activeWidth + "px"
+            });
+          });
+        });
+      </script>
 
   <script type="text/javascript">
     $(document).ready(function () {
