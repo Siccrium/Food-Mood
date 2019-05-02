@@ -11,7 +11,7 @@ var currOrder = "";
 var data = "";
 var orders = [];
 getUrlVars();
-var orderNumber = 0;
+var orderNumber = 1;
 
 function renderOrders() {
     for(var i=0; i<orders.length; i++) {

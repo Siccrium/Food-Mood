@@ -5,7 +5,7 @@ const inProgressDiv = document.getElementById("inProgressDiv");
 const pastDiv = document.getElementById("pastDiv");
 
 var email = "";
-var orderNumber = 0;
+var orderNumber = 1;
 var orders = []
 
 function renderOrders() {
