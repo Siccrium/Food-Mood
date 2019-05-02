@@ -13,6 +13,8 @@ const foodDuplicator = document.getElementById('foodDuplicator');
 const addFoodButton = document.getElementById("addFoodButton");
 const FoodName = document.getElementById("FoodName");
 const FoodPrice = document.getElementById("FoodPrice");
+const FoodDescription = document.getElementById("FoodDescription");
+const FoodSpiceLevel = document.getElementById("FoodSpiceLevel");
 const accDashboard = document.getElementById("accDashboard");
 const menuHeader = document.getElementById("menuHeader");
 const bottom1 = document.getElementById("bottom1");
@@ -38,12 +40,13 @@ function managerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
-                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    // div.className = 'card card-body float-right font-weight-bold';
-                      div.className = 'card card-body fixed float-left font-weight-bold';
+                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+'Spice Level: '+data.FoodSpiceLevel+'</p>';
+                      div.className = 'card card-body fixed float-left space font-weight-bold';
                     foodDuplicator.appendChild(div);
-                    //handle addToCart button later for customer view
+                    var editFood = document.getElementById(doc.id);
+                    editFood.addEventListener("click", e => {
+                        window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
+                    });
                 });
             }).catch(function (error) {
                 console.log("Error getting documents: " + error);
@@ -110,9 +113,9 @@ function customerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
+                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+ 'Spice Level: '+ data.FoodSpiceLevel+'</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body fixed float-left font-weight-bold';
+                    div.className = 'card card-body fixed float-left space font-weight-bold';
                     foodDuplicator.appendChild(div);
                 });//end forEach
                 //issues with listener.. get all food again and set listeners
@@ -156,6 +159,11 @@ function handleAddToCart(docId, FoodName, FoodPrice) {
             cartRef.get().then(querySnapshot => {
                 if (querySnapshot.empty) {//cart must be empty
                     putInCart();
+                    popup.innerText = "Item Added To Cart";
+                            popup.classList.add("show");
+                            setTimeout(function () {
+                                popup.classList.remove("show");
+                            }, 1950);
                 } else {//cart is not empty
                     var query = cartRef.where("ParentRest", "==", vars['restaurant_id']).get().then(querySnapshot => {
                         if (querySnapshot.empty) {//that item is from a different rest, dont allow
@@ -167,13 +175,12 @@ function handleAddToCart(docId, FoodName, FoodPrice) {
                             }, 3950);
                         } else {//item is from same rest, this is good
                             //popup.. plz help me edit the location of which this pops up via popup.css
+                           putInCart();
                             popup.innerText = "Item Added To Cart";
                             popup.classList.add("show");
                             setTimeout(function () {
                                 popup.classList.remove("show");
                             }, 1950);
-
-                            putInCart();
                         }//end if query2Snapshot.empty
                     }).catch(err => {
                         console.log('Error getting document', err);

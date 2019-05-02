@@ -228,7 +228,7 @@ function addDeleteEventListener(ordNum, currentOrder) {
 }
 
 function getOrders() {
-    firestore.collection("Users/" + email + "/Orders").get().then(function(querySnapshot) {
+    firestore.collection("Users/" + email + "/Orders").orderBy("ServerTimestamp").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             orders.push(doc);
         });

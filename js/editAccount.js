@@ -10,7 +10,7 @@ const userZip = document.getElementById("userZip");
 const userPhone = document.getElementById("userPhone");
 const dashboard = document.getElementById("dashButton");
 const saveButton = document.getElementById("saveButton");
-
+const userAccount = document.getElementById("accountButton");
 errorHeader.style.visibility = "hidden";
 var role = "";
 
@@ -29,6 +29,10 @@ function renderPage(userData) {
 saveButton.addEventListener("click", e => {
     updateAccount();
 });//end save listener
+
+userAccount.addEventListener("click", e =>{
+  window.location.replace(role + ".html");
+});
 
 function updateAccount() {
 
@@ -78,4 +82,4 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log("user isn't signed in")
         window.location.replace("homepage.html");
     }//end if user
-});        
+});

@@ -14,8 +14,79 @@ var restPhoneNumber = document.getElementById("restPhoneNumber");
 const restTags = document.getElementById("restTags");
 const errorHeader = document.getElementById('errorHeader');
 var Sbutton = document.getElementById("Sbutton");
+var fileButton = document.getElementById('fileButton');
+var uploader = document.getElementById('uploader');
 
 errorHeader.style.visibility = "hidden";
+
+fileButton.addEventListener('change',function(e){
+
+      var file = e.target.files[0];
+      var storageRef = firebase.storage().ref('images/'+file.name);
+      var task = storageRef.put(file);
+
+      // const ref = firebase.storage().ref();
+      // const file = $('images/').get(0).files[0];
+      // const name = (+new Date()) + '-' + file.name;
+      // const task = ref.child(name).put(file, metadata);
+
+
+      task.on('state_changed',
+
+      function progress(snapshot){
+        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        uploader.value = percentage;
+      },
+
+      function error(err){
+
+      },
+
+      function complete(){
+
+      }
+    );
+
+    // task.then((snapshot) => {<br/>
+    //     console.log(snapshot.downloadURL); <br/>});
+    //
+    //     task
+    //   .then((snapshot) => {
+    //     document.querySelector('restImage').src = snapshot.downloadURL;
+    //   })
+    //   .catch((error) => {
+    //
+    //     switch (error.code) {
+    //       case 'storage/unauthorized':
+    //
+    //         break;
+    //       case 'storage/canceled':
+    //
+    //         break;
+    //
+    //       case 'storage/unknown':
+    //         break;
+    //     }
+    //   });
+
+    function showimage() {
+
+        // storageRef.getDownloadURL().then(function(url) {
+        //     var test = url;
+        //     alert(url);
+        //     document.querySelector('img').src = test;
+        // }).catch(function(error) {
+        //
+        // });
+
+        storageRef.getMetadata().then(function(metadata){
+          document.getElementById('restImage').src = metadata.downloadURLs[0]
+        }).catch(function(error){
+
+        });
+    }
+
+  });
 
 function renderFilters() {
 
@@ -27,7 +98,7 @@ function renderFilters() {
             var filters = data.Tags.split(", ");
 
             filters.forEach(element => {
-                
+
                 restTags.innerHTML += "<option value='" + element + "'>" + element + "</option>";
 
             });
@@ -50,6 +121,7 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
+            fileButton.defaultValue = docData.RestaurantImage;
             populateTags(docData.RestaurantTags);
         } else console.log("The restaurant document does not exist.");
 
@@ -66,7 +138,7 @@ function populateTags(string) {
 
     var tagsArray = string.split(",");
     var tagsIndex = 0;
-    
+
     for(var i=0; i<restTags.length; i++) {
         if(tagsArray[tagsIndex] === restTags[i].value) {
             restTags[i].setAttribute("selected", "selected");
@@ -134,6 +206,7 @@ Sbutton.addEventListener('click', e => {
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
     var tags = getTagsString();
+    var image = fileButton.value;
     // var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
     if (name == "") {
@@ -166,7 +239,13 @@ Sbutton.addEventListener('click', e => {
         errorHeader.style.visibility = "visible";
         console.log("The 'phoneNumber' field was left empty.");
         return;
+    }else if (image == "") {
+        errorHeader.innerText = "Please upload a restaurant image."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'image' field was left empty.");
+        return;
     }
+
 
     if (vars[0] == "restaurant_id") {//edit existing rest // you clicked edit information
         firestore.collection("Restaurants").doc(vars['restaurant_id']).update({
@@ -176,7 +255,8 @@ Sbutton.addEventListener('click', e => {
             "RestaurantState": state,
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
-            "RestaurantTags": tags
+            "RestaurantTags": tags,
+            "RestaurantImage" : image
         }).then(function () {
             console.log("Document Successfully Updated.");
             window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -193,13 +273,14 @@ Sbutton.addEventListener('click', e => {
             "RestaurantState": state,
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
-            "RestaurantTags": tags
+            "RestaurantTags": tags,
+            "RestaurantImage" : image
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
         console.log(restInfo);
         newRestRef.set(restInfo).then(function () {
-            //original menu made on restaurant creation. 
+            //original menu made on restaurant creation.
             var newMenuRef = firestore.collection("Restaurants").doc(newRestRef.id).collection("Menus").doc();
             var menuInfo = { "MenuName": name + " Complete Menu", "ParentRestaurant": newRestRef.id };
             newMenuRef.set(menuInfo).then(function () {

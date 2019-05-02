@@ -20,6 +20,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-storage.js"></script>
 
 </head>
 
@@ -84,10 +85,19 @@
                 <span class="invalid-feedback">Enter the restaurant phone number</span>
               </div>
 
-              <label for="restTags">Restaurant Tags:(Hold Control to select multiple)</label>
-              <select multiple id="restTags">
-                <option></option>
-              </select>
+                  <label for="restTags">Restaurant Tags:(Hold Control to select multiple)</label>
+                  <select multiple id="restTags">
+                    <option></option>
+                  </select>
+                  <br>
+                  Restaurant Image:
+                  <br>
+                  <progress value="0" max="100" id="uploader">0%</progress>
+                  <input type="file" value="upload" id="fileButton" onclick="showimage();"/>
+                  <img height="125px" width="200px" src="" id="restImage"/>
+
+                  <br><br><br><br>
+                  <hr>
 
               <h1 id="errorHeader"></h1>
               <button type="submit" value="Submit" id="Sbutton"
@@ -100,31 +110,31 @@
     </div>
   </div>
 
-  <script src="js/firebase.js"></script>
-  <script src="js/editRestaurant.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/editRestaurant.js"></script>
 
-  <footer class="footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item">
-              <a href="#">About</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+
+    <footer class="footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-</body>
-
+    </footer>
+  </body>
 </html>

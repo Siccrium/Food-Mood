@@ -122,7 +122,7 @@ function addPickupEventListener(data, ordNum, currentOrder) {
 }
 
 function getOrders() {
-    firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Orders").get().then(function(querySnapshot) {
+    firestore.collection("Restaurants/" + vars['restaurant_id'] + "/Orders").orderBy("ServerTimestamp").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             orders.push(doc);
         });
@@ -196,7 +196,8 @@ function addEventListeners(data, ordNum, currentOrder, custEmail) {
                             "OrderStatus": "Accepted by Restaurant",
                             "OrderingCustomer": data.OrderingCustomer,
                             "RestaurantId": data.RestaurantId,
-                            "RestaurantName": data.RestaurantName
+                            "RestaurantName": data.RestaurantName,
+                            "ServerTimestamp": data.ServerTimestamp
                         }).then(function() {
                             document.getElementById("Order" + ordNum + "OrderStatus").innerText = "Order Status: Accepted by Restaurant";
                             var div = accButton.parentElement;
