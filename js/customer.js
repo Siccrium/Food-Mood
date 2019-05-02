@@ -312,7 +312,7 @@ function reRenderRestauraunts(filteredRestaurants, filteredRestIDs) {
     div.innerHTML = "<h3 style='color:#006400;'>" + element['RestaurantName'] + "</h3>"
       + "<button id='" + filteredRestIDs[index] + "' type=submit class= 'btn btn-success'>View Restaurant</button>";
     // div.className = 'row hidden-md-up col-md-4 mb-3 card card-block float-right font-weight-bold';
-    div.className = 'card card-body fixed float-left font-weight-bold';
+    div.className = 'card card-body fixed float-left space font-weight-bold';
     searchSection.appendChild(div);
   });
 }//end reRender
