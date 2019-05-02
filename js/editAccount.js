@@ -27,11 +27,13 @@ function renderPage(userData) {
 
 
 saveButton.addEventListener("click", e => {
+
     updateAccount();
+
 });//end save listener
 
-userAccount.addEventListener("click", e =>{
-  window.location.replace(role + ".html");
+userAccount.addEventListener("click", e => {
+    window.location.replace(role + ".html");
 });
 
 function updateAccount() {
@@ -43,18 +45,53 @@ function updateAccount() {
     var zip = userZip.value;
     var phone = userPhone.value;
 
-    firestore.doc("Users/" + email).update({
-        UserAddress: address,
-        UserCity: city,
-        UserName: name,
-        UserPhoneNumber: phone,
-        UserState: state,
-        UserZipCode: zip
-    }).then(function () {
-        window.location.replace(role + ".html");
-    }).catch(function (error) {
-        console.error("Error updating document: ", error);
-    });//end doc.update.then.catch
+    if (name == "") {
+        errorHeader.innerText = "Please enter a name."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'name' field was left empty.");
+        return;
+    } else if (address == "") {
+        errorHeader.innerText = "Please enter an address."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'address' field was left empty.");
+        return;
+    } else if (city == "") {
+        errorHeader.innerText = "Please enter a city."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'city' field was left empty.");
+        return;
+    } else if (state == "") {
+        errorHeader.innerText = "Please enter a state."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'state' field was left empty.");
+        return;
+    } else if (zip == "" || zip.length != 5) {
+        errorHeader.innerText = "Please enter a valid zip code."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'zip' field was left empty or was not 5 digits.");
+        return;
+    } else if (phone == "") {
+        errorHeader.innerText = "Please enter a phone number."
+        errorHeader.style.visibility = "visible";
+        console.log("The 'phone number' field was left empty.");
+        return;
+    }
+
+    else {
+        errorHeader.style.visibility = "hidden";
+        firestore.doc("Users/" + email).update({
+            UserAddress: address,
+            UserCity: city,
+            UserName: name,
+            UserPhoneNumber: phone,
+            UserState: state,
+            UserZipCode: zip
+        }).then(function () {
+            window.location.replace(role + ".html");
+        }).catch(function (error) {
+            console.error("Error updating document: ", error);
+        });//end doc.update.then.catch
+    }
 
 }//end updateAccount
 

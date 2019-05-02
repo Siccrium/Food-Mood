@@ -51,55 +51,49 @@
                 <label for="restName" class="control-label mb-1">Restaurant Name: </label>
                 <input type="text" id="restName" class="form-control" aria-required="true" aria-invalid="false" required
                   autofocus>
-                <span class="invalid-feedback">Enter the restaurant name</span>
               </div>
 
               <div class="form-group">
                 <label for="restAddress">Restaurant Address: </label>
                 <input type="text" id="restAddress" class="form-control" required autofocus>
-                <span class="invalid-feedback">Enter the restaurant address</span>
               </div>
 
               <div class="form-group">
                 <label for="restCity">Restaurant City: </label>
                 <input type="text" id="restCity" class="form-control" required autofocus>
-                <span class="invalid-feedback">Enter the restaurant city</span>
               </div>
 
               <div class="form-group">
                 <label for="restState">Restaurant State: </label>
-                <input type="text" id="restState" class="form-control" pattern="[A-Z]{2}" required autofocus>
-                <span class="invalid-feedback">Enter the restaurant state</span>
+                <input type="text" id="restState" class="form-control" required autofocus>
               </div>
 
               <div class="form-group">
                 <label for="restZip">Restaurant Zip: </label>
-                <input type="text" id="restZip" class="form-control" pattern="[0-9]{5}" required autofocus>
+                <input type="text" id="restZip" class="form-control" required autofocus>
                 <span class="invalid-feedback">Enter the restaurant zip code</span>
               </div>
 
               <div class="form-group">
                 <label for="restPhoneNumber">Restaurant Phone Number: </label>
-                <input type="text" id="restPhoneNumber" class="form-control" pattern="[0-9]{3}\-[0-9]{3}\-[0-9]{4}"
-                  required autofocus>
-                <span class="invalid-feedback">Enter the restaurant phone number</span>
+                <input type="text" id="restPhoneNumber" class="form-control" required autofocus>
               </div>
 
-                  <label for="restTags">Restaurant Tags:(Hold Control to select multiple)</label>
-                  <select multiple id="restTags">
-                    <option></option>
-                  </select>
-                  <br>
-                  Restaurant Image:
-                  <br>
-                  <progress value="0" max="100" id="uploader">0%</progress>
-                  <input type="file" value="upload" id="fileButton" onclick="showimage();"/>
-                  <img height="125px" width="200px" src="" id="restImage"/>
+              <label for="restTags">Restaurant Tags:(Hold Control to select multiple)</label>
+              <select multiple id="restTags">
+                <option></option>
+              </select>
+              <br>
+              Restaurant Image:
+              <br>
+              <progress value="0" max="100" id="uploader">0%</progress>
+              <input type="file" value="upload" id="fileButton" onclick="showimage();" />
+              <img height="125px" width="200px" src="" id="restImage" />
 
-                  <br><br><br><br>
-                  <hr>
+              <br><br><br><br>
+              <hr>
 
-              <h1 id="errorHeader"></h1>
+              <h5 style="color:red; font-style:italic; " id="errorHeader"></h5>
               <button type="submit" value="Submit" id="Sbutton"
                 class="btn btn-lg btn-info btn-block text-uppercase">Submit</button>
 
@@ -110,31 +104,32 @@
     </div>
   </div>
 
-    <script src="js/firebase.js"></script>
-    <script src="js/editRestaurant.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/editRestaurant.js"></script>
 
 
-    <footer class="footer bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item">
-                <a href="#">About</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#">Contact</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#">Terms of Use</a>
-              </li>
-            </ul>
-            <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
-          </div>
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#">About</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Contact</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Food Mood 2019. All Rights Reserved.</p>
         </div>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+</body>
+
 </html>
