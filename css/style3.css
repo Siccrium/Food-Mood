@@ -199,7 +199,8 @@ background:#2d2d2d;}
 	direction: rtl;
 	unicode-bidi: bidi-override;
 	color: #ddd; /* Personal choice */
-  margin-left: 80px;
+    display: inline-block;
+    text-align: center !important;
 }
 .rating input {
 	display: none;

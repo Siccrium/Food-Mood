@@ -4,6 +4,13 @@
   max-height: 55px;
 }
 
+/* .testimg{
+  margin-top: 0px;
+  padding-top: 0px;
+  height: 100px !important;
+  width: 100px !important;
+} */
+
 .bttn{
   float: right;
 }
@@ -243,7 +250,7 @@
                  display:none
 
              }
-
+            }
              .rating-header {
                margin-top: -10px;
                margin-bottom: 10px;
