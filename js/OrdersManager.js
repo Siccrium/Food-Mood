@@ -3,6 +3,7 @@ firestore = firebase.firestore();
 
 const inProgressDiv = document.getElementById("inProgressDiv");
 const pastDiv = document.getElementById("pastDiv");
+const restPage = document.getElementById("restPage");
 
 var email = "";
 var vars = [];
@@ -11,7 +12,7 @@ var currOrder = "";
 var data = "";
 var orders = [];
 getUrlVars();
-var orderNumber = 0;
+var orderNumber = 1;
 
 function renderOrders() {
     for(var i=0; i<orders.length; i++) {
@@ -226,6 +227,12 @@ function addEventListeners(data, ordNum, currentOrder, custEmail) {
     });
 
 }
+
+restPage.addEventListener("click", function() {
+
+    window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
+
+});
 
 function getUrlVars() {
     var hash;

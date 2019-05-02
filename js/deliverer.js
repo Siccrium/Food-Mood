@@ -8,6 +8,7 @@ const stateField = document.getElementById("userState");
 const zipField = document.getElementById("userZip");
 const emailField = document.getElementById("userEmail");
 const phoneNumberField = document.getElementById("userPhone");
+const editButton = document.getElementById("editButton");
 
 var name = "";
 var address = "";
@@ -16,6 +17,12 @@ var state = "";
 var zip = "";
 var email = "";
 var phoneNumber = "";
+
+editButton.addEventListener("click", function() {
+
+  window.location.replace("editAccount.html");
+
+});
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
