@@ -149,7 +149,7 @@ function renderRestaurants() {
       div.innerHTML = "<h3 style='color:#006400;'>" + data.RestaurantName + "</h3>"
         + "<button id='" + doc.id + "' type=submit class='btn btn-success'>View Restaurant</button>";
       // div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
-      div.className = 'card card-body fixed float-left font-weight-bold';
+      div.className = 'card card-body fixed space float-left font-weight-bold';
       searchSection.appendChild(div);
       restaurants.push(data); //wow I should have been doing this instead of .get multiple times #imDumb
       restIDs.push(doc.id);

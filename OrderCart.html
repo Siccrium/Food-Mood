@@ -48,10 +48,10 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarText">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#" id="accountButton">Account</a>
+              <a class="nav-link" href="customer.html" id="accountButton">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Restaurant Page</a>
+              <a class="nav-link" id="restPage">Restaurant Page</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="homepage.html" id="signOut">Sign Out</a>
@@ -150,23 +150,26 @@
                                       <br>
                                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-info active">
-                                          <input type="radio" name="options" id="option1" autocomplete="off" value=0.01 checked onchange="getRadioVal()"> 1%
+                                          <input type="radio" name="options" id="option1" autocomplete="off" value=0.15 checked onchange="getRadioVal()"> 15%
                                         </label>
                                         <label class="btn btn-info">
-                                          <input type="radio" name="options" id="option2" autocomplete="off" value=0.02 onchange="getRadioVal()"> 2%
+                                          <input type="radio" name="options" id="option2" autocomplete="off" value=0.18 onchange="getRadioVal()"> 18%
                                         </label>
                                         <label class="btn btn-info">
-                                          <input type="radio" name="options" id="option3" autocomplete="off" value=0.03 onchange="getRadioVal()"> 3%
+                                          <input type="radio" name="options" id="option3" autocomplete="off" value=0.2 onchange="getRadioVal()"> 20%
                                         </label>
                                         <label class="btn btn-info">
                                           <input type="radio" name="options" class="text" id="option4" autocomplete="off" value="Other" onchange="getRadioVal()">Other
                                         </label>
                                       </div>
+                                      <p id="tipExplain">Enter tip amount in decimal format. (ex: 5% is 0.05)</p>
+                                      <input type="text" id="otherTip">
+                                      <input type="submit" id="submitOther" value="Submit">
                                       <hr>
                                       <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
                                       <h1 id="Total"></h1>
                                       <hr>
-                                      <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href='appFeedback.html';">Place Order</button>
+                                      <button type="button" class="btn btn-danger btn-lg btn-block" id="placeOrder">Place Order</button>
 
                                 </div>
                               </div>

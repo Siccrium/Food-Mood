@@ -13,6 +13,8 @@ const foodDuplicator = document.getElementById('foodDuplicator');
 const addFoodButton = document.getElementById("addFoodButton");
 const FoodName = document.getElementById("FoodName");
 const FoodPrice = document.getElementById("FoodPrice");
+const FoodDescription = document.getElementById("FoodDescription");
+const FoodSpiceLevel = document.getElementById("FoodSpiceLevel");
 const accDashboard = document.getElementById("accDashboard");
 const menuHeader = document.getElementById("menuHeader");
 const bottom1 = document.getElementById("bottom1");
@@ -38,10 +40,8 @@ function managerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
-                        '<button id="' + doc.id + '" type="submit" class="btn btn-success">Edit</button>';
-                    // div.className = 'card card-body float-right font-weight-bold';
-                    div.className = 'card card-body fixed float-left font-weight-bold';
+                    div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+'Spice Level: '+data.FoodSpiceLevel+'</p>';
+                      div.className = 'card card-body fixed float-left space font-weight-bold';
                     foodDuplicator.appendChild(div);
                     var editFood = document.getElementById(doc.id);
                     editFood.addEventListener("click", e => {
@@ -113,9 +113,9 @@ function customerPage() {
                     var data = doc.data();
                     console.log(data);
                     var div = document.createElement('div');
-                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '</p>' +
+                    div.innerHTML = '<div"><p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+ 'Spice Level: '+ data.FoodSpiceLevel+'</p>' +
                         '<button id="' + doc.id + '" type="submit" class="btn btn-success">Add To Cart</button><div class="popup"><span class="popuptext" id="popup' + doc.id + '">Item Added To Cart</span></div></div>';
-                    div.className = 'card card-body fixed float-left font-weight-bold';
+                    div.className = 'card card-body fixed float-left space font-weight-bold';
                     foodDuplicator.appendChild(div);
                 });//end forEach
                 //issues with listener.. get all food again and set listeners
