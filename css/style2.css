@@ -35,8 +35,8 @@ a:focus {
 
 .fixed{
 
-    width:15rem;
-    height:15rem;
+    width:18rem;
+    height:18rem;
 }
 .navbar-btn {
     box-shadow: none;
@@ -51,6 +51,9 @@ a:focus {
     margin: 40px 0;
 }
 
+.space{
+  margin: 10px;
+}
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
