@@ -42,6 +42,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-storage.js"></script>
 
 </head>
 
@@ -132,11 +133,12 @@
                   </div>
                   <br>
                   <p>Would you like to upload a picture of your order?</p>
-                  <input type='file' onchange="readURL(this);" />
+                  <input type='file' id="fileButton" onchange="readURL(this);" />
                   <img id="blah" src="http://placehold.it/180" alt="" />
                   <br>
                   <br>
                   <hr>
+                  <h6 id="errorHeader" style="display:none; color:red;"></h6>
                   <button type="submit" value="Submit" id="feedbackSubmit"
                     class="btn btn-lg btn-success btn-block text-uppercase">Submit</button>
                 </div>

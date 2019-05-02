@@ -6,6 +6,8 @@ const image = document.getElementById("blah");
 const submitFeedback = document.getElementById("feedbackSubmit");
 const ratingRadio = document.getElementsByName("rating");
 const typeRadio = document.getElementsByName("typeRadio");
+const errorHeader = document.getElementById("errorHeader");
+const fileButton = document.getElementById("fileButton");
 
 // document.getElementsByName("rating").forEach(function (elm) {
 //   if (elm.checked) {
@@ -19,35 +21,67 @@ const typeRadio = document.getElementsByName("typeRadio");
 //   }
 // });
 
+
 var email = "";
 var type = "";
 
 submitFeedback.addEventListener("click", e => {
+
+  if(type == ""){
+    errorHeader.innerText = "Please Choose A FeedBack Type";
+    errorHeader.style.display="inline-block"
+    return;
+  }else if(description.value == ""){
+    console.log("stupid");
+    errorHeader.innerText = "Please Enter A Description";
+    errorHeader.style.display="inline-block"
+    return;
+  }
+
+
+  errorHeader.innerText ="";
+  errorHeader.style.display="none";
   writeFeedback();
 });
+
+fileButton.addEventListener('change',function(e){
+
+  var file = e.target.files[0];
+  var storageRef = firebase.storage().ref('images/'+file.name);
+  storageRef.put(file);
+  console.log(fileButton.value);
+
+});
+
 
 function writeFeedback() {
 
   var feedbackDescription = description.value;
-  var feedbackImage = image.src;
+  var feedbackImage = image;
   var rating = getRating();
+  if(feedbackImage == "http://placehold.it/180"){
+    feedbackImage = "No Image";
+  }
 
-  console.log("description: " + feedbackDescription);
-  console.log("image: " + feedbackImage);
-  console.log("rating: " + rating);
-  console.log("feedbackType: " + type);
 
-  // firestore.doc("Users/"+email+"/feedback/").set({
-  //   UserDescription: feedbackDescription,
-  //   UserImage:feedbackImage,
-  //   UserRating:rating,
-  //   UserType:type
-  // }).then(function () {
-  //   console.log("Feedback successfully written!");
-  // }).catch(function (error) {
-  //     console.log("Error writing document: " + error);
-  //   });
-}
+  var feedbackRef = firestore.collection("Users").doc(email).collection("feedback").doc();
+  var feedbackInfo = {
+    UserName: email,
+    UserType:type,
+    UserDescription: feedbackDescription,
+    UserImage:fileButton.value,
+    UserRating:rating
+  }
+
+
+
+  feedbackRef.set(feedbackInfo).then(function () {
+    console.log("Feedback successfully written!");  
+  }).catch(function (error) {
+      console.log("Error writing document: " + error);
+    });
+
+}//end writeFeedback
 
 function giveType(feedbackType) {//sets type when clicking a radio button. called from html
   type = feedbackType;
@@ -59,10 +93,15 @@ function getRating() {
 
   while (!ratingRadio[i].checked) {
     i++;
+    if(i==5){
+      rating=0;
+      return rating;
+    }
+    
   }//end while radio !checked
-
-  rating = ratingRadio[i].value;
+rating = ratingRadio[i].value;
   return rating;
+  
 
 }//end getRating
 
