@@ -72,22 +72,46 @@
 
 
                   <label for="userName">Name: </label>
-                  <input type="text" id="userName" class="form-control" required autofocus>
+                  <input id="acc-name" name="acc-name" type="text" class="form-control acc-name" required
+                        autocomplete="acc-name" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-name-error" pattern="^[a-zA-Z\s]+">
+                  <span class="invalid-feedback">Enter your name</span>
+                  <!-- <input type="text" id="userName" class="form-control" required autofocus> -->
 
                   <label for="userAddress">Address: </label>
-                  <input type="text" id="userAddress" class="form-control" required autofocus>
+                  <input id="acc-addr" name="acc-addr" type="text" class="form-control acc-addr" required
+                        autocomplete="acc-addr" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-addr-error" pattern="^[0-9]{1-5} + ^[a-zA-Z\s]+">
+                  <span class="invalid-feedback">Enter your address</span>
+                  <!-- <input type="text" id="userAddress" class="form-control" required autofocus> -->
 
                   <label for="userCity">City: </label>
-                  <input type="text" id="userCity" class="form-control" required autofocus>
+                  <input id="acc-city" name="acc-city" type="text" class="form-control acc-city" required
+                        autocomplete="acc-city" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-city-error" pattern="^[a-zA-Z\s]+">
+                  <span class="invalid-feedback">Enter your city</span>
+                  <!-- <input type="text" id="userCity" class="form-control" required autofocus> -->
 
                   <label for="userState">State: </label>
-                  <input type="text" id="userState" class="form-control" required autofocus>
+                  <input id="acc-state" name="acc-state" type="text" class="form-control acc-state" required
+                        autocomplete="acc-state" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-state-error" pattern="^[a-zA-Z\s]">
+                  <span class="invalid-feedback">Enter your state</span>
+                  <!-- <input type="text" id="userState" class="form-control" required autofocus> -->
 
                   <label for="userZip">Zip: </label>
-                  <input type="text" id="userZip" class="form-control" required autofocus>
+                  <input id="acc-zip" name="acc-zip" type="text" class="form-control acc-zip" required
+                        autocomplete="acc-zip" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-zip-error" pattern="^[0-9]{5}">
+                  <span class="invalid-feedback">Enter your zip</span>
+                  <!-- <input type="text" id="userZip" class="form-control" required autofocus> -->
 
                   <label for="userPhone">Phone Number: </label>
-                  <input type="text" id="userPhone" class="form-control" required autofocus>
+                  <input id="acc-phone" name="acc-phone" type="text" class="form-control acc-phone" required
+                        autocomplete="acc-phone" aria-required="true" aria-invalid="false"
+                        aria-describedby="acc-phone-error" pattern="^[0-9]{10}">
+                  <span class="invalid-feedback">Enter your phone number</span>
+                  <!-- <input type="text" id="userPhone" class="form-control" required autofocus> -->
 
                   <h5 style="color:red; font-style:italic; " id="errorHeader"></h5>
                   <input type="submit" value="Save Changes" id="saveButton"

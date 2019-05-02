@@ -14,79 +14,10 @@ var restPhoneNumber = document.getElementById("restPhoneNumber");
 const restTags = document.getElementById("restTags");
 const errorHeader = document.getElementById('errorHeader');
 var Sbutton = document.getElementById("Sbutton");
-var fileButton = document.getElementById('fileButton');
-var uploader = document.getElementById('uploader');
 
 errorHeader.style.visibility = "hidden";
 
-// fileButton.addEventListener('change', function (e) {
-//
-//     var file = e.target.files[0];
-//     var storageRef = firebase.storage().ref('images/' + file.name);
-//     var task = storageRef.put(file);
 
-    // const ref = firebase.storage().ref();
-    // const file = $('images/').get(0).files[0];
-    // const name = (+new Date()) + '-' + file.name;
-    // const task = ref.child(name).put(file, metadata);
-
-
-    // task.on('state_changed',
-    //
-    //     function progress(snapshot) {
-    //         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //         uploader.value = percentage;
-    //     },
-    //
-    //     function error(err) {
-    //
-    //     },
-    //
-    //     function complete() {
-    //
-    //     }
-    // );
-
-    // task.then((snapshot) => {<br/>
-    //     console.log(snapshot.downloadURL); <br/>});
-    //
-    //     task
-    //   .then((snapshot) => {
-    //     document.querySelector('restImage').src = snapshot.downloadURL;
-    //   })
-    //   .catch((error) => {
-    //
-    //     switch (error.code) {
-    //       case 'storage/unauthorized':
-    //
-    //         break;
-    //       case 'storage/canceled':
-    //
-    //         break;
-    //
-    //       case 'storage/unknown':
-    //         break;
-    //     }
-    //   });
-
-    // function showimage() {
-
-        // storageRef.getDownloadURL().then(function(url) {
-        //     var test = url;
-        //     alert(url);
-        //     document.querySelector('img').src = test;
-        // }).catch(function(error) {
-        //
-        // });
-
-//         storageRef.getMetadata().then(function (metadata) {
-//             document.getElementById('restImage').src = metadata.downloadURLs[0]
-//         }).catch(function (error) {
-//
-//         });
-//     }
-//
-// });
 
 function renderFilters() {
 
