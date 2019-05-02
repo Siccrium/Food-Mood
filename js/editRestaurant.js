@@ -311,4 +311,5 @@ firebase.auth().onAuthStateChanged(function (user) {
         // No user is signed in.
         console.log("No user is signed in");
     }
+
 });
