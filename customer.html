@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/style2.css">
   <link rel="stylesheet" href="css/tabs.css">
   <link rel="stylesheet" href="css/checkbox.css">
+
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -86,7 +87,7 @@
     </div>
 
     <!-- Page Content  -->
-    <div id="content" style="background-image:url('./img/bg.jpg')" ;>
+    <div id="content" style="background-image:url('./img/bg.jpg'); background-attachment:fixed;">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -157,18 +158,22 @@
       <div class="container">
         <div class="row">
           <div class="jumbotron">
-            <div class="wrapp">
-              <nav class="tabs">
-                <div class="selector"></div>
-                <a href="#" id="filterRest" class="active"><i class="material-icons">store</i>Find Restaurants/Food</a>
-                <a href="#" id="showMap"><i class="material-icons">map</i></i>Local Map</a>
-              </nav>
-            </div>
-            <br>
-            <div id="filterRestDiv">
+            <div>
               <h5>Find Your Favorite Restaurant or Cuisine:</h5>
-              <input type="text" id="searchbar" onkeyup="filterRestaurants('name')" placeholder="Search...">
+              <input type="text" id="searchbar" onkeyup="filterRestaurants('name')" placeholder="Search..."
+                style="border-radius: 10px;">
               <br><br>
+              <div class="wrapp">
+                <p style="margin-left: 45px; margin-bottom: 0px;">How Would You Like To Search?</p>
+                <nav class="tabs">
+                  <div class="selector"></div>
+                  <a href="#" id="filterRest" onclick="changeTab('findRest')" class="active"><i
+                      class="material-icons">store</i>Find Restaurants</a>
+                  <a href="#" id="filterFood" onclick="changeTab('findFood')"><i
+                      class="material-icons">fastfood</i></i>Find Food</a>
+                </nav>
+              </div>
+              <br>
               <h5>Select a filter:</h5>
               <!-- <p>(Hold control to select multiple)</p>
               <select onchange="console.log('old')" multiple id="restTags">
@@ -178,7 +183,6 @@
               <ul id="checkboxSection" onchange="filterRestaurants('tags')" class="ks-cboxtags">
               </ul>
             </div>
-            <div class="hidetab" id="map"></div>
             <hr>
             <section id="searchSection">
             </section>
@@ -282,6 +286,7 @@
       });
     });
   </script>
+
 
   <script type="text/javascript">
     $(document).ready(function () {
