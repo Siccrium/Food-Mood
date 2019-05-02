@@ -9,6 +9,9 @@ const typeRadio = document.getElementsByName("typeRadio");
 const errorHeader = document.getElementById("errorHeader");
 const fileButton = document.getElementById("fileButton");
 
+var vars = [];
+getUrlVars();
+
 // document.getElementsByName("rating").forEach(function (elm) {
 //   if (elm.checked) {
 //     ratingRadio = elm.value;
@@ -87,6 +90,13 @@ function writeFeedback() {
 
 
     feedbackRef.set(feedbackInfo).then(function () {
+
+        firestore.doc("Users/" + email + "/Orders/" + vars['order_id']).update({
+            "FeedbackSubmitted": "True"
+        }).catch(function(error) {
+            console.log("Error updating document: " + error);
+        });
+
         console.log("Feedback successfully written!");
     }).catch(function (error) {
         console.log("Error writing document: " + error);
@@ -116,6 +126,16 @@ function getRating() {
 
 }//end getRating
 
+function getUrlVars() {
+    var hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
 
 
 firebase.auth().onAuthStateChanged(function (user) {
