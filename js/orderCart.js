@@ -10,6 +10,11 @@ const submitOther = document.getElementById("submitOther");
 const tipExplain = document.getElementById("tipExplain");
 const placeOrder = document.getElementById("placeOrder");
 const restPage = document.getElementById("restPage");
+const ccName = document.getElementById("cc-name");
+const ccNum = document.getElementById("cc-number");
+const ccExp = document.getElementById("cc-exp");
+const ccCode = document.getElementById("x_card_code");
+const ccZip = document.getElementById("x_zip");
 
 var email = "";
 var subtotal = 0;
@@ -56,75 +61,117 @@ restPage.addEventListener("click", function() {
 
 });
 
+function checkCard() {
+
+    var filledOut = true;
+
+    var namePatt = RegExp(ccName.pattern);
+    var nameVal = ccName.value;
+    var nameResult = namePatt.test(nameVal);  
+    
+    var numPatt = RegExp(ccNum.pattern);
+    var numVal = ccNum.value;
+    var numResult = numPatt.test(numVal);
+
+    var expPatt = RegExp(ccExp.pattern);
+    var expVal = ccExp.value;
+    var expResult = expPatt.test(expVal);
+
+    var zipPatt = RegExp(ccZip.pattern);
+    var zipVal = ccZip.value;
+    var zipResult = zipPatt.test(zipVal);
+
+    var codePatt = RegExp(ccCode.pattern);
+    var codeVal = ccCode.value;
+    var codeResult = codePatt.test(codeVal);
+
+    console.log(nameResult);
+    console.log(numResult);
+    console.log(expResult);
+    console.log(zipResult);
+    console.log(codeResult);
+
+    if(((!nameResult || !numResult) || (!expResult || !zipResult)) || !codeResult) {
+        filledOut = false
+    }
+
+    return filledOut;
+
+}
+
 placeOrder.addEventListener("click", function() {
 
-    var parentRest = "";
-    var foodOrdered = [];
-    var time = Date.now();
+    if(checkCard()) {
 
-    firestore.collection("Users/" + email + "/cart").get().then(function(querySnapshot) {
-        var data = querySnapshot.docs[0].data();
-        parentRest = data.ParentRest;
-
-        querySnapshot.forEach(function(doc) {
-            var data = doc.data();
-            foodOrdered.push(data.FoodName + ":" + data.Quantity);
-        });
-
-        firestore.collection("Users/" + email + "/cart").get().then(function(cartSnapshot) {
-
-            cartSnapshot.forEach(function(doc) {
-                firestore.doc("Users/" + email + "/cart/" + doc.id).delete().then(function() {
-                    console.log("Document successfully deleted.");
-                }).catch(function(error) {
-                    console.log("Error deleting document: " + error);
-                });
-            });
-
-            firestore.doc("Restaurants/" + parentRest).get().then(function(doc) {
-
+        var parentRest = "";
+        var foodOrdered = [];
+        var time = Date.now();
+        firestore.collection("Users/" + email + "/cart").get().then(function(querySnapshot) {
+            var data = querySnapshot.docs[0].data();
+            parentRest = data.ParentRest;
+    
+            querySnapshot.forEach(function(doc) {
                 var data = doc.data();
-
-                firestore.collection("Users/" + email + "/Orders").add({
-                    "RestaurantId": parentRest,
-                    "RestaurantName": data.RestaurantName,
-                    "OrderingCustomer": email,
-                    "FoodOrdered": foodOrdered,
-                    "OrderStatus": "In Progress - New",
-                    "ServerTimestamp": time,
-                    "FeedbackSubmitted": "False"
-                }).then(function(docRef){
-                    console.log("Order successfully written to customer!");
-
-                    firestore.doc("Restaurants/" + parentRest + "/Orders/" + docRef.id).set({
+                foodOrdered.push(data.FoodName + ":" + data.Quantity);
+            });
+    
+            firestore.collection("Users/" + email + "/cart").get().then(function(cartSnapshot) {
+    
+                cartSnapshot.forEach(function(doc) {
+                    firestore.doc("Users/" + email + "/cart/" + doc.id).delete().then(function() {
+                        console.log("Document successfully deleted.");
+                    }).catch(function(error) {
+                        console.log("Error deleting document: " + error);
+                    });
+                });
+    
+                firestore.doc("Restaurants/" + parentRest).get().then(function(doc) {
+    
+                    var data = doc.data();
+    
+                    firestore.collection("Users/" + email + "/Orders").add({
                         "RestaurantId": parentRest,
                         "RestaurantName": data.RestaurantName,
                         "OrderingCustomer": email,
                         "FoodOrdered": foodOrdered,
                         "OrderStatus": "In Progress - New",
-                        "ServerTimestamp": time
-                    }).then(function(){
-                        console.log("Order successfully placed to restaurant!");
-                        window.location.replace("OrdersCustomer.html");
+                        "ServerTimestamp": time,
+                        "FeedbackSubmitted": "False"
+                    }).then(function(docRef){
+                        console.log("Order successfully written to customer!");
+    
+                        firestore.doc("Restaurants/" + parentRest + "/Orders/" + docRef.id).set({
+                            "RestaurantId": parentRest,
+                            "RestaurantName": data.RestaurantName,
+                            "OrderingCustomer": email,
+                            "FoodOrdered": foodOrdered,
+                            "OrderStatus": "In Progress - New",
+                            "ServerTimestamp": time
+                        }).then(function(){
+                            console.log("Order successfully placed to restaurant!");
+                            window.location.replace("OrdersCustomer.html");
+                        }).catch(function(error) {
+                            console.log("Error writing to database: " + error);
+                        });
+    
                     }).catch(function(error) {
                         console.log("Error writing to database: " + error);
                     });
-
+    
                 }).catch(function(error) {
-                    console.log("Error writing to database: " + error);
+                    console.log("Error getting document: " + error);
                 });
-
+    
             }).catch(function(error) {
-                console.log("Error getting document: " + error);
+                console.log("Error getting documents: " + error);
             });
-
+    
         }).catch(function(error) {
             console.log("Error getting documents: " + error);
         });
 
-    }).catch(function(error) {
-        console.log("Error getting documents: " + error);
-    });
+    } else console.log("Card fields incomplete.");
+
 
 });
 
