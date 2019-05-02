@@ -61,9 +61,18 @@ function checkFields() {
     var zipResult = zipPattern.test(zip);
     var phoneResult = phonePattern.test(phone);
 
+    console.log(nameResult);
+    console.log(addressResult);
+    console.log(cityResult);
+    console.log(stateResult);
+    console.log(zipResult);
+    console.log(phoneResult);
+
     if(((!nameResult || !addressResult) || (!cityResult || !stateResult)) || (!zipResult || !phoneResult)) {
         fieldsCorrect = false;
     }
+
+    console.log(fieldsCorrect);
 
     return fieldsCorrect;
 
