@@ -6,15 +6,23 @@ const deliveryFeeText = document.getElementById("Delivery");
 const totalText = document.getElementById("Total");
 const tipRadio = document.getElementsByName("options");
 const otherTip = document.getElementById("otherTip");
-const submitOther = document.getElementById("submitOther");
+const tipAmount = document.getElementById("TipAmount");
+const submitOtherPerc = document.getElementById("submitOther%");
+const submitOtherDoll = document.getElementById("submitOther$");
 const tipExplain = document.getElementById("tipExplain");
 const placeOrder = document.getElementById("placeOrder");
 const restPage = document.getElementById("restPage");
+const ccName = document.getElementById("cc-name");
+const ccNum = document.getElementById("cc-number");
+const ccExp = document.getElementById("cc-exp");
+const ccCode = document.getElementById("x_card_code");
+const ccZip = document.getElementById("x_zip");
 
 var email = "";
 var subtotal = 0;
 var deliveryFee = 5;
 var total = 0;
+var tipAmnt = 0;
 var parentRest = "";
 getRadioVal();
 
@@ -30,11 +38,13 @@ function renderTotals() {
             subtotal = subtotal + data.TotalCost;
         });
 
-        subtotalText.innerHTML = "$"+subtotal;
-        deliveryFeeText.innerHTML = "$"+deliveryFee;
+        subtotalText.innerHTML = "$"+subtotal.toFixed(2);
+        deliveryFeeText.innerHTML = "$"+deliveryFee.toFixed(2);
         total = subtotal + deliveryFee;
-        total = total + (total*tip);
-        totalText.innerHTML = "$" + total;
+        tipAmnt = total*tip;
+        total = total + tipAmnt;
+        tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+        totalText.innerHTML = "$" + total.toFixed(2);
 
     }).catch(function(error) {
         console.log("Error getting documents: " + error);
@@ -45,8 +55,20 @@ function renderTotals() {
 function updateTotal() {
 
     total = subtotal + deliveryFee;
-    total = total + (total*tip);
-    totalText.innerHTML = "$" + total;
+    tipAmnt = total*tip;
+    total = total + tipAmnt;
+    tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+    totalText.innerHTML = "$" + total.toFixed(2);
+
+}
+
+function updateTotalDollarAmnt() {
+
+    total = subtotal + deliveryFee;
+    tipAmnt = parseFloat(tip);
+    total = total + tipAmnt;
+    tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+    totalText.innerHTML = "$" + total.toFixed(2);
 
 }
 
@@ -56,100 +78,160 @@ restPage.addEventListener("click", function() {
 
 });
 
+function checkCard() {
+
+    var filledOut = true;
+
+    var namePatt = RegExp(ccName.pattern);
+    var nameVal = ccName.value;
+    var nameResult = namePatt.test(nameVal);  
+    
+    var numPatt = RegExp(ccNum.pattern);
+    var numVal = ccNum.value;
+    var numResult = numPatt.test(numVal);
+
+    var expPatt = RegExp(ccExp.pattern);
+    var expVal = ccExp.value;
+    var expResult = expPatt.test(expVal);
+
+    var zipPatt = RegExp(ccZip.pattern);
+    var zipVal = ccZip.value;
+    var zipResult = zipPatt.test(zipVal);
+
+    var codePatt = RegExp(ccCode.pattern);
+    var codeVal = ccCode.value;
+    var codeResult = codePatt.test(codeVal);
+
+    console.log(nameResult);
+    console.log(numResult);
+    console.log(expResult);
+    console.log(zipResult);
+    console.log(codeResult);
+
+    if(((!nameResult || !numResult) || (!expResult || !zipResult)) || !codeResult) {
+        filledOut = false
+    }
+
+    return filledOut;
+
+}
+
 placeOrder.addEventListener("click", function() {
 
-    var parentRest = "";
-    var foodOrdered = [];
-    var time = Date.now();
+    if(checkCard()) {
 
-    firestore.collection("Users/" + email + "/cart").get().then(function(querySnapshot) {
-        var data = querySnapshot.docs[0].data();
-        parentRest = data.ParentRest;
-
-        querySnapshot.forEach(function(doc) {
-            var data = doc.data();
-            foodOrdered.push(data.FoodName + ":" + data.Quantity);
-        });
-
-        firestore.collection("Users/" + email + "/cart").get().then(function(cartSnapshot) {
-
-            cartSnapshot.forEach(function(doc) {
-                firestore.doc("Users/" + email + "/cart/" + doc.id).delete().then(function() {
-                    console.log("Document successfully deleted.");
-                }).catch(function(error) {
-                    console.log("Error deleting document: " + error);
-                });
-            });
-
-            firestore.doc("Restaurants/" + parentRest).get().then(function(doc) {
-
+        var parentRest = "";
+        var foodOrdered = [];
+        var time = Date.now();
+        firestore.collection("Users/" + email + "/cart").get().then(function(querySnapshot) {
+            var data = querySnapshot.docs[0].data();
+            parentRest = data.ParentRest;
+    
+            querySnapshot.forEach(function(doc) {
                 var data = doc.data();
-
-                firestore.collection("Users/" + email + "/Orders").add({
-                    "RestaurantId": parentRest,
-                    "RestaurantName": data.RestaurantName,
-                    "OrderingCustomer": email,
-                    "FoodOrdered": foodOrdered,
-                    "OrderStatus": "In Progress - New",
-                    "ServerTimestamp": time,
-                    "FeedbackSubmitted": "False"
-                }).then(function(docRef){
-                    console.log("Order successfully written to customer!");
-
-                    firestore.doc("Restaurants/" + parentRest + "/Orders/" + docRef.id).set({
+                foodOrdered.push(data.FoodName + ":" + data.Quantity);
+            });
+    
+            firestore.collection("Users/" + email + "/cart").get().then(function(cartSnapshot) {
+    
+                cartSnapshot.forEach(function(doc) {
+                    firestore.doc("Users/" + email + "/cart/" + doc.id).delete().then(function() {
+                        console.log("Document successfully deleted.");
+                    }).catch(function(error) {
+                        console.log("Error deleting document: " + error);
+                    });
+                });
+    
+                firestore.doc("Restaurants/" + parentRest).get().then(function(doc) {
+    
+                    var data = doc.data();
+    
+                    firestore.collection("Users/" + email + "/Orders").add({
                         "RestaurantId": parentRest,
                         "RestaurantName": data.RestaurantName,
                         "OrderingCustomer": email,
                         "FoodOrdered": foodOrdered,
                         "OrderStatus": "In Progress - New",
-                        "ServerTimestamp": time
-                    }).then(function(){
-                        console.log("Order successfully placed to restaurant!");
-                        window.location.replace("OrdersCustomer.html");
+                        "ServerTimestamp": time,
+                        "FeedbackSubmitted": "False"
+                    }).then(function(docRef){
+                        console.log("Order successfully written to customer!");
+    
+                        firestore.doc("Restaurants/" + parentRest + "/Orders/" + docRef.id).set({
+                            "RestaurantId": parentRest,
+                            "RestaurantName": data.RestaurantName,
+                            "OrderingCustomer": email,
+                            "FoodOrdered": foodOrdered,
+                            "OrderStatus": "In Progress - New",
+                            "ServerTimestamp": time
+                        }).then(function(){
+                            console.log("Order successfully placed to restaurant!");
+                            window.location.replace("OrdersCustomer.html");
+                        }).catch(function(error) {
+                            console.log("Error writing to database: " + error);
+                        });
+    
                     }).catch(function(error) {
                         console.log("Error writing to database: " + error);
                     });
-
+    
                 }).catch(function(error) {
-                    console.log("Error writing to database: " + error);
+                    console.log("Error getting document: " + error);
                 });
-
+    
             }).catch(function(error) {
-                console.log("Error getting document: " + error);
+                console.log("Error getting documents: " + error);
             });
-
+    
         }).catch(function(error) {
             console.log("Error getting documents: " + error);
         });
 
-    }).catch(function(error) {
-        console.log("Error getting documents: " + error);
-    });
+    } else console.log("Card fields incomplete.");
+
 
 });
 
-submitOther.addEventListener("click", function() {
+submitOtherPerc.addEventListener("click", function() {
 
     tip = otherTip.value;
+    tip = tip.replace(/[^0-9.]/g, "");
     updateTotal();
 
 });
 
+submitOtherDoll.addEventListener("click", function() {
+
+    tip = otherTip.value;
+    tip = tip.replace(/[^0-9.]/g, "");
+    updateTotalDollarAmnt();
+
+});
+
 function getRadioVal() {
-    otherTip.style.visibility = "hidden";
-    submitOther.style.visibility = "hidden";
-    tipExplain.style.visibility = "hidden";
+    otherTip.style.display = "none";
+    submitOtherPerc.style.display = "none";
+    submitOtherDoll.style.display = "none";
+    tipExplain.style.display = "none";
     for (var i = 0, len = tipRadio.length; i < len; i++) {
       if (tipRadio[i].checked) {
         tip = tipRadio[i].value;
         break;
       }
     }
-    if(tip != "Other") updateTotal();
-    else {
-        otherTip.style.visibility = "visible";
-        submitOther.style.visibility = "visible";
-        tipExplain.style.visibility = "visible";
+    if(tip != "Other%" && tip != "Other$") updateTotal();
+    else if(tip == "Other%") {
+        otherTip.value = "";
+        otherTip.style.display = "block";
+        submitOtherPerc.style.display = "block";
+        tipExplain.innerHTML = "Enter tip amount in decimal format. <br> (ex: 5% is 0.05)";
+        tipExplain.style.display = "block";
+    } else if(tip == "Other$") {
+        otherTip.value = "";
+        otherTip.style.display = "block";
+        submitOtherDoll.style.display = "block";
+        tipExplain.innerText = "Enter tip amount in dollars:";
+        tipExplain.style.display = "block";
     }
 }
 
