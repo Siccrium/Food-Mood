@@ -6,7 +6,9 @@ const deliveryFeeText = document.getElementById("Delivery");
 const totalText = document.getElementById("Total");
 const tipRadio = document.getElementsByName("options");
 const otherTip = document.getElementById("otherTip");
-const submitOther = document.getElementById("submitOther");
+const tipAmount = document.getElementById("TipAmount");
+const submitOtherPerc = document.getElementById("submitOther%");
+const submitOtherDoll = document.getElementById("submitOther$");
 const tipExplain = document.getElementById("tipExplain");
 const placeOrder = document.getElementById("placeOrder");
 const restPage = document.getElementById("restPage");
@@ -20,6 +22,7 @@ var email = "";
 var subtotal = 0;
 var deliveryFee = 5;
 var total = 0;
+var tipAmnt = 0;
 var parentRest = "";
 getRadioVal();
 
@@ -35,11 +38,13 @@ function renderTotals() {
             subtotal = subtotal + data.TotalCost;
         });
 
-        subtotalText.innerHTML = "$"+subtotal;
-        deliveryFeeText.innerHTML = "$"+deliveryFee;
+        subtotalText.innerHTML = "$"+subtotal.toFixed(2);
+        deliveryFeeText.innerHTML = "$"+deliveryFee.toFixed(2);
         total = subtotal + deliveryFee;
-        total = total + (total*tip);
-        totalText.innerHTML = "$" + total;
+        tipAmnt = total*tip;
+        total = total + tipAmnt;
+        tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+        totalText.innerHTML = "$" + total.toFixed(2);
 
     }).catch(function(error) {
         console.log("Error getting documents: " + error);
@@ -50,8 +55,20 @@ function renderTotals() {
 function updateTotal() {
 
     total = subtotal + deliveryFee;
-    total = total + (total*tip);
-    totalText.innerHTML = "$" + total;
+    tipAmnt = total*tip;
+    total = total + tipAmnt;
+    tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+    totalText.innerHTML = "$" + total.toFixed(2);
+
+}
+
+function updateTotalDollarAmnt() {
+
+    total = subtotal + deliveryFee;
+    tipAmnt = parseFloat(tip);
+    total = total + tipAmnt;
+    tipAmount.innerHTML = "$" + tipAmnt.toFixed(2);
+    totalText.innerHTML = "$" + total.toFixed(2);
 
 }
 
@@ -175,28 +192,46 @@ placeOrder.addEventListener("click", function() {
 
 });
 
-submitOther.addEventListener("click", function() {
+submitOtherPerc.addEventListener("click", function() {
 
     tip = otherTip.value;
+    tip = tip.replace(/[^0-9.]/g, "");
     updateTotal();
 
 });
 
+submitOtherDoll.addEventListener("click", function() {
+
+    tip = otherTip.value;
+    tip = tip.replace(/[^0-9.]/g, "");
+    updateTotalDollarAmnt();
+
+});
+
 function getRadioVal() {
-    otherTip.style.visibility = "hidden";
-    submitOther.style.visibility = "hidden";
-    tipExplain.style.visibility = "hidden";
+    otherTip.style.display = "none";
+    submitOtherPerc.style.display = "none";
+    submitOtherDoll.style.display = "none";
+    tipExplain.style.display = "none";
     for (var i = 0, len = tipRadio.length; i < len; i++) {
       if (tipRadio[i].checked) {
         tip = tipRadio[i].value;
         break;
       }
     }
-    if(tip != "Other") updateTotal();
-    else {
-        otherTip.style.visibility = "visible";
-        submitOther.style.visibility = "visible";
-        tipExplain.style.visibility = "visible";
+    if(tip != "Other%" && tip != "Other$") updateTotal();
+    else if(tip == "Other%") {
+        otherTip.value = "";
+        otherTip.style.display = "block";
+        submitOtherPerc.style.display = "block";
+        tipExplain.innerHTML = "Enter tip amount in decimal format. <br> (ex: 5% is 0.05)";
+        tipExplain.style.display = "block";
+    } else if(tip == "Other$") {
+        otherTip.value = "";
+        otherTip.style.display = "block";
+        submitOtherDoll.style.display = "block";
+        tipExplain.innerText = "Enter tip amount in dollars:";
+        tipExplain.style.display = "block";
     }
 }
 

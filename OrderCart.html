@@ -173,13 +173,23 @@
                           onchange="getRadioVal()"> 20%
                       </label>
                       <label class="btn btn-info">
-                        <input type="radio" name="options" class="text" id="option4" autocomplete="off" value="Other"
-                          onchange="getRadioVal()">Other
+                        <input type="radio" name="options" class="text" id="option4" autocomplete="off" value="Other%"
+                          onchange="getRadioVal()">Other(%)
                       </label>
+                      <label class="btn btn-info">
+                          <input type="radio" name="options" class="text" id="option5" autocomplete="off" value="Other$"
+                            onchange="getRadioVal()">Other($)
+                        </label>
                     </div>
-                    <p id="tipExplain">Enter tip amount in decimal format. (ex: 5% is 0.05)</p>
+                    <p id="tipExplain">Enter tip amount in decimal format. <br>
+                    (ex: 5% is 0.05)</p>
                     <input type="text" id="otherTip">
-                    <input type="submit" id="submitOther" value="Submit">
+                    <input type="submit" id="submitOther%" value="Submit">
+                    <input type="submit" id="submitOther$" value="Submit">
+                    <hr>
+                    <div class="summary-item"><span class="text">Tip Amount:</span><span class="price"></span></div>
+                    <h1 id="TipAmount"></h1>
+                    <br>
                     <hr>
                     <div class="summary-item"><span class="text">Total:</span><span class="price"></span></div>
                     <h1 id="Total"></h1>
