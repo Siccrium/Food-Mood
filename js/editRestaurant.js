@@ -19,11 +19,11 @@ var uploader = document.getElementById('uploader');
 
 errorHeader.style.visibility = "hidden";
 
-fileButton.addEventListener('change', function (e) {
-
-    var file = e.target.files[0];
-    var storageRef = firebase.storage().ref('images/' + file.name);
-    var task = storageRef.put(file);
+// fileButton.addEventListener('change', function (e) {
+//
+//     var file = e.target.files[0];
+//     var storageRef = firebase.storage().ref('images/' + file.name);
+//     var task = storageRef.put(file);
 
     // const ref = firebase.storage().ref();
     // const file = $('images/').get(0).files[0];
@@ -31,21 +31,21 @@ fileButton.addEventListener('change', function (e) {
     // const task = ref.child(name).put(file, metadata);
 
 
-    task.on('state_changed',
-
-        function progress(snapshot) {
-            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            uploader.value = percentage;
-        },
-
-        function error(err) {
-
-        },
-
-        function complete() {
-
-        }
-    );
+    // task.on('state_changed',
+    //
+    //     function progress(snapshot) {
+    //         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         uploader.value = percentage;
+    //     },
+    //
+    //     function error(err) {
+    //
+    //     },
+    //
+    //     function complete() {
+    //
+    //     }
+    // );
 
     // task.then((snapshot) => {<br/>
     //     console.log(snapshot.downloadURL); <br/>});
@@ -69,7 +69,7 @@ fileButton.addEventListener('change', function (e) {
     //     }
     //   });
 
-    function showimage() {
+    // function showimage() {
 
         // storageRef.getDownloadURL().then(function(url) {
         //     var test = url;
@@ -79,14 +79,14 @@ fileButton.addEventListener('change', function (e) {
         //
         // });
 
-        storageRef.getMetadata().then(function (metadata) {
-            document.getElementById('restImage').src = metadata.downloadURLs[0]
-        }).catch(function (error) {
-
-        });
-    }
-
-});
+//         storageRef.getMetadata().then(function (metadata) {
+//             document.getElementById('restImage').src = metadata.downloadURLs[0]
+//         }).catch(function (error) {
+//
+//         });
+//     }
+//
+// });
 
 function renderFilters() {
 
@@ -121,7 +121,7 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
-            fileButton.defaultValue = docData.RestaurantImage;
+            // fileButton.defaultValue = docData.RestaurantImage;
             populateTags(docData.RestaurantTags);
         } else console.log("The restaurant document does not exist.");
 
@@ -206,7 +206,7 @@ Sbutton.addEventListener('click', e => {
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
     var tags = getTagsString();
-    var image = fileButton.value;
+    // var image = fileButton.value;
 
     if (name == "") {
         errorHeader.innerText = "Please enter a restaurant name."
@@ -238,11 +238,6 @@ Sbutton.addEventListener('click', e => {
         errorHeader.style.visibility = "visible";
         console.log("The 'phoneNumber' field was left empty.");
         return;
-    } else if (image == "") {
-        errorHeader.innerText = "Please upload a restaurant image."
-        errorHeader.style.visibility = "visible";
-        console.log("The 'image' field was left empty.");
-        return;
     }
 
 
@@ -273,7 +268,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantTags": tags,
-            "RestaurantImage": image
+            // "RestaurantImage": image
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
