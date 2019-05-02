@@ -52,7 +52,7 @@ function renderPage() {
             restState.defaultValue = docData.RestaurantState;
             restZip.defaultValue = docData.RestaurantZip;
             restPhoneNumber.defaultValue = docData.RestaurantPhoneNumber;
-            fileButton.defaultValue = docData.RestaurantImage;
+            // fileButton.defaultValue = docData.RestaurantImage;
             populateTags(docData.RestaurantTags);
         } else console.log("The restaurant document does not exist.");
 
@@ -137,7 +137,7 @@ Sbutton.addEventListener('click', e => {
     var zip = restZip.value;
     var phoneNumber = restPhoneNumber.value;
     var tags = getTagsString();
-    var image = fileButton.value;
+    // var image = fileButton.value;
 
     if (name == "") {
         errorHeader.innerText = "Please enter a restaurant name."
@@ -169,11 +169,6 @@ Sbutton.addEventListener('click', e => {
         errorHeader.style.visibility = "visible";
         console.log("The 'phoneNumber' field was left empty.");
         return;
-    } else if (image == "") {
-        errorHeader.innerText = "Please upload a restaurant image."
-        errorHeader.style.visibility = "visible";
-        console.log("The 'image' field was left empty.");
-        return;
     }
 
 
@@ -204,7 +199,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantTags": tags,
-            "RestaurantImage": image
+            // "RestaurantImage": image
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
