@@ -119,5 +119,4 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log("user isn't signed in")
         window.location.replace("homepage.html");
     }//end if user
-
 });
