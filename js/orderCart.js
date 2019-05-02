@@ -30,8 +30,8 @@ function renderTotals() {
             subtotal = subtotal + data.TotalCost;
         });
 
-        subtotalText.innerHTML = subtotal;
-        deliveryFeeText.innerHTML = deliveryFee;
+        subtotalText.innerHTML = "$"+subtotal;
+        deliveryFeeText.innerHTML = "$"+deliveryFee;
         total = subtotal + deliveryFee;
         total = total + (total*tip);
         totalText.innerHTML = "$" + total;
