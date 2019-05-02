@@ -46,10 +46,6 @@ function managerPage() {
                     div.innerHTML = '<p>' + data.FoodName + ' - $' + data.FoodPrice + '<br>'+ data.FoodDescription+ '<br>'+'Spice Level: '+data.FoodSpiceLevel+'</p>';
                       div.className = 'card card-body fixed float-left space font-weight-bold';
                     foodDuplicator.appendChild(div);
-                    var editFood = document.getElementById(doc.id);
-                    editFood.addEventListener("click", e => {
-                        window.location.replace("editMenu.html?restaurant_id=" + vars['restaurant_id'] + "&menu_id=" + vars['menu_id']);
-                    });
                 });
             }).catch(function (error) {
                 console.log("Error getting documents: " + error);
