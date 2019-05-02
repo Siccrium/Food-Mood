@@ -180,8 +180,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantState": state,
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
-            "RestaurantTags": tags,
-            "RestaurantImage": image
+            "RestaurantTags": tags
         }).then(function () {
             console.log("Document Successfully Updated.");
             window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -198,8 +197,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantState": state,
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
-            "RestaurantTags": tags,
-            // "RestaurantImage": image
+            "RestaurantTags": tags
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
