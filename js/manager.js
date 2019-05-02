@@ -1,6 +1,6 @@
 //Initialize Firestore
 firestore = firebase.firestore();
-
+"<link rel='stylesheet' href='css/style2.css'>";
 
 const nameField = document.getElementById("userName");
 const addressField = document.getElementById("userAddress");
@@ -33,6 +33,7 @@ function renderPage() {
       div.innerHTML = '<br><br><h3 id="h">' + data.RestaurantName + '</h3>' +
         '<h3 id="h">' + data.RestaurantAddress + '</h3>' +
         '<button name="' + data.RestaurantName + '" id="' + doc.id + '" type="submit" class="btn btn-success">View Restaurant</button>';
+        div.className = 'card card-body font-weight-bold space';
       duplicator.appendChild(div);
       refs.push(document.getElementById(doc.id));
     });
