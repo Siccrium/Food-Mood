@@ -10,13 +10,22 @@ const zipField = document.getElementById("userZip");
 const emailField = document.getElementById("userEmail");
 const phoneNumberField = document.getElementById("userPhone");
 const searchSection = document.getElementById("searchSection");
-const restTags = document.getElementById("restTags");
+// const restTags = document.getElementById("restTags");
 const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
 const cartButton = document.getElementById("cartButton");
 const editButton = document.getElementById("editButton");
-const searchBar = document.getElementById("searchBar");
+const searchBar = document.getElementById("searchbar");
+const filterRestTab = document.getElementById("filterRest");
+const mapTab = document.getElementById("showMap");
+const ordersButton = document.getElementById("ordersButton");
+const notifyHeader = document.getElementById("notifyHeader");
+const filterRestDiv = document.getElementById("filterRestDiv");
+const mapDiv = document.getElementById("map");
+const cbSection = document.getElementById("checkboxSection");
+
+notifyHeader.style.visibility = "hidden";
 
 var name = "";
 var address = "";
@@ -30,16 +39,108 @@ var restIDs = [];
 var filtersUsed = [];
 
 
-// const placeOrder = document.getElementById("placeOrder");
-// const accountButton = document.getElementById("accountButton");
-const ordersButton = document.getElementById("ordersButton");
-const notifyHeader = document.getElementById("notifyHeader");
 
-notifyHeader.style.visibility = "hidden";
+filterRestTab.addEventListener("click", e => {
+
+  console.log("Filter Restaurants");
+  mapDiv.style.display = "none";
+  filterRestDiv.style.display = "block";
 
 
+});//end filterRestTab listener
+
+mapTab.addEventListener("click", e => {
+
+  console.log("Show Map");
+  filterRestDiv.style.display = "none";
+  mapDiv.style.display = "block";
+});//end mapTab listener
+
+
+// function initMap() {
+//   // Map options
+//   var options = {
+//     zoom: 8,
+//     center: { lat: 42.3601, lng: -71.0589 }
+//   }
+
+//   // New map
+//   var map = new google.maps.Map(document.getElementById('map'), options);
+
+//   // Listen for click on map
+//   // google.maps.event.addListener(map, 'click', function (event) {
+//   //   // Add marker
+//   //   addMarker({ coords: event.latLng });
+//   // });
+
+//   /*
+//   // Add marker
+//   var marker = new google.maps.Marker({
+//     position:{lat:42.4668,lng:-70.9495},
+//     map:map,
+//     icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+//   });
+
+//   var infoWindow = new google.maps.InfoWindow({
+//     content:'<h1>Lynn MA</h1>'
+//   });
+
+//   marker.addListener('click', function(){
+//     infoWindow.open(map, marker);
+//   });
+//   */
+
+//   // Array of markers
+//   var markers = [
+//     {
+//       coords: { lat: 42.4668, lng: -70.9495 },
+//       iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+//       content: '<h1>Lynn MA</h1>'
+//     },
+//     {
+//       coords: { lat: 42.8584, lng: -70.9300 },
+//       content: '<h1>Amesbury MA</h1>'
+//     },
+//     {
+//       coords: { lat: 42.7762, lng: -71.0773 }
+//     }
+//   ];
+
+//   // Loop through markers
+//   // for (var i = 0; i < markers.length; i++) {
+//   //   // Add marker
+//   //   addMarker(markers[i]);
+//   // }
+
+//   // Add Marker Function
+//   function addMarker(props) {
+//     var marker = new google.maps.Marker({
+//       position: props.coords,
+//       map: map,
+//       //icon:props.iconImage
+//     });
+
+//     // Check for customicon
+//     if (props.iconImage) {
+//       // Set icon image
+//       marker.setIcon(props.iconImage);
+//     }
+
+//     // Check content
+//     if (props.content) {
+//       var infoWindow = new google.maps.InfoWindow({
+//         content: props.content
+//       });
+
+//       marker.addListener('click', function () {
+//         infoWindow.open(map, marker);
+//       });
+//     }
+//   }
+// }
+
+////////////////////////////////////////FILTER RESTAURANTS
 function renderRestaurants() {
-
   firestore.collection("Restaurants").get().then(function (documents) {
 
     documents.forEach(function (doc) {
@@ -50,7 +151,7 @@ function renderRestaurants() {
       // div.className = 'col-md-3 col-lg-10 mx-left text-center mb-3 card card-body d-inline-block font-weight-bold';
       div.className = 'card card-body fixed space float-left font-weight-bold';
       searchSection.appendChild(div);
-      restaurants.push(data);
+      restaurants.push(data); //wow I should have been doing this instead of .get multiple times #imDumb
       restIDs.push(doc.id);
     });
 
@@ -61,7 +162,6 @@ function renderRestaurants() {
 }//end renderRestaurants
 
 function renderFilters() {
-
   firestore.doc("Tags/Tags").get().then(function (doc) {
 
     if (doc && doc.exists) {
@@ -70,18 +170,15 @@ function renderFilters() {
       var filters = data.Tags.split(", ");
 
       filters.forEach(element => {
-
-        restTags.innerHTML += "<option value='" + element + "'>" + element + "</option>";
-        restTags.className = "'mdb-select md-form colorful-select dropdown-primary' multiple searchable='Search here..'"
-
+        // console.log("rendered filters");
+        // restTags.innerHTML += "<option value='" + element + "'>" + element + "</option>";
+        // restTags.className = "'mdb-select md-form colorful-select dropdown-primary' multiple searchable='Search here..'";
+        cbSection.innerHTML += "<li><input type='checkbox' id='checkbox" + element + "' value='" + element + "'><label for='checkbox" + element + "'>" + element + "</label></li>";
       });
-
     }
-
   })
-
 }//end renderFilters
-
+// .replace(/\s+/g, '')
 function filterRestaurants(filterHow) {
 
   if (filtersUsed.includes(filterHow)) {//already using that filter
@@ -117,7 +214,7 @@ function filterByTags() {
   }//end for i
 
   console.log(filteredRestaurants);
-  var tagsArray = getSelections(restTags);
+  var tagsArray = getSelections(cbSection);
 
   for (var i = 0; i < tagsArray.length; i++) {
     for (var j = 0; j < filteredRestaurants.length; j++) {
@@ -180,7 +277,7 @@ function filterByNameAndTags() {
   }//end for i
 
   console.log(filteredRestaurants);
-  var tagsArray = getSelections(restTags);
+  var tagsArray = getSelections(cbSection);
 
   for (var i = 0; i < tagsArray.length; i++) {
     for (var j = 0; j < filteredRestaurants.length; j++) {
@@ -231,25 +328,53 @@ function eventListeners(IDs) {
 
 }//end eventListeners IDs
 
-function getSelections(select) {
+function getSelections(cbSection) {
+
+
+  // NodeList.prototype.forEach = Array.prototype.forEach
+  var c = cbSection.childNodes;
+  var cArray = [];
+  // console.log("t1: " + c);
+  c.forEach(function (item) {
+    var kid = item.firstChild;
+    cArray.push(kid);
+    // console.log("t2: " + kid);
+    // console.log(item);
+  });
 
   var result = [];
-  var options = select && select.options;
-  var opt;
-
-  for (var i = 0, iLen = options.length; i < iLen; i++) {
-    opt = options[i];
-
-    if (opt.selected) {
-      result.push(opt.value || opt.text);
-    }
-  }
+  for (var i = 1, cLen = cArray.length; i < cLen; i++) {
+    if (cArray[i].checked) {
+      result.push(cArray[i].value);
+    }//end if checked
+  }//endFor
   return result;
 
-}//end getSelections
+  // 
+  // var options = select && select.options;
+  // var opt;
 
-//cart modal functions, sorry for confusion.
-///////////////////////////////////////////
+  // for (var i = 0, iLen = options.length; i < iLen; i++) {
+  //   opt = options[i];
+
+  //   if (opt.selected) {
+  //     result.push(opt.value || opt.text);
+  //   }
+  // }
+  // return result;
+
+
+
+}//end getSelections
+////////////////////////////////////////END FILTER RESTAURANTS
+
+////////////////////////////////////////FILTER FOOD
+
+
+
+////////////////////////////////////////END FILTER FOOD
+
+////////////////////////////////////////CART MODAL
 var total = 0;
 var cartCount = 0;
 var itemTotal = 0;
@@ -404,7 +529,7 @@ checkout.addEventListener("click", e => {
   window.location.replace("orderCart.html");
 })//end checkoutButton listener
 
-//////////////////////////////////////////
+////////////////////////////////////////END CART MODAL
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
