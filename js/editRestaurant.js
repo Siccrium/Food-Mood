@@ -19,32 +19,32 @@ var uploader = document.getElementById('uploader');
 
 errorHeader.style.visibility = "hidden";
 
-fileButton.addEventListener('change',function(e){
+fileButton.addEventListener('change', function (e) {
 
-      var file = e.target.files[0];
-      var storageRef = firebase.storage().ref('images/'+file.name);
-      var task = storageRef.put(file);
+    var file = e.target.files[0];
+    var storageRef = firebase.storage().ref('images/' + file.name);
+    var task = storageRef.put(file);
 
-      // const ref = firebase.storage().ref();
-      // const file = $('images/').get(0).files[0];
-      // const name = (+new Date()) + '-' + file.name;
-      // const task = ref.child(name).put(file, metadata);
+    // const ref = firebase.storage().ref();
+    // const file = $('images/').get(0).files[0];
+    // const name = (+new Date()) + '-' + file.name;
+    // const task = ref.child(name).put(file, metadata);
 
 
-      task.on('state_changed',
+    task.on('state_changed',
 
-      function progress(snapshot){
-        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        uploader.value = percentage;
-      },
+        function progress(snapshot) {
+            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+        },
 
-      function error(err){
+        function error(err) {
 
-      },
+        },
 
-      function complete(){
+        function complete() {
 
-      }
+        }
     );
 
     // task.then((snapshot) => {<br/>
@@ -79,20 +79,20 @@ fileButton.addEventListener('change',function(e){
         //
         // });
 
-        storageRef.getMetadata().then(function(metadata){
-          document.getElementById('restImage').src = metadata.downloadURLs[0]
-        }).catch(function(error){
+        storageRef.getMetadata().then(function (metadata) {
+            document.getElementById('restImage').src = metadata.downloadURLs[0]
+        }).catch(function (error) {
 
         });
     }
 
-  });
+});
 
 function renderFilters() {
 
-    firestore.doc("Tags/Tags").get().then(function(doc) {
+    firestore.doc("Tags/Tags").get().then(function (doc) {
 
-        if(doc && doc.exists) {
+        if (doc && doc.exists) {
 
             var data = doc.data();
             var filters = data.Tags.split(", ");
@@ -139,8 +139,8 @@ function populateTags(string) {
     var tagsArray = string.split(",");
     var tagsIndex = 0;
 
-    for(var i=0; i<restTags.length; i++) {
-        if(tagsArray[tagsIndex] === restTags[i].value) {
+    for (var i = 0; i < restTags.length; i++) {
+        if (tagsArray[tagsIndex] === restTags[i].value) {
             restTags[i].setAttribute("selected", "selected");
             tagsIndex++;
         }
@@ -185,11 +185,11 @@ function getSelections(select) {
     var options = select && select.options;
     var opt;
 
-    for (var i=0, iLen=options.length; i<iLen; i++) {
+    for (var i = 0, iLen = options.length; i < iLen; i++) {
         opt = options[i];
 
         if (opt.selected) {
-        result.push(opt.value || opt.text);
+            result.push(opt.value || opt.text);
         }
     }
     return result;
@@ -207,7 +207,6 @@ Sbutton.addEventListener('click', e => {
     var phoneNumber = restPhoneNumber.value;
     var tags = getTagsString();
     var image = fileButton.value;
-    // var number = Math.floor(Math.random() * 900000000000) + 100000000000;
 
     if (name == "") {
         errorHeader.innerText = "Please enter a restaurant name."
@@ -239,7 +238,7 @@ Sbutton.addEventListener('click', e => {
         errorHeader.style.visibility = "visible";
         console.log("The 'phoneNumber' field was left empty.");
         return;
-    }else if (image == "") {
+    } else if (image == "") {
         errorHeader.innerText = "Please upload a restaurant image."
         errorHeader.style.visibility = "visible";
         console.log("The 'image' field was left empty.");
@@ -256,7 +255,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantTags": tags,
-            "RestaurantImage" : image
+            "RestaurantImage": image
         }).then(function () {
             console.log("Document Successfully Updated.");
             window.location.replace("restaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -274,7 +273,7 @@ Sbutton.addEventListener('click', e => {
             "RestaurantZip": zip,
             "RestaurantPhoneNumber": phoneNumber,
             "RestaurantTags": tags,
-            "RestaurantImage" : image
+            "RestaurantImage": image
         };
         console.log("newRestRef: " + newRestRef);
         console.log("id: " + newRestRef.id);
