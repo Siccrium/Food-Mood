@@ -23,11 +23,14 @@ const bottom3 = document.getElementById("bottom3");
 const cartCounter = document.getElementById("cartCounter");
 const cartButton = document.getElementById("cartButton");
 const modalBody = document.getElementById("modalBody");
+cartButton.style.display = "none";
 getUrlVars();
 
 
 
 function managerPage() {
+
+    cartButton.parentElement.removeChild(cartButton);
 
     menuHeader.innerHTML = "Food Items In Your Menu";
     firestore.doc("Restaurants/" + vars['restaurant_id'] + "/Menus/" + vars['menu_id']).get().then(function (doc) {
@@ -79,6 +82,8 @@ var cartCount = 0;
 var quantityCount = 0;
 
 function customerPage() {
+
+    cartButton.style.display = "block";
 
     editButton.parentNode.removeChild(editButton);
     deleteButton.parentNode.removeChild(deleteButton);

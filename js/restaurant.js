@@ -28,6 +28,7 @@ const itemSummary = document.getElementById("itemSummary");
 const subtotal = document.getElementById("subtotal");
 const checkout = document.getElementById("checkout");
 const cartButton = document.getElementById("cartButton");
+cartButton.style.display = "none";
 
 getUrlVars();
 
@@ -86,6 +87,8 @@ function eventListeners() {
 
 function managerPage() {
 
+    cartButton.parentElement.removeChild(cartButton);
+
     editButton.addEventListener('click', e => {
 
         window.location.replace("editRestaurant.html?restaurant_id=" + vars['restaurant_id']);
@@ -118,6 +121,9 @@ function managerPage() {
 }
 
 function customerPage() {
+
+    cartButton.style.display = "block";
+    
     youCan.innerHTML = "Choose Your Favorite Menu!";
     editButton.parentNode.removeChild(editButton);
     addMenuButton.parentNode.removeChild(addMenuButton);
@@ -277,7 +283,7 @@ cartButton.addEventListener("click", e => {
         itemSummary.removeChild(itemSummary.firstChild);
     }
     fillCart();
-})
+});
 
 checkout.addEventListener("click", e => {
     window.location.replace("orderCart.html");
